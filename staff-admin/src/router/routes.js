@@ -18,9 +18,9 @@ export default [
 
             //员工信息
             {
-                name: 'message',//名字
-                path: '/message',//路径
-                component: () => import('../pages/Employees/Message.vue'),//组件名称
+                name: 'staffMsg',//名字
+                path: '/staffMsg',//路径
+                component: () => import('../pages/Employees/StaffMsg.vue'),//组件名称
                 meta: {
                     title:"信息管理"
                 },//路由元信息
@@ -72,9 +72,9 @@ export default [
 
             //用户管理
             {
-                name: 'userManage',//名字
-                path: '/userManage',//路径
-                component: () => import('../pages/User/UserManage.vue'),//组件名称
+                name: 'userMsg',//名字
+                path: '/userMsg',//路径
+                component: () => import('../pages/User/UserMsg.vue'),//组件名称
                 meta: {
                     title:"用户信息"
                 },//路由元信息
@@ -91,13 +91,14 @@ export default [
 
             //操作内容审核
             {
-                name: 'operatingAudit',//名字
-                path: '/operatingAudit',//路径
-                component: () => import('../pages/OperatingAudit/OperatingAudit.vue'),//组件名称
+                name: 'operatingRequestAudit',//名字
+                path: '/operatingRequestAudit',//路径
+                component: () => import('../pages/OperatingRequest/OperatingRequestAudit.vue'),//组件名称
                 meta: {
-                    title:"操作内容审核"
+                    title:"操作请求审核"
                 },//路由元信息
             }, 
+            
             
             
             //离职审核
@@ -137,13 +138,16 @@ export default [
                 meta: {
                     title:"反馈消息"
                 },//路由元信息
+            },
+
+            //登录
+            {
+                name: 'login',//名字
+                path: '/login',//路径
+                component: () => import('../pages/Login/Login.vue'),//组件名称
+                meta: {},//路由元信息
             }
         ],//二级路由
-    }, {
-        name: 'login',//名字
-        path: '/login',//路径
-        component: () => import('../pages/Login/Login.vue'),//组件名称
-        meta: {},//路由元信息
     }, {
         name: '404',//名字
         path: '/404',//路径

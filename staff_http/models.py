@@ -4,25 +4,26 @@ from extension import db
 # 管理系统-权限表
 class Admin_authority(db.Model):
     __tablename__ = "admin_authority"
-    # 自身ID
+    # ID
     id = db.Column(db.Integer(),primary_key = True,autoincrement = True)
-    # 一级ID
-    one_level_Id = db.Column(db.Integer(),nullable = True)
-    # 二级ID
-    two_level_Id = db.Column(db.Integer(),nullable = True)
-    # 三级ID
-    three_level_Id = db.Column(db.Integer(),nullable = True)
+    # 一级权限名称
+    one_level_name = db.Column(db.String(255),nullable = True)
+    # 二级权限名称
+    two_level_name = db.Column(db.String(255),nullable = True)
+    # 三级权限名称
+    three_level_name = db.Column(db.String(255),nullable = True)
     # 权限名称
-    right_name = db.Column(db.String(255),nullable = False)
+    right_name = db.Column(db.String(30), primary_key = True)
     # 权限描述
     description = db.Column(db.Text(),nullable = False)
 
     # 模型的资源序列化函数（方法）
     def schema(self):
         return {
-            'one_level_Id': self.one_level_Id,
-            'two_level_Id': self.two_level_Id,
-            'three_level_Id': self.three_level_Id,
+            'id': self.id,
+            'one_level_name': self.one_level_name,
+            'two_level_name': self.two_level_name,
+            'three_level_name': self.three_level_name,
             'right_name': self.right_name, 
             'description': self.description,
         }
@@ -68,8 +69,10 @@ class Admin_op_review(db.Model):
     __tablename__ = "admin_op_review"
     # ID
     id = db.Column(db.Integer(),primary_key = True,autoincrement = True)
-    # 内容
-    content = db.Column(db.Text(),nullable = False)
+    # 数据
+    data = db.Column(db.Text(),nullable = False)
+    # 操作描述
+    description = db.Column(db.Text(),nullable = False)
     # 员工ID
     staffId = db.Column(db.String(7),nullable = False)
     # 申请时间
@@ -82,7 +85,8 @@ class Admin_op_review(db.Model):
     def schema(self):
         return {
             'id': self.id,
-            'content': self.content,
+            'data': self.data,
+            'description':self.description,
             'staffId': self.staffId,
             'datetime': self.datetime,
             'status': self.status,
@@ -132,6 +136,8 @@ class Admin_user(db.Model):
     __tablename__ = "admin_user"
     # 员工ID
     staffId = db.Column(db.String(7),primary_key = True,autoincrement = False)
+    # 员工ID
+    departId = db.Column(db.String(7),nullable = False)
     # 员工姓名
     staffName = db.Column(db.String(255),nullable = False)
     # 密码
@@ -146,6 +152,7 @@ class Admin_user(db.Model):
     def schema(self):
         return {
             'staffId': self.staffId,
+            'departId':self.departId,
             'staffName': self.staffName,
             'password': self.password,
             'status': self.status,
@@ -291,8 +298,8 @@ class Receivernotice(db.Model):
 # 离职员工表
 class Resign(db.Model):
     __tablename__ = "resign"
-    # 员工ID
-    staffId = db.Column(db.String(7),primary_key = True,autoincrement = False)
+    # 离职员工Id
+    resignId = db.Column(db.String(7),primary_key = True,autoincrement = False)
     # 部门ID
     departId = db.Column(db.String(2),nullable = False)
     # 电话号码
@@ -307,7 +314,7 @@ class Resign(db.Model):
     # 模型的资源序列化函数（方法）
     def schema(self):
         return {
-            'staffId': self.staffId,
+            'resignId':self.resignId,
             'departId': self.departId,
             'phoneNum': self.phoneNum,
             'staffName': self.staffName,

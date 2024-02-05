@@ -1,6 +1,6 @@
 <template>
-    <div class="Report">
-        <h1>周报</h1>
+    <div class="UserMsg">
+        <h1>用户信息</h1>
     </div>
 </template>
 
@@ -11,7 +11,7 @@
 
 
 <style>
-    .Report{
+    .UserMsg{
         
     }
 </style>

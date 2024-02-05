@@ -1,45 +1,72 @@
 <template>
-    <div class="container">
+    <div class="container"
+        :style="{ borderBottom: themeType ? '1px solid rgba(0, 0, 0, .3)' : '1px solid rgba(255, 255, 255, .3)' }">
         <!-- 面包屑和侧边栏的显示/隐藏按钮 -->
         <div class="l-content">
             <el-button style="margin-right: 10px;" @click="setCollapse" size="small" type="primary" icon="Menu" />
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item>首页</el-breadcrumb-item>
-                <el-breadcrumb-item  v-for="(i,index) in currentMenu" :key="index">{{ i }}</el-breadcrumb-item>
+                <el-breadcrumb-item><span :style="{color: themeType ? 'rgba(0, 0, 0, 1)':'rgba(255, 255, 255, 1)'}">首页</span></el-breadcrumb-item>
+                <el-breadcrumb-item v-for="(i, index) in currentMenu" :key="index"><span
+                        :style="{ color: themeType ? '#f3a694' : '#30d5c8' }">{{ i }}</span></el-breadcrumb-item>
             </el-breadcrumb>
 
         </div>
         <!-- 头像 -->
         <div class="r-content">
+            <ThemeSwitch></ThemeSwitch>
             <el-dropdown>
                 <el-image class="iconImg" :src="userIcon('user', 'jpg')" fit="contain" />
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item @click="logout">退出</el-dropdown-item>
+                        <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
+
         </div>
     </div>
 </template>
 
 
 <script setup>
+
+import { computed, getCurrentInstance } from "vue";
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
 // 图片处理
 import imageSrc from "../../util/imageSrc"
 // 引入layout仓库
 import { useLayoutStore } from '../../stores/layout'
+// 引入login仓库
+import { useLoginStore } from '../../stores/login'
+// 引入路由
+import { useRouter } from "vue-router"
 
+//使用路由
+let router = useRouter()
+
+//获取全局挂载
+let internalInstance = getCurrentInstance();
+
+//获取全局Element消息提示框
+let $ElMessage = internalInstance.appContext.config.globalProperties.$ElMessage;
 
 // 使用layout仓库
 const layoutStore = useLayoutStore()
+// 使用login仓库
+const loginStore = useLoginStore()
 
-const { 
+const {
+    // 主题
+    theme,
     // 当前路径
-    currentMenu 
+    currentMenu,
 } = storeToRefs(layoutStore)
+
+//主题类型
+const themeType = computed(() => {
+    return theme.value === "light" ? true : false
+})
 
 // layout仓库的action方法
 const {
@@ -47,11 +74,25 @@ const {
     setCollapse
 } = layoutStore
 
-
-
+// login仓库的action方法
+const {
+    // 退出登录
+    setLogoutStatus,
+} = loginStore
 
 // 图片处理（函数）
 const userIcon = imageSrc
+
+// 退出登录
+const logout = async () => {
+    let message = await setLogoutStatus()
+    $ElMessage({
+        message: message,
+        type: "success"
+    })
+    router.push({ path: "/login" })
+
+}
 
 </script>
 
@@ -66,7 +107,7 @@ const userIcon = imageSrc
 
 ::v-deep(.el-breadcrumb__item) {
     .el-breadcrumb__inner {
-        color: rgb(0, 183, 255) !important;
+        font-size: 17px;
     }
 }
 </style>
@@ -76,7 +117,7 @@ const userIcon = imageSrc
 .container {
     width: 100%;
     height: 60px;
-    background: #333;
+    backdrop-filter: blur(25px);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,9 +132,13 @@ const userIcon = imageSrc
 
     // 头像
     .r-content {
+        user-select: none;
+        display: flex;
+        align-items: center;
         margin-right: 20px;
 
         .iconImg {
+            margin-left: 20px;
             width: 45px;
             height: 45px;
             border-radius: 50%;

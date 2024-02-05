@@ -7,42 +7,27 @@ import config
 # 蓝图
 from view.staff import staff
 from view.department import department
+from view.admin_user import admin_user
+from view.feedback import feedback
+from view.resetAllData import resetAllData
+from view.admin_authority import admin_authority
+# token
+from flask_jwt_extended import JWTManager
+# 定时任务
+from setting import scheduler,app
 
-
-# 配置app
-app = Flask(__name__)
-app.config.from_object(config)
-db.init_app(app)
-cors.init_app(app)
 
 
 # 注册蓝图
-# 员工表操作
 app.register_blueprint(staff)
+app.register_blueprint(feedback)
+app.register_blueprint(admin_user)
 app.register_blueprint(department)
-
-
-# 默认路由
-@app.route('/')
-def hello_world():
-    return '闲人勿扰'
-
-
-#创建表
-@app.route('/createTable')
-def createTable():
-    with db.engine.connect() as conn:
-        db.create_all()
-    return '已创建表'
-
-#删除所有的表
-@app.route('/dropTable')
-def dropTable():
-    with db.engine.connect() as conn:
-        db.drop_all()
-    return '已删除所有表'
-
+app.register_blueprint(resetAllData)
+app.register_blueprint(admin_authority)
 
 
 if __name__ == '__main__':
-    app.run()
+    scheduler.start()
+    app.run(debug=True, port=5001)
+    

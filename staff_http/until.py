@@ -1,16 +1,12 @@
-from flask import Flask as _Flask
-from flask.json import JSONEncoder as _JSONEncoder
-from datetime import date
-import json
+import datetime
+def getDate():
+    current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print("current_date")
+    print(current_date)
+    return current_date
 
-class JSONEncoder(_JSONEncoder):
-    def default(self, o):
-        if hasattr(o, 'keys') and hasattr(o, '__getitem__'):
-            return dict(o)
-        if isinstance(o, date):
-            return o.strftime('%Y-%m-%d %H:%M:%S')
-        return json.JSONEncoder.default(self, o)
-
-
-class Flask(_Flask):
-    json_encoder = JSONEncoder
+def delay30_date():
+    delay_date = (datetime.datetime.now() + datetime.timedelta(seconds=10)).strftime("%Y-%m-%d %H:%M:%S")
+    print("delay_date")
+    print(delay_date)
+    return delay_date

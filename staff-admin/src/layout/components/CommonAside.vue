@@ -1,85 +1,111 @@
 <template>
-    <div class="CommonAside" :style="{ width: collapse ? 0.3299999909099099 + 'rem' : 1.197979061409448 + 'rem' }">
-        <el-menu active-text-color="#ffd04b" background-color="#545c64" class="new-el-menu--sidebar"
-            :default-active="defaultActive" text-color="#fff" :collapse="collapse" popper-effect="light" router>
-            <p v-show="!collapse">通用后台管理</p>
+    <div class="CommonAside"
+        :style="{ width: collapse ? 0.3299999909099099 + 'rem' : 1.197979061409448 + 'rem', borderRight: themeType ? '1px solid rgba(0, 0, 0, .3)' : '1px solid rgba(255, 255, 255, .3)' }">
+        <el-menu :active-text-color="themeType ? '#f3a694' : '#30d5c8'" class="new-el-menu--sidebar"
+            :default-active="defaultActive" :text-color="themeType ? '#333' : '#ebeaea'" :collapse="collapse"
+            :popper-effect="themeType ? 'light' : 'dark'" router>
+            <p v-show="!collapse" :style="{color: themeType ? 'rgba(0, 0, 0, 1)':'rgba(255, 255, 255, 1)'}">员工后台管理</p>
 
             <!-- 首页 -->
             <el-menu-item @click="clickMenu('/home', '首页')" index="/home">
                 <el-icon>
                     <component :is="icons[0]"></component>
                 </el-icon>
-                <template #title>首页</template>
+                <template #title>
+                    <span class="fontSize17" >首页</span>
+                </template>
             </el-menu-item>
 
 
             <!-- 员工管理 -->
-            <el-sub-menu index="员工管理">
+            <el-sub-menu index="员工管理" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'">
                 <template #title>
                     <el-icon>
                         <component :is="icons[1]"></component>
                     </el-icon>
-                    <span>员工管理</span>
+                    <span class="fontSize17">员工管理</span>
                 </template>
-                <el-menu-item @click="clickMenu('/message', '员工管理|信息管理')" index="/message">信息管理</el-menu-item>
-                <el-menu-item @click="clickMenu('/checkingIn', '员工管理|考勤管理')" index="/checkingIn">考勤管理</el-menu-item>
+                <el-menu-item @click="clickMenu('/staffMsg', '员工管理|信息管理')" index="/staffMsg">
+                    <span class="fontSize17">信息管理</span>
+                </el-menu-item>
+                <el-menu-item @click="clickMenu('/checkingIn', '员工管理|考勤管理')" index="/checkingIn">
+                    <span class="fontSize17">考勤管理</span>
+                </el-menu-item>
             </el-sub-menu>
 
             <!-- 通知管理 -->
-            <el-sub-menu index="通知管理">
+            <el-sub-menu index="通知管理" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'">
                 <template #title>
                     <el-icon>
                         <component :is="icons[2]"></component>
                     </el-icon>
-                    <span>通知管理</span>
+                    <span class="fontSize17">通知管理</span>
                 </template>
-                <el-menu-item @click="clickMenu('/release', '通知管理|发布通知')" index="/release">发布通知</el-menu-item>
-                <el-menu-item @click="clickMenu('/informHistory', '通知管理|历史记录')" index="/informHistory">历史记录</el-menu-item>
+                <el-menu-item @click="clickMenu('/release', '通知管理|发布通知')" index="/release">
+                    <span class="fontSize17">发布通知</span>
+                </el-menu-item>
+                <el-menu-item @click="clickMenu('/informHistory', '通知管理|历史记录')" index="/informHistory">
+                    <span class="fontSize17">历史记录</span>
+                </el-menu-item>
             </el-sub-menu>
 
             <!-- 请假审核 -->
-            <el-sub-menu index="请假审核">
+            <el-sub-menu index="请假审核" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'">
                 <template #title>
                     <el-icon>
                         <component :is="icons[3]"></component>
                     </el-icon>
-                    <span>请假审核</span>
+                    <span class="fontSize17">请假审核</span>
                 </template>
-                <el-menu-item @click="clickMenu('/leaveAudit', '请假审核|审核')" index="/leaveAudit">审核</el-menu-item>
-                <el-menu-item @click="clickMenu('/leaveHistory', '请假审核|历史记录')" index="/leaveHistory">历史记录</el-menu-item>
+                <el-menu-item @click="clickMenu('/leaveAudit', '请假审核|审核')" index="/leaveAudit">
+                    <span class="fontSize17"> 审核</span>
+                </el-menu-item>
+                <el-menu-item @click="clickMenu('/leaveHistory', '请假审核|历史记录')" index="/leaveHistory">
+                    <span class="fontSize17"> 历史记录</span>
+                </el-menu-item>
             </el-sub-menu>
 
             <!-- 用户管理 -->
-            <el-sub-menu index="用户管理">
+            <el-sub-menu index="用户管理" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'">
                 <template #title>
                     <el-icon>
-                        <component :is="icons[3]"></component>
+                        <component :is="icons[4]"></component>
                     </el-icon>
-                    <span>用户管理</span>
+                    <span class="fontSize17">用户管理</span>
                 </template>
-                <el-menu-item @click="clickMenu('/userManage', '用户管理|用户信息')" index="/userManage">用户信息</el-menu-item>
-                <el-menu-item @click="clickMenu('/authority', '用户管理|权限管理')" index="/authority">权限管理</el-menu-item>
+                <el-menu-item @click="clickMenu('/userMsg', '用户管理|用户信息')" index="/userMsg">
+                    <span class="fontSize17">用户信息</span>
+                </el-menu-item>
+                <el-menu-item @click="clickMenu('/authority', '用户管理|权限管理')" index="/authority">
+                    <span class="fontSize17">权限管理</span>
+                </el-menu-item>
             </el-sub-menu>
 
-            <!-- 操作内容审核 -->
-            <el-menu-item @click="clickMenu('/operatingAudit', '操作内容审核')" index="/operatingAudit">
+            <!-- 操作请求审核 -->
+            <el-menu-item @click="clickMenu('/operatingRequestAudit', '操作请求审核')" index="/operatingRequestAudit">
                 <el-icon>
                     <component :is="icons[5]"></component>
                 </el-icon>
-                <template #title>操作内容审核</template>
+                <template #title>
+                    <span class="fontSize17">操作请求审核</span>
+                </template>
             </el-menu-item>
 
 
             <!-- 离职审核 -->
-            <el-sub-menu index="离职审核">
+            <el-sub-menu index="离职审核" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'">
                 <template #title>
                     <el-icon>
                         <component :is="icons[6]"></component>
                     </el-icon>
-                    <span>离职审核</span>
+                    <span class="fontSize17">离职审核</span>
                 </template>
-                <el-menu-item @click="clickMenu('/dimissionAudit', '离职审核|审核')" index="/dimissionAudit">审核</el-menu-item>
-                <el-menu-item @click="clickMenu('/dimissionData', '离职审核|离职员工表')" index="/dimissionData">离职员工表</el-menu-item>
+                <el-menu-item @click="clickMenu('/dimissionAudit', '离职审核|审核')" index="/dimissionAudit">
+                    <span class="fontSize17">审核</span>
+                </el-menu-item>
+                <el-menu-item @click="clickMenu('/dimissionData', '离职审核|离职员工表')" index="/dimissionData">
+                    <span class="fontSize17">离职员工表</span>
+                </el-menu-item>
             </el-sub-menu>
 
             <!-- 操作记录 -->
@@ -87,7 +113,9 @@
                 <el-icon>
                     <component :is="icons[8]"></component>
                 </el-icon>
-                <template #title>操作记录</template>
+                <template #title>
+                    <span class="fontSize17">操作记录</span>
+                </template>
             </el-menu-item>
 
             <!-- 反馈消息 -->
@@ -95,7 +123,9 @@
                 <el-icon>
                     <component :is="icons[7]"></component>
                 </el-icon>
-                <template #title>反馈消息</template>
+                <template #title>
+                    <span class="fontSize17">反馈消息</span>
+                </template>
             </el-menu-item>
 
 
@@ -110,7 +140,7 @@ import { storeToRefs } from 'pinia'
 // 引入路由
 import { useRoute, useRouter } from "vue-router"
 // 引入vue
-import { watch, ref } from 'vue'
+import { watch, ref, computed } from 'vue'
 // 引入layout仓库
 import { useLayoutStore } from '../../stores/layout'
 
@@ -127,9 +157,16 @@ const layoutStore = useLayoutStore()
 
 // layout仓库的state数据
 const {
+    // 主题
+    theme,
     //显示或隐藏的状态
     collapse
 } = storeToRefs(layoutStore)
+
+//主题类型
+const themeType = computed(() => {
+    return theme.value === "light" ? true : false
+})
 
 // layout仓库的action方法
 const {
@@ -149,7 +186,7 @@ const clickMenu = (path, label) => {
 }
 
 //图标
-const icons = ["HomeFilled", "UserFilled", "BellFilled", "ColdDrink", "Key", "WarningFilled", "Failed", "Message", "Clock"]
+const icons = ["HomeFilled", "UserFilled", "BellFilled", "ColdDrink", "Avatar", "WarningFilled", "Failed", "Message", "Clock"]
 
 </script>
 
@@ -174,16 +211,66 @@ const icons = ["HomeFilled", "UserFilled", "BellFilled", "ColdDrink", "Key", "Wa
 .el-menu--collapse {
     transition-duration: .9s;
 }
+
+:deep(.el-menu) {
+    background: transparent !important;
+
+    .fontSize17 {
+        font-size: 17px;
+    }
+}
+
+.el-menu-item:hover {
+    background-color: rgba(64, 158, 255, .3);
+}
+
+:deep(.el-sub-menu__title):hover {
+    background-color: rgba(64, 158, 255, .3);
+}
 </style>
 
-<style lang="less" scoped>
+<style lang="less">
 .CommonAside {
     height: 100vh;
+    backdrop-filter: blur(25px) !important;
     transition-duration: .7s;
     overflow-y: auto;
     overflow-x: hidden;
+}
 
-
+.bglightBlur {
+    background: transparent !important;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, .2)!important;
+    border: none !important;
+    transition-duration: 0s;
+    .el-menu {
+        background: transparent;
+        box-shadow: none!important;
+        transition-duration: 0s;
+        .el-menu-item {
+            font-size: 15px !important;
+            box-shadow: none!important;
+            transition-duration: 0s;
+        }
+    }
+}
+.bgdarkBlur{
+    background: transparent !important;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 5px 5px rgba(255, 255, 255, .2)!important;
+    border: none !important;
+    transition-duration: 0s;
+    .el-menu {
+        background: transparent;
+        box-shadow: none!important;
+        transition-duration: 0s;
+        .el-menu-item {
+            font-size: 15px !important;
+            box-shadow: none!important;
+            transition-duration: 0s;
+        }
+    }
 }
 </style>
 
