@@ -41,3 +41,26 @@ export const reqStaffData = (params) => request({
     method: 'post',
     data: params
 })
+
+//添加员工信息
+export const reqAddStaff = (params) => request({
+    url: "/staff/addStaff",
+    method: 'post',
+    data: params
+})
+
+
+//修改员工信息
+export const reqUpdateStaff = (params) => request({
+    url: "/staff/updateStaff",
+    method: 'post',
+    data: params
+})
+
+//设置为离职员工
+export const reqResignStaff = (params) => request({
+    url: "/staff/resignStaff",
+    method: 'post',
+    data: params
+})
+

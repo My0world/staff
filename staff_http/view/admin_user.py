@@ -14,12 +14,11 @@ def timerLogin(i):
     with app.app_context():
         # 修改登录用户的状态
         Admin_user.query.filter(Admin_user.staffId == i).update({'status': "下线"})
-        print(123)
         db.session.commit()
         scheduler.remove_job("timerLogin")
 
 
-# 重置数据d
+# 重置数据
 @admin_user.route('/admin_user/resetData',methods=['GET'])
 def resetData():
     # 默认数据
@@ -130,7 +129,7 @@ def login():
 @admin_user.route('/admin_user/logout',methods=['GET'])
 @jwt_required()
 def logout():
-    # try:
+    try:
         # 身份验证
         userid = get_jwt_identity()
         # 获取header的token
@@ -167,16 +166,16 @@ def logout():
             #返回值
             "data": {}
         })
-    # except:
-    #     # 返回体
-    #     return jsonify({
-    #         #返回状态码
-    #         "code": 500,
-    #         #返回信息描述
-    #         "message": "内部服务器错误",
-    #         #返回值
-    #         "data": {}
-    #     })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
 
 
 #查询所有用户

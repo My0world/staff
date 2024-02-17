@@ -6,13 +6,12 @@
         <template v-slot:body>
             <el-form ref="FormRef" :rules="FormRules" label-width="37%"
                 :class="{ feedback_main_light: themeType, feedback_main_dark: !themeType }" :model="FormData">
-                <el-row :gutter="20"  style="margin-bottom: 15px;">
+                <el-row :gutter="20" style="margin-bottom: 15px;">
                     <el-col :span="12">
                         <el-form-item label="部门:" prop="departId">
                             <el-select v-model="FormData.departId" placeholder="请选择部门" size="large">
-                                <el-option label="开发部" value="01" />
-                                <el-option label="测试部" value="02" />
-                                <el-option label="管理层" value="03" />
+                                <el-option v-for="i in departmentList" :key="i.departId" :label="i.department_Name"
+                                    :value="i.departId" />
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -26,12 +25,12 @@
                     </el-col>
 
                 </el-row>
-                <el-row :gutter="20"  style="margin-bottom: 15px;">
+                <el-row :gutter="20" style="margin-bottom: 15px;">
                     <el-col :span="12">
                         <el-form-item label="职位:" prop="job">
-                            <div class="input">
-                                <el-input v-model="FormData.job" type="text" size="large" placeholder="请输入职位" />
-                            </div>
+                            <el-select v-model="FormData.job" placeholder="请选择职位" size="large">
+                                <el-option v-for="(i, index) in jobType" :key="index" :label="i" :value="i" />
+                            </el-select>
 
                         </el-form-item>
                     </el-col>
@@ -46,7 +45,7 @@
                     </el-col>
 
                 </el-row>
-                <el-row :gutter="20"  style="margin-bottom: 15px;">
+                <el-row :gutter="20" style="margin-bottom: 15px;">
                     <el-col :span="12">
                         <el-form-item label="性别:" prop="sex">
                             <el-select v-model="FormData.sex" placeholder="请选择性别" size="large">
@@ -58,7 +57,7 @@
                     <el-col :span="12">
                         <el-form-item label="进入公司时间:" prop="entryTime">
                             <el-date-picker v-model="FormData.entryTime" type="date" size="large" placeholder="请选择日期"
-                                :default-value="new Date(2010, 9, 1)" />
+                                format="YYYY-MM-DD" value-format="YYYY-MM-DD" />
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -70,7 +69,11 @@
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="薪资:" prop="salary">
-                            <el-input-number v-model="FormData.salary" :precision="1" size="large" />
+                            <div style="position: relative;">
+                                <el-input-number v-model="FormData.salary" :precision="1" size="large" />
+                                <span class="unit">K</span>
+                            </div>
+
                         </el-form-item>
 
                     </el-col>
@@ -94,12 +97,22 @@ import { reactive, computed, ref, getCurrentInstance } from 'vue';
 import { debounce } from "lodash"
 // 引入layout仓库
 import { useLayoutStore } from '../../../stores/layout'
-
+// 引入employees仓库
+import { useEmployeesStore } from '../../../stores/employees'
+//API
+import { reqAddStaff, reqUpdateStaff } from '../../../api'
+//格式化时间
+import { GMTToStr } from "../../../util/GMTToStr.js"
 //获取全局挂载
 let internalInstance = getCurrentInstance();
+// 使用employees仓库
+let employeesStore = useEmployeesStore()
 
 //表单头部标题
 let title = ref("")
+
+//修改用的员工号
+let staffId = ref(null)
 
 //表单元素
 let FormRef = ref(null)
@@ -115,6 +128,22 @@ const noZore = (rule, value, callback) => {
         callback()
     }
 }
+
+// employees仓库的action方法
+const {
+    //筛选员工信息
+    filterStaffData
+} = employeesStore
+
+// employees仓库的state数据
+const {
+    // 部门列表
+    departmentList,
+    // 职位类型
+    jobType,
+    // 员工信息搜索信息表单
+    employeesSearchForm,
+} = storeToRefs(employeesStore)
 
 //表单规则
 const FormRules = reactive({
@@ -230,10 +259,47 @@ const handleSubmit = debounce(async (el) => {
     if (!el) return
     await el.validate(async (valid, fields) => {
         if (valid) {
-            $ElMessage({
-                message: message,
-                type: "success"
-            })
+            // 是修改还是添加
+            if (staffId.value !== null) {
+                let salary = FormData.salary * 1000
+                reqUpdateStaff({ ...FormData, staffId: staffId.value, salary }).then(async reslove => {
+                    await filterStaffData(employeesSearchForm.value)
+                    $ElMessage({
+                        message: "修改成功",
+                        type: "success"
+                    })
+                }, reject => {
+                    $ElMessage({
+                        message: "修改失败，请联系管理员",
+                        type: "error"
+                    })
+
+                })
+            } else {
+                let salary = FormData.salary * 1000
+                reqAddStaff(
+                    { ...FormData, salary }
+                ).then(async resolve => {
+                    await filterStaffData(employeesSearchForm.value)
+                    FormData.departId = ""
+                    FormData.staffName = ""
+                    FormData.job = ""
+                    FormData.phoneNum = ""
+                    FormData.sex = ""
+                    FormData.age = 0
+                    FormData.salary = 0
+                    FormData.entryTime = ""
+                    $ElMessage({
+                        message: "添加成功",
+                        type: "success"
+                    })
+                }, reject => {
+                    $ElMessage({
+                        message: "添加失败，请联系管理员",
+                        type: "error"
+                    })
+                })
+            }
         } else {
             $ElMessage({
                 message: "请输入正确的内容",
@@ -245,9 +311,22 @@ const handleSubmit = debounce(async (el) => {
 
 defineExpose({
     //员工信息对话框显示
-    StaffMsgDialogShow: (tit) => {
+    StaffMsgDialogShow: (tit, item) => {
+        console.log(item)
         title.value = tit
         formDialog.value.dialogStatus = true
+
+        if (item && item.staffId !== null) {
+            staffId.value = item.staffId
+            FormData.departId = item.departId
+            FormData.staffName = item.staffName
+            FormData.job = item.job
+            FormData.phoneNum = item.phoneNum
+            FormData.sex = item.sex
+            FormData.age = item.age
+            FormData.salary = item.salary / 1000
+            FormData.entryTime = GMTToStr(item.entryTime)
+        }
     }
 })
 
@@ -373,6 +452,13 @@ defineExpose({
 
     }
 
+    .unit {
+        position: absolute;
+        z-index: 9999;
+        top: 50%;
+        right: 60px;
+        transform: translateY(-47%);
+    }
 }
 </style>
 

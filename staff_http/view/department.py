@@ -83,8 +83,7 @@ def queryAll():
         for item in queryData:
             dataList.append({
                 "departId":item.schema()["departId"],
-                "department_Name":item.schema()["department_Name"],
-                "manager_staffName":Staff.query.filter(Staff.staffId == item.schema()["manager_staffId"]).first().schema()["staffName"],
+                "department_Name":item.schema()["department_Name"]
             })
         # 返回体
         return jsonify({

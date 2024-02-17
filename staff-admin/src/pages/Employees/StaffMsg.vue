@@ -1,7 +1,7 @@
 <template>
     <div class="StaffMsg">
-        <SearchCard style="height: 28%;"></SearchCard>
-        <StaffMsgTable style="height: 77%;"></StaffMsgTable>
+        <SearchCard></SearchCard>
+        <StaffMsgTable></StaffMsgTable>
     </div>
 </template>
 

@@ -1,7 +1,8 @@
+
+
+
 export function GMTToStr(time) {
-    let date = new Date(time)
-    let Str = date.getFullYear() + '-' +
-        (date.getMonth() + 1) + '-' +
-        date.getDate()
+    let date = new Date(time).toISOString()
+    let Str = date.slice(0,10)
     return Str
 }

@@ -3,7 +3,11 @@
         <template v-slot:body>
             <div class="StaffMsgTable" :class="[theme === 'light' ? 'light' : 'dark']">
                 <div class="operation">
-                    <el-button type="primary" size="large" @click="handleAdd('添加')">添加</el-button>
+                    <el-button type="primary" size="large" @click="handleAdd('添加')"
+                        v-if="hasUserAddStaff">添加(需审核)</el-button>
+                    <el-button type="primary" size="large" @click="handleAdd('添加')" v-if="hasAdminAddStaff">添加</el-button>
+                    <el-button type="primary" size="large" disabled
+                        v-if="!hasAdminAddStaff && !hasUserAddStaff">添加</el-button>
                     <el-button link type="primary" size="large">您有新的内容可刷新</el-button>
                 </div>
                 <el-table :data="staffList" style="width: 100%;margin: 17px 0px;" border>
@@ -25,9 +29,12 @@
                     <el-table-column :resizable="false" fixed="right" label="操作栏"
                         v-if="hasUserUpdateStaff || hasAdminUpdateStaff || hasSettingDimission">
                         <template #default="scope">
-                            <el-button v-if="hasUserUpdateStaff" size="small" @click="handleUpdate" type="warning">修改(需审核)</el-button>
-                            <el-button v-if="hasAdminUpdateStaff" size="small" @click="handleUpdate" type="warning">修改</el-button>
-                            <el-button v-if="hasSettingDimission" size="small" type="danger">设置为离职状态</el-button>
+                            <el-button v-if="hasUserUpdateStaff" size="small" @click="handleUpdate('修改', scope.row)"
+                                type="warning">修改(需审核)</el-button>
+                            <el-button v-if="hasAdminUpdateStaff" size="small" @click="handleUpdate('修改', scope.row)"
+                                type="warning">修改</el-button>
+                            <el-button v-if="hasSettingDimission" size="small" @click="handleResign(scope.row)"
+                                type="danger">设置为离职状态</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -43,9 +50,13 @@
 
 
 <script setup>
-import { GMTToStr } from "../../../util/GMTToStr.js"
+import { ref, computed, onMounted, getCurrentInstance } from 'vue';
+//添加和修改对话框
 import StaffMsgDialog from "./StaffMsgDialog.vue"
-import { ref, computed, onMounted } from 'vue';
+//API
+import { reqResignStaff } from '../../../api'
+// 格式化时间
+import { GMTToStr } from "../../../util/GMTToStr.js"
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
 // 引入login仓库
@@ -54,6 +65,12 @@ import { useLoginStore } from '../../../stores/login'
 import { useLayoutStore } from '../../../stores/layout'
 // 引入employees仓库
 import { useEmployeesStore } from '../../../stores/employees'
+
+//获取全局挂载
+let internalInstance = getCurrentInstance();
+
+//获取全局Element消息提示框
+let $ElMessage = internalInstance.appContext.config.globalProperties.$ElMessage;
 
 // 使用login仓库
 let loginStore = useLoginStore()
@@ -104,6 +121,22 @@ const hasSettingDimission = computed(() => {
     return index !== -1
 })
 
+// 是否有添加员工权限（无需审核）
+const hasAdminAddStaff = computed(() => {
+    let index = authorityList.value.findIndex((item) => {
+        return item === "adminAddStaff"
+    })
+    return index !== -1
+})
+
+// 是否有添加员工权限（需审核）
+const hasUserAddStaff = computed(() => {
+    let index = authorityList.value.findIndex((item) => {
+        return item === "userAddStaff"
+    })
+    return index !== -1
+})
+
 // 是否有修改员工权限（无需审核）
 const hasAdminUpdateStaff = computed(() => {
     let index = authorityList.value.findIndex((item) => {
@@ -135,6 +168,34 @@ let StaffMsgDialogRef = ref(null)
 const handleAdd = (tit) => {
     StaffMsgDialogRef.value.StaffMsgDialogShow(tit)
 }
+
+//修改员工信息
+const handleUpdate = (tit, item) => {
+    StaffMsgDialogRef.value.StaffMsgDialogShow(tit, item)
+}
+
+const handleResign = async (item) => {
+    await reqResignStaff({ ...item, entryTime: GMTToStr(item.entryTime) }).then(async resolve => {
+        if(staffList.value.length === 1){
+            employeesSearchForm.value.pageNo = employeesSearchForm.value.pageNo - 1
+            if(employeesSearchForm.value.pageNo === 0){
+                employeesSearchForm.value.pageNo = 1
+            }
+        }
+        await getData()
+        $ElMessage({
+            message: resolve.message,
+            type: "success"
+        })
+    }, reject => {
+        $ElMessage({
+            message: reject.message,
+            type: "error"
+        })
+    })
+}
+
+
 
 //获取数据
 const getData = async () => {
@@ -179,7 +240,7 @@ onMounted(async () => {
 
 .light {
     :deep(.el-table) {
-        height: 495px;
+        height: 480px;
         background: transparent;
 
         thead {
@@ -227,7 +288,7 @@ onMounted(async () => {
 
 .dark {
     :deep(.el-table) {
-        height: 495px;
+        height: 480px;
         background: transparent;
 
         thead {
