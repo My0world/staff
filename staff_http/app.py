@@ -11,6 +11,7 @@ from view.admin_user import admin_user
 from view.feedback import feedback
 from view.resetAllData import resetAllData
 from view.admin_authority import admin_authority
+from view.admin_op_review import admin_op_review
 # token
 from flask_jwt_extended import JWTManager
 # 定时任务
@@ -25,6 +26,7 @@ app.register_blueprint(admin_user)
 app.register_blueprint(department)
 app.register_blueprint(resetAllData)
 app.register_blueprint(admin_authority)
+app.register_blueprint(admin_op_review)
 
 
 if __name__ == '__main__':

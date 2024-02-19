@@ -153,5 +153,10 @@ export default [
         path: '/404',//路径
         component: () => import('../pages/404/404.vue'),//组件名称
         meta: {},//路由元信息
+    },{
+        name: '403',//名字
+        path: '/403',//路径
+        component: () => import('../pages/403/403.vue'),//组件名称
+        meta: {},//路由元信息
     },
 ]

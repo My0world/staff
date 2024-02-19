@@ -7,7 +7,7 @@
             <p v-show="!collapse" :style="{color: themeType ? 'rgba(0, 0, 0, 1)':'rgba(255, 255, 255, 1)'}">员工后台管理</p>
 
             <!-- 首页 -->
-            <el-menu-item @click="clickMenu('/home', '首页')" index="/home">
+            <el-menu-item @click="clickMenu('/home', '首页')" index="/home" v-if="authorityList.indexOf('home') != -1">
                 <el-icon>
                     <component :is="icons[0]"></component>
                 </el-icon>
@@ -18,17 +18,17 @@
 
 
             <!-- 员工管理 -->
-            <el-sub-menu index="员工管理" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'">
+            <el-sub-menu index="员工管理" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'" v-if="authorityList.indexOf('staff') != -1">
                 <template #title>
                     <el-icon>
                         <component :is="icons[1]"></component>
                     </el-icon>
                     <span class="fontSize17">员工管理</span>
                 </template>
-                <el-menu-item @click="clickMenu('/staffMsg', '员工管理|信息管理')" index="/staffMsg">
+                <el-menu-item @click="clickMenu('/staffMsg', '员工管理|信息管理')" index="/staffMsg" v-if="authorityList.indexOf('staffMsg') != -1">
                     <span class="fontSize17">信息管理</span>
                 </el-menu-item>
-                <el-menu-item @click="clickMenu('/checkingIn', '员工管理|考勤管理')" index="/checkingIn">
+                <el-menu-item @click="clickMenu('/checkingIn', '员工管理|考勤管理')" index="/checkingIn" v-if="authorityList.indexOf('checkingIn') != -1">
                     <span class="fontSize17">考勤管理</span>
                 </el-menu-item>
             </el-sub-menu>
@@ -82,7 +82,7 @@
             </el-sub-menu>
 
             <!-- 操作请求审核 -->
-            <el-menu-item @click="clickMenu('/operatingRequestAudit', '操作请求审核')" index="/operatingRequestAudit">
+            <el-menu-item @click="clickMenu('/operatingRequestAudit', '操作请求审核')" index="/operatingRequestAudit" v-if="authorityList.indexOf('operatingRequestAudit') != -1">
                 <el-icon>
                     <component :is="icons[5]"></component>
                 </el-icon>
@@ -143,6 +143,8 @@ import { useRoute, useRouter } from "vue-router"
 import { watch, ref, computed } from 'vue'
 // 引入layout仓库
 import { useLayoutStore } from '../../stores/layout'
+// 引入layout仓库
+import { useLoginStore } from '../../stores/login'
 
 
 // 使用路由
@@ -153,7 +155,7 @@ const router = useRouter()
 let defaultActive = ref("/home")
 
 // 使用layout仓库
-const layoutStore = useLayoutStore()
+let layoutStore = useLayoutStore()
 
 // layout仓库的state数据
 const {
@@ -162,6 +164,16 @@ const {
     //显示或隐藏的状态
     collapse
 } = storeToRefs(layoutStore)
+
+
+// 使用login仓库
+let loginStore = useLoginStore()
+
+// login仓库的state数据
+const {
+    // 权限表
+    authorityList,
+} = storeToRefs(loginStore)
 
 //主题类型
 const themeType = computed(() => {
