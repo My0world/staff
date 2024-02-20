@@ -1,6 +1,6 @@
 <template>
-    <div class="DimissionAudit">
-        <h1>离职审核</h1>
+    <div class="NoticeRelease">
+        <h1>发布通知</h1>
     </div>
 </template>
 
@@ -27,7 +27,7 @@ const {
 } = storeToRefs(loginStore)
 
 onMounted(()=>{
-    if(authorityList.value.indexOf("dimissionAudit") === -1){
+    if(authorityList.value.indexOf("noticeRelease") === -1){
         router.push({name:'403'})
     }
 })
@@ -35,7 +35,7 @@ onMounted(()=>{
 
 
 <style>
-    .DimissionAudit{
+    .NoticeRelease{
         
     }
 </style>

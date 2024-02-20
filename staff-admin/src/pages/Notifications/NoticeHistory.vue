@@ -1,11 +1,11 @@
 <template>
-    <div class="DimissionAudit">
-        <h1>离职审核</h1>
+    <div class="NoticeHistory">
+        <h1>通知历史记录</h1>
     </div>
 </template>
 
 
-<script setup>
+<script>
 import { onMounted } from 'vue';
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
@@ -27,7 +27,7 @@ const {
 } = storeToRefs(loginStore)
 
 onMounted(()=>{
-    if(authorityList.value.indexOf("dimissionAudit") === -1){
+    if(authorityList.value.indexOf("noticeHistory") === -1){
         router.push({name:'403'})
     }
 })
@@ -35,7 +35,7 @@ onMounted(()=>{
 
 
 <style>
-    .DimissionAudit{
+    .NoticeHistory{
         
     }
 </style>

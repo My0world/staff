@@ -13,18 +13,21 @@ admin_op_review = Blueprint('admin_op_review',__name__)
 # GET
 # 接收的GET格式
 """
-# 状态
-status(待审核、审核通过、审核驳回)
-# 页码
-pageNo
+    # 状态
+    status(待审核、审核通过、审核驳回)
+    # 页码
+    pageNo
 """
 @admin_op_review.route('/admin_op_review/filterAll',methods=['GET'])
 @jwt_required()
 def queryAll():
     dataList = []
     try:
+        # 身份验证
         userid = get_jwt_identity()
+        # 操作内容请求状态
         status = request.args.get("status")
+        # 页码
         pageNo = request.args.get("pageNo")
         # 是否登录了
         if userid == None:
@@ -87,7 +90,7 @@ def queryAll():
         # 返回体
         return jsonify({
             #返回状态码
-            "code": 401,
+            "code": 403,
             #返回信息描述
             "message": "你没有权限",
             #返回值

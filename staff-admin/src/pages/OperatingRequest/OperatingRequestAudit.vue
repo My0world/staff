@@ -14,14 +14,24 @@
 import { ref, computed, onMounted, getCurrentInstance } from 'vue';
 // 引入layout仓库
 import { useLayoutStore } from '../../stores/layout'
+// 引入login仓库
+import { useLoginStore } from '../../stores/login'
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
+// 路由
+import {useRouter} from 'vue-router'
+
+//使用路由
+let router = useRouter()
 
 //标签页点击的值
-const activeName = ref('second')
+let activeName = ref('second')
 
 // 使用layout仓库
 let layoutStore = useLayoutStore()
+
+// 获取login仓库
+let loginStore = useLoginStore()
 
 // layout仓库的state数据
 const {
@@ -29,6 +39,17 @@ const {
     theme,
 } = storeToRefs(layoutStore)
 
+// login仓库的state数据
+const {
+    //权限列表
+    authorityList,
+} = storeToRefs(loginStore)
+
+onMounted(()=>{
+    if(authorityList.value.indexOf("operatingRequestAudit") === -1){
+        router.push({name:'403'})
+    }
+})
 
 </script>
 

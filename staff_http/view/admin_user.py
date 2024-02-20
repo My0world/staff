@@ -54,15 +54,17 @@ def resetData():
 # 登录
 # POST
 # 接收的Post格式
-# {
-#     # 员工ID
-#     staffId,
-#     # 密码
-#     password
-# }
+"""
+{
+    # 员工ID
+    staffId,
+    # 密码
+    password
+}
+"""
 @admin_user.route('/admin_user/login',methods=['POST'])
 def login():
-    # try:
+    try:
         # 获取post数据
         staffId = request.json.get('staffId')
         password = request.json.get('password')
@@ -112,16 +114,16 @@ def login():
                     "authority":adminUser[0].schema()["authority"],
                 }
             })
-    # except:
-    #     # 返回体
-    #     return jsonify({
-    #         #返回状态码
-    #         "code": 500,
-    #         #返回信息描述
-    #         "message": "内部服务器错误",
-    #         #返回值
-    #         "data": {}
-    #     })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
 
 
 # 退出登录
@@ -180,10 +182,88 @@ def logout():
 
 #查询所有用户
 # GET
+"""
+    # 页码
+    pageNo
+"""
 @admin_user.route('/admin_user/queryAll',methods=['GET'])
 @jwt_required()
 def queryAll():
     dataList = []
+    try:
+        # 页码
+        pageNo = request.args.get("pageNo")
+        # 身份验证
+        userid = get_jwt_identity()
+        # 获取header的token
+        headerToken = request.headers['Authorization'].split('Bearer ')[1]
+        # 获取redis的token
+        token = redis_client.get(userid)
+        # 判断token是否存在并且和头部的token是否一致
+        if not token or token.decode() != headerToken:
+            # 返回体
+            return jsonify({
+            #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "身份已过期，请重新登录",
+                #返回值
+                "data": {}
+            })
+        # 查找权限
+        userData = Admin_user.query.filter(Admin_user.staffId == userid).first()
+        admin_user = userData.schema()["authority"].find("admin_user")
+        if admin_user != -1:
+            # 查询用户表所有数据
+            queryData = Admin_user.query.filter_by()
+             # 分页
+            pn = queryData.paginate(page=int(pageNo), per_page=15, error_out=False)
+            # 添加到dataList
+            for item in pn:
+                dataList.append({
+                    "staffId":item.schema()["staffId"],
+                    "staffName":item.schema()["staffName"],
+                    "password":"XXXXXXXXX",
+                    "status":item.schema()["status"],
+                })
+            # 返回体
+            return jsonify({
+            #返回状态码
+                "code": 200,
+                #返回信息描述
+                "message": "成功",
+                #返回值
+                "data": {
+                    "count":len(dataList),
+                    'data':dataList
+                }
+            }) 
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
+
+
+# 查看某位用户的密码
+# POST
+# 接收的Post格式
+"""
+{
+    # 员工ID
+    staffId,
+    # 密码
+    requirePassword
+}
+"""
+@admin_user.route('/admin_user/showPassWord',methods=['GET'])
+@jwt_required()
+def showPassWord():
     try:
         # 身份验证
         userid = get_jwt_identity()
@@ -201,29 +281,49 @@ def queryAll():
                 "message": "身份已过期，请重新登录",
                 #返回值
                 "data": {}
-            }) 
-        # 查询用户表所有数据
-        queryData = Admin_user.query.filter_by()
-        # 添加到dataList
-        for item in queryData:
-            dataList.append({
-                "staffId":item.schema()["staffId"],
-                "staffName":item.schema()["staffName"],
-                "password":item.schema()["password"],
-                "status":item.schema()["status"],
             })
-        # 返回体
-        return jsonify({
-        #返回状态码
-            "code": 200,
-            #返回信息描述
-            "message": "成功",
-            #返回值
-            "data": {
-                "count":len(dataList),
-                'data':dataList
-            }
-        }) 
+        # 获取post数据
+        staffId = request.json.get('staffId')
+        requirePassword = request.json.get('requirePassword')
+        # 查找是否有该用户
+        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requirePassword)).first(),
+        # 密码错误
+        if adminUser[0] == None:
+            # 用户不存在
+            return jsonify({           
+                #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "密码错误",
+                #返回值
+                "data": {}
+            })
+        else:
+            # 查找权限
+            showUserPassWord = adminUser.schema()["authority"].find("showUserPassWord")
+            if showUserPassWord != -1:
+                queryData = Admin_user.query.filter(Admin_user.staffId == staffId)
+                # 返回体
+                return jsonify({           
+                    #返回状态码
+                    "code": 200,
+                    #返回信息描述
+                    "message": "登录成功",
+                    #返回值
+                    "data": {
+                        "password":queryData[0].schema()["password"]
+                    }
+                })
+            else:
+                # 返回体
+                return jsonify({
+                    #返回状态码
+                    "code": 403,
+                    #返回信息描述
+                    "message": "你没有权限",
+                    #返回值
+                    "data": {}
+                })
     except:
         # 返回体
         return jsonify({

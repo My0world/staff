@@ -36,16 +36,16 @@ export default [
 
             //通知管理
             {
-                name: 'release',//名字
-                path: '/release',//路径
-                component: () => import('../pages/Notifications/Release.vue'),//组件名称
+                name: 'noticeRelease',//名字
+                path: '/noticeRelease',//路径
+                component: () => import('../pages/Notifications/NoticeRelease.vue'),//组件名称
                 meta: {
                     title:"发布通知"
                 },//路由元信息
             }, {
-                name: 'informHistory',//名字
-                path: '/informHistory',//路径
-                component: () => import('../pages/Notifications/InformHistory.vue'),//组件名称
+                name: 'noticeHistory',//名字
+                path: '/noticeHistory',//路径
+                component: () => import('../pages/Notifications/NoticeHistory.vue'),//组件名称
                 meta: {
                     title:"历史记录"
                 },//路由元信息
@@ -72,24 +72,16 @@ export default [
 
             //用户管理
             {
-                name: 'userMsg',//名字
-                path: '/userMsg',//路径
-                component: () => import('../pages/User/UserMsg.vue'),//组件名称
+                name: 'user',//名字
+                path: '/user',//路径
+                component: () => import('../pages/User/User.vue'),//组件名称
                 meta: {
-                    title:"用户信息"
-                },//路由元信息
-            }, 
-            {
-                name: 'authority',//名字
-                path: '/authority',//路径
-                component: () => import('../pages/User/Authority.vue'),//组件名称
-                meta: {
-                    title:"权限管理"
+                    title:"用户管理"
                 },//路由元信息
             }, 
             
 
-            //操作内容审核
+            //操作请求审核
             {
                 name: 'operatingRequestAudit',//名字
                 path: '/operatingRequestAudit',//路径
