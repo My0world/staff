@@ -1,12 +1,13 @@
 from flask import Blueprint
 from extension import db
-from models import Admin_user
+from models import Admin_user,Admin_op_record
 from flask import jsonify
 from flask import request
 from sqlalchemy import and_
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from setting import redis_client,scheduler,app
 import time
+from until import getDate
 
 admin_user = Blueprint('admin_user',__name__)
 
@@ -238,6 +239,16 @@ def queryAll():
                     'data':dataList
                 }
             }) 
+        else:
+            # 返回体
+            return jsonify({
+                #返回状态码
+                "code": 403,
+                #返回信息描述
+                "message": "你没有权限",
+                #返回值
+                "data": {}
+            })
     except:
         # 返回体
         return jsonify({
@@ -258,10 +269,10 @@ def queryAll():
     # 员工ID
     staffId,
     # 密码
-    requirePassword
+    requireUserPassword
 }
 """
-@admin_user.route('/admin_user/showPassWord',methods=['GET'])
+@admin_user.route('/admin_user/showPassWord',methods=['POST'])
 @jwt_required()
 def showPassWord():
     try:
@@ -284,9 +295,9 @@ def showPassWord():
             })
         # 获取post数据
         staffId = request.json.get('staffId')
-        requirePassword = request.json.get('requirePassword')
+        requireUserPassword = request.json.get('requireUserPassword')
         # 查找是否有该用户
-        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requirePassword)).first(),
+        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requireUserPassword)).first(),
         # 密码错误
         if adminUser[0] == None:
             # 用户不存在
@@ -300,18 +311,26 @@ def showPassWord():
             })
         else:
             # 查找权限
-            showUserPassWord = adminUser.schema()["authority"].find("showUserPassWord")
+            showUserPassWord = adminUser[0].schema()["authority"].find("showUserPassWord")
             if showUserPassWord != -1:
-                queryData = Admin_user.query.filter(Admin_user.staffId == staffId)
+                # 查找密码
+                queryData = Admin_user.query.filter(Admin_user.staffId == staffId).first()
+                # 记下操作记录
+                record = f'<div class="shortMsg">{userid}查看了{staffId}的密码</div>'
+                # 向操作记录表添加信息
+                msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
+                db.session.add_all([msg])
+                db.session.commit()
                 # 返回体
                 return jsonify({           
                     #返回状态码
                     "code": 200,
                     #返回信息描述
-                    "message": "登录成功",
+                    "message": "获取成功",
                     #返回值
                     "data": {
-                        "password":queryData[0].schema()["password"]
+                        "staffId":queryData.schema()["staffId"],
+                        "password":queryData.schema()["password"]
                     }
                 })
             else:

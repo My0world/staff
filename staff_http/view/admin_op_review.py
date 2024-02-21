@@ -156,7 +156,7 @@ def checkReject():
             # 其他用户的操作审核通过
             Admin_op_review.query.filter(Admin_op_review.id == id).update({'status': "审核驳回"})
             queryData = Admin_op_review.query.filter(Admin_op_review.id == id)
-            print(queryData[0].schema()["staffId"])
+            # 记下操作记录
             record = f'<div class="shortMsg">{queryData[0].schema()["staffId"]}用户的修改信息请求已被{userid}用户驳回</div>'
             # 向操作记录表添加信息
             msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
