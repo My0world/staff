@@ -799,7 +799,6 @@ def resignStaff():
             # 删除员工表
             Staff.query.filter(Staff.staffId == staffId).delete()
             # 如果用户表存在就删除用户表
-            print(Admin_user.query.filter(Admin_user.staffId == staffId).first())
             if Admin_user.query.filter(Admin_user.staffId == staffId).first() != None:
                 Admin_user.query.filter(Staff.staffId == staffId).delete()
             db.session.add_all([resign,msg])

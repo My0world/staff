@@ -1,8 +1,14 @@
 from flask import Blueprint
 from extension import db
-from models import Admin_authority
 from flask import jsonify
-
+from flask import Blueprint
+from extension import db
+from models import Admin_user,Admin_authority
+from flask import jsonify
+from flask import request
+from sqlalchemy import and_
+from setting import redis_client
+from flask_jwt_extended import  get_jwt_identity, jwt_required
 admin_authority = Blueprint('admin_authority',__name__)
 
 # 重置数据
@@ -50,6 +56,80 @@ def resetData():
             #返回值
             "data": "ok"
         })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
+    
+
+
+# 查看权限表
+# GET
+@admin_authority.route('/admin_authority/allData',methods=['GET'])
+@jwt_required()
+def allData():
+    dataList = []
+    try:
+        # 身份验证
+        userid = get_jwt_identity()
+        # 获取header的token
+        headerToken = request.headers['Authorization'].split('Bearer ')[1]
+        # 获取redis的token
+        token = redis_client.get(userid)
+        # 判断token是否存在并且和头部的token是否一致
+        if not token or token.decode() != headerToken:
+            # 返回体
+            return jsonify({
+            #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "身份已过期，请重新登录",
+                #返回值
+                "data": {}
+            })
+        # 查找权限
+        userData = Admin_user.query.filter(Admin_user.staffId == userid).first()
+        allotAuthority = userData.schema()["authority"].find("allotAuthority")
+        if allotAuthority != -1:
+            # 查询用户表所有数据
+            queryData = Admin_authority.query.filter_by()
+            # 添加到dataList
+            for item in queryData:
+                dataList.append({
+                    "id":item.schema()["id"],
+                    "one_level_name":item.schema()["one_level_name"],
+                    "two_level_name":item.schema()["two_level_name"],
+                    "three_level_name":item.schema()["three_level_name"],
+                    "right_name":item.schema()["right_name"],
+                    "description":item.schema()["description"],
+                })
+            # 返回体
+            return jsonify({
+            #返回状态码
+                "code": 200,
+                #返回信息描述
+                "message": "成功",
+                #返回值
+                "data": {
+                    'data':dataList
+                }
+            }) 
+        else:
+            # 返回体
+            return jsonify({
+                #返回状态码
+                "code": 403,
+                #返回信息描述
+                "message": "你没有权限",
+                #返回值
+                "data": {}
+            })
     except:
         # 返回体
         return jsonify({
