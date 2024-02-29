@@ -353,7 +353,7 @@ def showPassWord():
             #返回值
             "data": {}
         })
-    
+
 
 
 # 修改某位用户的密码
@@ -365,7 +365,7 @@ def showPassWord():
     staffId,
     # 修改后的密码
     password
-    # 想要查看密码的人的密码
+    # 想要修改密码的人的密码
     requireUserPassword
 }
 """
@@ -409,12 +409,12 @@ def updatePassWord():
             })
         else:
             # 查找权限
-            showUserPassWord = adminUser[0].schema()["authority"].find("showUserPassWord")
-            if showUserPassWord != -1:
-                # 修改密码
-                Admin_user.query.filter(Admin_user.staffId == staffId).update({'password': password})
+            updateUserPassWord = adminUser[0].schema()["authority"].find("updateUserPassWord")
+            if updateUserPassWord != -1:
                 # 记下操作记录
                 record = f'<div class="shortMsg">{userid}修改了{staffId}的密码</div>'
+                # 修改密码
+                Admin_user.query.filter(Admin_user.staffId == staffId).update({'password': password})
                 # 向操作记录表添加信息
                 msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
                 db.session.add_all([msg])
@@ -448,3 +448,98 @@ def updatePassWord():
             #返回值
             "data": {}
         })
+    
+
+
+# 删除某位用户
+# POST
+# 接收的Post格式
+"""
+{
+    # 员工ID
+    staffId,
+    # 想要删除用户的人的密码
+    requireUserPassword
+}
+"""
+@admin_user.route('/admin_user/deleteUser',methods=['POST'])
+@jwt_required()
+def deleteUser():
+    try:
+        # 身份验证
+        userid = get_jwt_identity()
+        # 获取header的token
+        headerToken = request.headers['Authorization'].split('Bearer ')[1]
+        # 获取redis的token
+        token = redis_client.get(userid)
+        # 判断token是否存在并且和头部的token是否一致
+        if not token or token.decode() != headerToken:
+            # 返回体
+            return jsonify({
+            #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "身份已过期，请重新登录",
+                #返回值
+                "data": {}
+            })
+        # 获取post数据
+        staffId = request.json.get('staffId')
+        requireUserPassword = request.json.get('requireUserPassword')
+        # 查找是否有该用户
+        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requireUserPassword)).first(),
+        # 密码错误
+        if adminUser[0] == None:
+            # 用户不存在
+            return jsonify({           
+                #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "密码错误",
+                #返回值
+                "data": {}
+            })
+        else:
+            # 查找权限
+            deleteUser = adminUser[0].schema()["authority"].find("deleteUser")
+            if deleteUser != -1:
+                # 记下操作记录
+                record = f'<div class="shortMsg">{userid}删除了{staffId}用户</div>'
+                # 删除用户
+                Admin_user.query.filter(Admin_user.staffId == staffId).delete()
+                # 向操作记录表添加信息
+                msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
+                db.session.add_all([msg])
+                db.session.commit()
+                # 返回体
+                return jsonify({           
+                    #返回状态码
+                    "code": 200,
+                    #返回信息描述
+                    "message": "删除成功",
+                    #返回值
+                    "data": {}
+                })
+            else:
+                # 返回体
+                return jsonify({
+                    #返回状态码
+                    "code": 403,
+                    #返回信息描述
+                    "message": "你没有权限",
+                    #返回值
+                    "data": {}
+                })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
+    
+
+  

@@ -7,7 +7,7 @@ from until import getDate
 
 feedback = Blueprint('feedback',__name__)
 
-# 接收反馈内容
+# 发送反馈内容
 # 接收的Post格式
 # {
 #     # 发送方员工ID

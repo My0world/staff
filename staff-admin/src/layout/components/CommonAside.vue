@@ -71,7 +71,7 @@
             <!-- 用户管理 -->
             <el-menu-item @click="clickMenu('/user', '用户管理')" index="/user" v-if="authorityList.indexOf('user') != -1">
                 <el-icon>
-                    <component :is="icons[5]"></component>
+                    <component :is="icons[4]"></component>
                 </el-icon>
                 <template #title>
                     <span class="fontSize17">用户管理</span>

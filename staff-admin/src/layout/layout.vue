@@ -86,7 +86,7 @@ let themeType = computed(() => {
         z-index: -1;
         width: 100%;
         height: 100vh;
-        background: url("../assets/bg/sun.png");
+        background: url("../assets/bg/sun.webp");
         background-size: 100%;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -100,7 +100,7 @@ let themeType = computed(() => {
         z-index: -1;
         width: 100%;
         height: 100vh;
-        background: url("../assets/bg/moon.png");
+        background: url("../assets/bg/moon.webp");
         background-size: 100%;
 
         background-repeat: no-repeat;
