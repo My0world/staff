@@ -26,7 +26,7 @@ def userLogin(data):
 
 # 用户退出登录
 @socketio.on('userLogout')
-def userLogout(data):
+def userLogout():
     emit('userLogoutEvent', {'code':'userUpdate','msg': '有用户退出登录了'},broadcast=True)
     print("用户退出登录")
 

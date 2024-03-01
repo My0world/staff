@@ -56,13 +56,13 @@ def queryAll():
             }) 
         # 查找权限
         userData = Admin_user.query.filter(Admin_user.staffId == userid).first()
-        allOpReviewMsg = userData.schema()["authority"].find("allOpReviewMsg")
-        if allOpReviewMsg != -1:
+        operatingRequestAudit = userData.schema()["authority"].find("operatingRequestAudit")
+        if operatingRequestAudit != -1:
             # 查询操作内容审核表所有数据
-            if status == "全部":
+            if status == "全部" or status == "" or status == None:
                 queryData = Admin_op_review.query.filter_by()
             else:
-                queryData = Admin_op_review.query.filter(status == status)
+                queryData = Admin_op_review.query.filter(Admin_op_review.status == status)
             # 分页
             pn = queryData.paginate(page=int(pageNo), per_page=7, error_out=False)
             # 添加到dataList
@@ -83,7 +83,7 @@ def queryAll():
                 "message": "成功",
                 #返回值
                 "data": {
-                    "count":len(dataList),
+                    "total":pn.total,
                     'data':dataList
                 }
         })  

@@ -59,7 +59,7 @@ export const reqUpdateStaff = (params) => request({
 
 //设置为离职员工
 export const reqResignStaff = (params) => request({
-    url: "/staff/resignStaff",
+    url: "/resign/resignStaff",
     method: 'post',
     data: params
 })

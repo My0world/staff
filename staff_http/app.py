@@ -13,6 +13,8 @@ from view.resetAllData import resetAllData
 from view.admin_authority import admin_authority
 from view.admin_op_review import admin_op_review
 from view.admin_op_record import admin_op_record
+from view.resign import resign
+
 
 # token
 from flask_jwt_extended import JWTManager
@@ -30,6 +32,7 @@ app.register_blueprint(resetAllData)
 app.register_blueprint(admin_authority)
 app.register_blueprint(admin_op_review)
 app.register_blueprint(admin_op_record)
+app.register_blueprint(resign)
 
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@ from flask import request
 from flask_jwt_extended import jwt_required,get_jwt_identity
 from setting import redis_client
 
-admin_op_review = Blueprint('admin_op_review',__name__)
+admin_op_record = Blueprint('admin_op_record',__name__)
 
 # 筛选出所有数据
 # GET
@@ -20,7 +20,7 @@ admin_op_review = Blueprint('admin_op_review',__name__)
     # 页码
     pageNo
 """
-@admin_op_review.route('/admin_op_record/filterAll',methods=['GET'])
+@admin_op_record.route('/admin_op_record/filterAll',methods=['GET'])
 @jwt_required()
 def queryAll():
     dataList = []
@@ -62,13 +62,13 @@ def queryAll():
             }) 
         # 查找权限
         userData = Admin_user.query.filter(Admin_user.staffId == userid).first()
-        admin_op_record = userData.schema()["authority"].find("admin_op_record")
-        if admin_op_record != -1:
+        operatingData = userData.schema()["authority"].find("operatingData")
+        if operatingData != -1:
             # 查询出所有数据
             queryData = Admin_op_record.query.order_by(Admin_op_record.datetime)
             # 时间区域查找
             if (startTime != None) and (endTime != None and endTime != ""):
-                queryData = queryData.filter(Admin_op_record.datetime.between(endTime, endTime))
+                queryData = queryData.filter(Admin_op_record.datetime.between(startTime, endTime))
             # 关键字查找
             if searchText != None and searchText != "":
                 queryData = queryData.filter(Admin_op_record.content.like("%" + searchText + "%"))
@@ -90,7 +90,7 @@ def queryAll():
                 "message": "成功",
                 #返回值
                 "data": {
-                    "count":len(dataList),
+                    "total":pn.total,
                     'data':dataList
                 }
         })  

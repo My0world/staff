@@ -65,7 +65,7 @@ def resetData():
 """
 @admin_user.route('/admin_user/login',methods=['POST'])
 def login():
-    try:
+    # try:
         # 获取post数据
         staffId = request.json.get('staffId')
         password = request.json.get('password')
@@ -115,16 +115,16 @@ def login():
                     "authority":adminUser[0].schema()["authority"],
                 }
             })
-    except:
-        # 返回体
-        return jsonify({
-            #返回状态码
-            "code": 500,
-            #返回信息描述
-            "message": "内部服务器错误",
-            #返回值
-            "data": {}
-        })
+    # except:
+    #     # 返回体
+    #     return jsonify({
+    #         #返回状态码
+    #         "code": 500,
+    #         #返回信息描述
+    #         "message": "内部服务器错误",
+    #         #返回值
+    #         "data": {}
+    #     })
 
 
 # 退出登录
@@ -184,6 +184,10 @@ def logout():
 #查询所有用户
 # GET
 """
+    # 部门
+    departId,
+    # 状态
+    status,
     # 页码
     pageNo
 """
@@ -194,6 +198,10 @@ def queryAll():
     try:
         # 页码
         pageNo = request.args.get("pageNo")
+        # 页码
+        status = request.args.get("status")
+        # 页码
+        departId = request.args.get("departId")
         # 身份验证
         userid = get_jwt_identity()
         # 获取header的token
@@ -213,10 +221,16 @@ def queryAll():
             })
         # 查找权限
         userData = Admin_user.query.filter(Admin_user.staffId == userid).first()
-        admin_user = userData.schema()["authority"].find("admin_user")
-        if admin_user != -1:
+        user = userData.schema()["authority"].find("user")
+        if user != -1:
             # 查询用户表所有数据
             queryData = Admin_user.query.filter_by()
+            # 时间区域查找
+            if status != None and status != "":
+                queryData = Admin_user.query.filter(Admin_user.status == status)
+            # 关键字查找
+            if departId != None and departId != "":
+                queryData = Admin_user.query.filter(Admin_user.departId == departId)
              # 分页
             pn = queryData.paginate(page=int(pageNo), per_page=15, error_out=False)
             # 添加到dataList
@@ -224,6 +238,7 @@ def queryAll():
                 dataList.append({
                     "staffId":item.schema()["staffId"],
                     "staffName":item.schema()["staffName"],
+                    "departId":item.schema()["departId"],
                     "password":"XXXXXXXXX",
                     "status":item.schema()["status"],
                 })
@@ -235,7 +250,7 @@ def queryAll():
                 "message": "成功",
                 #返回值
                 "data": {
-                    "count":len(dataList),
+                    "total":pn.total,
                     'data':dataList
                 }
             }) 

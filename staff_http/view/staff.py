@@ -70,6 +70,8 @@ def resetData():
     (startSalary-endSalary),
     # 加入公司的时间(区间)
     (startEntryTime-endEntryTime),
+    # 离职公司的时间(区间)
+    (startEntryTime-endEntryTime),
     # 搜索关键字
     searchValue:"",
     # 页码
@@ -276,7 +278,7 @@ def filterAll():
 @staff.route('/staff/addStaff',methods=['POST'])
 @jwt_required()
 def addStaff():
-    try:
+    # try:
         userid = get_jwt_identity()
         # 是否登录了
         if userid == None:
@@ -358,7 +360,7 @@ def addStaff():
         </div>
         """
         # 获取当前部门人数并且按照部门人数、部门编号、进入公司年份生成员工ID
-        staffCount = Staff.query.filter(Staff.departId == departId).count()
+        staffCount = Staff.query.filter(Staff.departId == departId).count() + Resign.query.filter(Resign.departId == departId).count() + 1
         if staffCount < 10:
             staffCount = "0" + str(staffCount)
         staffId = departId + entryTime[2:4] + str(staffCount)
@@ -436,16 +438,16 @@ def addStaff():
                 #返回值
                 "data": {}
             })
-    except:
-        # 返回体
-        return jsonify({
-            #返回状态码
-            "code": 500,
-            #返回信息描述
-            "message": "内部服务器错误",
-            #返回值
-            "data": {}
-        })
+    # except:
+    #     # 返回体
+    #     return jsonify({
+    #         #返回状态码
+    #         "code": 500,
+    #         #返回信息描述
+    #         "message": "内部服务器错误",
+    #         #返回值
+    #         "data": {}
+    #     })
     
 
 # 修改员工数据
@@ -720,119 +722,6 @@ def updateStaff():
             #返回值
             "data": {}
         })
-    
-# 添加离职员工数据
-# POST
-# 接收的Post格式
-"""
-{
-    # 部门
-    departId,
-    # 员工姓名
-    staffName,
-    # 员工ID
-    staffId,
-    # 职位
-    job,
-    #手机号码
-    phoneNum
-    # 性别
-    sex,
-    # 年龄(区间)
-    age,
-    # 薪资(区间)
-    salary,
-    # 加入公司的时间(区间)
-    entryTime
-}
-"""
-@staff.route('/staff/resignStaff',methods=['POST'])
-@jwt_required()
-def resignStaff():
-    try:
-        userid = get_jwt_identity()
-        # 是否登录了
-        if userid == None:
-            return jsonify({           
-                #返回状态码
-                "code": 401,
-                #返回信息描述
-                "message": "请登录",
-                #返回值
-                "data": {}
-            })
-                # 获取header的token
-        headerToken = request.headers['Authorization'].split('Bearer ')[1]
-        # 获取redis的token
-        token = redis_client.get(userid)
-        # 判断token是否存在并且和头部的token是否一致
-        if not token or token.decode() != headerToken:
-            # 返回体
-            return jsonify({
-            #返回状态码
-                "code": 401,
-                #返回信息描述
-                "message": "身份已过期，请重新登录",
-                #返回值
-                "data": {}
-            }) 
-        # 查找用户
-        user = Admin_user.query.filter(Admin_user.staffId == userid).first(),
-        # 查找权限
-        settingDimission = user[0].schema()["authority"].find("settingDimission")
-        staffId = request.json.get('staffId')
-        departId = request.json.get('departId')
-        staffName = request.json.get('staffName')
-        job = request.json.get('job')
-        phoneNum = request.json.get('phoneNum')
-        sex = request.json.get('sex')
-        age = request.json.get('age')
-        salary = request.json.get('salary')
-        entryTime = request.json.get('entryTime')
-        # 对权限进行判断
-        if settingDimission != -1:    
-            record = f'<div class="shortMsg">{userid}将{staffName}设置为离职</div>'
-            # 向离职员工表添加信息
-            resign = Resign(departId = departId, phoneNum = phoneNum, staffName = staffName, sex = sex, age = age, salary = salary ,job = job ,entryTime = entryTime)
-            # 向操作记录表添加信息
-            msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
-            # 删除员工表
-            Staff.query.filter(Staff.staffId == staffId).delete()
-            # 如果用户表存在就删除用户表
-            if Admin_user.query.filter(Admin_user.staffId == staffId).first() != None:
-                Admin_user.query.filter(Staff.staffId == staffId).delete()
-            db.session.add_all([resign,msg])
-            db.session.commit()
-            # 返回体
-            return jsonify({
-                #返回状态码
-                "code": 200,
-                #返回信息描述
-                "message": "设置成功",
-                #返回值
-                "data": {}
-            })
-        else:
-            # 返回体
-            return jsonify({
-                #返回状态码
-                "code": 401,
-                #返回信息描述
-                "message": "你没有权限",
-                #返回值
-                "data": {}
-            })
-    except:
-        # 返回体
-        return jsonify({
-            #返回状态码
-            "code": 500,
-            #返回信息描述
-            "message": "内部服务器错误",
-            #返回值
-            "data": {}
-        })
-    
 
 
 # 所有员工职位类型

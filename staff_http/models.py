@@ -298,8 +298,8 @@ class Receivernotice(db.Model):
 # 离职员工表
 class Resign(db.Model):
     __tablename__ = "resign"
-    # 离职员工Id
-    id = db.Column(db.Integer(),primary_key = True,autoincrement = True)
+    # 员工ID
+    staffId = db.Column(db.String(7),primary_key = True,autoincrement = False)
     # 部门ID
     departId = db.Column(db.String(2),nullable = False)
     # 电话号码
@@ -316,11 +316,13 @@ class Resign(db.Model):
     job = db.Column(db.String(255),nullable = False)
     # 入职时间
     entryTime = db.Column(db.Date(),nullable = False)
+    # 离职时间
+    resignTime = db.Column(db.Date(),nullable = False)
 
     # 模型的资源序列化函数（方法）
     def schema(self):
         return {
-            'id':self.id,
+            "staffId":self.staffId,
             'departId': self.departId,
             'phoneNum': self.phoneNum,
             'staffName': self.staffName,
@@ -328,7 +330,8 @@ class Resign(db.Model):
             'age':self.age,
             'salary':self.salary,
             'job': self.job,
-            'entryTime': self.entryTime
+            'entryTime': self.entryTime,
+            'resignTime': self.resignTime,
         }
 
     #清空数据
