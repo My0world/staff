@@ -1,6 +1,6 @@
 from flask import Blueprint
 from extension import db
-from models import Admin_user,Admin_op_record
+from models import Admin_user,Admin_op_record,Staff
 from flask import jsonify
 from flask import request
 from sqlalchemy import and_
@@ -557,4 +557,110 @@ def deleteUser():
         })
     
 
-  
+# 添加用户某位用户
+# POST
+# 接收的Post格式
+"""
+{
+    # 员工ID
+    staffId,
+    # 员工密码
+    password,
+    # 执行操作的人的密码
+    requireUserPassword
+}
+"""
+@admin_user.route('/admin_user/addAdmin',methods=['POST'])
+@jwt_required()
+def addAdmin():
+    try:
+        # 身份验证
+        userid = get_jwt_identity()
+        # 获取header的token
+        headerToken = request.headers['Authorization'].split('Bearer ')[1]
+        # 获取redis的token
+        token = redis_client.get(userid)
+        # 判断token是否存在并且和头部的token是否一致
+        if not token or token.decode() != headerToken:
+            # 返回体
+            return jsonify({
+            #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "身份已过期，请重新登录",
+                #返回值
+                "data": {}
+            })
+        # 获取post数据
+        staffId = request.json.get('staffId')
+        password = request.json.get('password')
+        requireUserPassword = request.json.get('requireUserPassword')
+        # 查找是否有该用户
+        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requireUserPassword)).first(),
+        # 密码错误
+        if adminUser[0] == None:
+            # 用户不存在
+            return jsonify({           
+                #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "密码错误",
+                #返回值
+                "data": {}
+            })
+        else:
+            # 查找权限
+            addAdminUser = adminUser[0].schema()["authority"].find("addAdminUser")
+            if addAdminUser != -1:
+                # 记下操作记录
+                record = f'<div class="shortMsg">{userid}添加了{staffId}用户</div>'
+                 # 查找是否有该用户
+                staff = Staff.query.filter(Staff.staffId == staffId).first(),
+                # 密码错误
+                if staff[0] == None:
+                    # 用户不存在
+                    return jsonify({           
+                        #返回状态码
+                        "code": 401,
+                        #返回信息描述
+                        "message": "请添加本公司的员工",
+                        #返回值
+                        "data": {}
+                    })
+                # 添加用户
+                user = Admin_user(staffId = staff[0].schema()["staffId"],departId = staff[0].schema()["departId"], staffName = staff[0].schema()["staffName"],password = password,status = "下线", authority = "home")
+                # 向操作记录表添加信息
+                msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
+                db.session.add_all([msg,user])
+                db.session.commit()
+                # 返回体
+                return jsonify({           
+                    #返回状态码
+                    "code": 200,
+                    #返回信息描述
+                    "message": "删除成功",
+                    #返回值
+                    "data": {}
+                })
+            else:
+                # 返回体
+                return jsonify({
+                    #返回状态码
+                    "code": 403,
+                    #返回信息描述
+                    "message": "你没有权限",
+                    #返回值
+                    "data": {}
+                })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
+    
+    
