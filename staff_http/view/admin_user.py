@@ -410,7 +410,7 @@ def updatePassWord():
         requireUserPassword = request.json.get('requireUserPassword')
         password = request.json.get('password')
         # 查找是否有该用户
-        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requireUserPassword)).first(),
+        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requireUserPassword)).first()
         # 密码错误
         if adminUser[0] == None:
             # 用户不存在
@@ -480,7 +480,7 @@ def updatePassWord():
 @admin_user.route('/admin_user/deleteUser',methods=['POST'])
 @jwt_required()
 def deleteUser():
-    try:
+    # try:
         # 身份验证
         userid = get_jwt_identity()
         # 获取header的token
@@ -518,6 +518,19 @@ def deleteUser():
             # 查找权限
             deleteUser = adminUser[0].schema()["authority"].find("deleteUser")
             if deleteUser != -1:
+                beDelete = Admin_user.query.filter(Admin_user.staffId == staffId).first()
+                beDeleteUserAuthority = beDelete.schema()["authority"].find("allotAuthority")
+                if  beDeleteUserAuthority != -1:
+                    islast = Admin_user.query.filter(Admin_user.authority.like("%allotAuthority%")).all()
+                    if len(islast) <= 1 :
+                        return jsonify({           
+                            #返回状态码
+                            "code": 401,
+                            #返回信息描述
+                            "message": "无法删除最后一个拥有分配权限的人",
+                            #返回值
+                            "data": {}
+                        })
                 # 记下操作记录
                 record = f'<div class="shortMsg">{userid}删除了{staffId}用户</div>'
                 # 删除用户
@@ -545,17 +558,18 @@ def deleteUser():
                     #返回值
                     "data": {}
                 })
-    except:
-        # 返回体
-        return jsonify({
-            #返回状态码
-            "code": 500,
-            #返回信息描述
-            "message": "内部服务器错误",
-            #返回值
-            "data": {}
-        })
+    # except:
+    #     # 返回体
+    #     return jsonify({
+    #         #返回状态码
+    #         "code": 500,
+    #         #返回信息描述
+    #         "message": "内部服务器错误",
+    #         #返回值
+    #         "data": {}
+    #     })
     
+
 
 # 添加用户某位用户
 # POST
@@ -638,7 +652,7 @@ def addAdmin():
                     #返回状态码
                     "code": 200,
                     #返回信息描述
-                    "message": "删除成功",
+                    "message": "添加成功",
                     #返回值
                     "data": {}
                 })
