@@ -1,6 +1,6 @@
 from flask import Blueprint
 from extension import db
-from models import Admin_user,Admin_op_record,Staff
+from models import Admin_user,Admin_op_record,Staff,Admin_authority
 from flask import jsonify
 from flask import request
 from sqlalchemy import and_
@@ -410,7 +410,7 @@ def updatePassWord():
         requireUserPassword = request.json.get('requireUserPassword')
         password = request.json.get('password')
         # 查找是否有该用户
-        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requireUserPassword)).first()
+        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requireUserPassword)).first(),
         # 密码错误
         if adminUser[0] == None:
             # 用户不存在
@@ -480,7 +480,7 @@ def updatePassWord():
 @admin_user.route('/admin_user/deleteUser',methods=['POST'])
 @jwt_required()
 def deleteUser():
-    # try:
+    try:
         # 身份验证
         userid = get_jwt_identity()
         # 获取header的token
@@ -520,6 +520,7 @@ def deleteUser():
             if deleteUser != -1:
                 beDelete = Admin_user.query.filter(Admin_user.staffId == staffId).first()
                 beDeleteUserAuthority = beDelete.schema()["authority"].find("allotAuthority")
+                # 无法删除最后一个拥有分配权限的人
                 if  beDeleteUserAuthority != -1:
                     islast = Admin_user.query.filter(Admin_user.authority.like("%allotAuthority%")).all()
                     if len(islast) <= 1 :
@@ -558,16 +559,16 @@ def deleteUser():
                     #返回值
                     "data": {}
                 })
-    # except:
-    #     # 返回体
-    #     return jsonify({
-    #         #返回状态码
-    #         "code": 500,
-    #         #返回信息描述
-    #         "message": "内部服务器错误",
-    #         #返回值
-    #         "data": {}
-    #     })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
     
 
 
@@ -677,4 +678,141 @@ def addAdmin():
             "data": {}
         })
     
+
+
+# 分配权限
+# POST
+# 接收的Post格式
+"""
+{
+    # 员工ID
+    staffId,
+    # 权限表
+    authorityString,
+    # 想要分配权限用户的人的密码
+    requireUserPassword
+}
+"""
+@admin_user.route('/admin_user/allotAuth',methods=['POST'])
+@jwt_required()
+def allotAuth():
+    try:
+        # 身份验证
+        userid = get_jwt_identity()
+        # 获取header的token
+        headerToken = request.headers['Authorization'].split('Bearer ')[1]
+        # 获取redis的token
+        token = redis_client.get(userid)
+        # 判断token是否存在并且和头部的token是否一致
+        if not token or token.decode() != headerToken:
+            # 返回体
+            return jsonify({
+            #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "身份已过期，请重新登录",
+                #返回值
+                "data": {}
+            })
+        # 获取post数据
+        staffId = request.json.get('staffId')
+        authorityString = request.json.get('authorityString')
+        requireUserPassword = request.json.get('requireUserPassword')
+        # 查找是否有该用户
+        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requireUserPassword)).first(),
+        # 密码错误
+        if adminUser == None:
+            # 用户不存在
+            return jsonify({           
+                #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "密码错误",
+                #返回值
+                "data": {}
+            })
+        else:
+            # 查找权限
+            allotAuthority = adminUser[0].schema()["authority"].find("allotAuthority")
+            if allotAuthority != -1:
+                # 查找分配的权限中是否拥有分配权限的能力
+                isHasAuth = authorityString.find("allotAuthority")
+                # 如果没有分配给用户分配权限的能力
+                if isHasAuth == -1:
+                    # 查找是否当前有分配权限的人
+                    islast = Admin_user.query.filter(Admin_user.authority.like("%allotAuthority%")).all()
+                    if len(islast) <= 1 :
+                        return jsonify({           
+                            #返回状态码
+                            "code": 401,
+                            #返回信息描述
+                            "message": "必须要有一个拥有分配权限的人",
+                            #返回值
+                            "data": {}
+                        })
+                # 遍历分配过来的权限表
+                string = ""
+                authorityList = authorityString.split(",")
+                for i in authorityList:
+                    if i != '':
+                        description = Admin_authority.query.filter(Admin_authority.right_name == i).first()
+                        string += f"<span>{description.schema()["description"]}</span>"
+                # 记下操作记录
+                record = f"""
+                    <div class="authority">
+                        <p>{userid}分配权限给了{staffId}</p>
+                        
+                        <div>
+                """ + string + "</div></div>"
+                # 修改密码
+                Admin_user.query.filter(Admin_user.staffId == staffId).update({'authority': authorityString})
+                # 向操作记录表添加信息
+                msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
+                db.session.add_all([msg])
+                db.session.commit()
+                # 返回体
+                return jsonify({           
+                    #返回状态码
+                    "code": 200,
+                    #返回信息描述
+                    "message": "分配成功",
+                    #返回值
+                    "data": {}
+                })
+            else:
+                # 返回体
+                return jsonify({
+                    #返回状态码
+                    "code": 403,
+                    #返回信息描述
+                    "message": "你没有权限",
+                    #返回值
+                    "data": {}
+                })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

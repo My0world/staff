@@ -278,7 +278,7 @@ def filterAll():
 @staff.route('/staff/addStaff',methods=['POST'])
 @jwt_required()
 def addStaff():
-    # try:
+    try:
         userid = get_jwt_identity()
         # 是否登录了
         if userid == None:
@@ -370,11 +370,12 @@ def addStaff():
             if requestUserid == None:
                 # 记录操作内容
                 record = f"""
+                <div class="add">
                 <div>
                     <p>添加信息</p>
                     <p>{userid}用户添加了一位员工</p>
                 </div>
-                """ + addRecord
+                """ + addRecord+"</div>"
             else:
                 # 其他用户的操作审核通过
                 Admin_op_review.query.filter(Admin_op_review.id == opid).update({'status': "审核通过"})
@@ -408,11 +409,12 @@ def addStaff():
             })
             # 记录操作内容
             record = f"""
+            <div class="add">
             <div>
-                <p>添加信息请求</p>
-                <p>{userid}用户请求添加一位员工</p>
+                <p>添加信息</p>
+                <p>{userid}用户需要添加一位员工</p>
             </div>
-            """ + addRecord
+            """ + addRecord+"</div>"
             # 向操作内容审核表添加信息
             staff = Admin_op_review(staffId = userid, data = data, description = "addRequest", datetime = getDate(), status = "待审核")
             # 向操作记录表添加信息
@@ -438,16 +440,16 @@ def addStaff():
                 #返回值
                 "data": {}
             })
-    # except:
-    #     # 返回体
-    #     return jsonify({
-    #         #返回状态码
-    #         "code": 500,
-    #         #返回信息描述
-    #         "message": "内部服务器错误",
-    #         #返回值
-    #         "data": {}
-    #     })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
     
 
 # 修改员工数据
@@ -618,12 +620,14 @@ def updateStaff():
             # 记录操作内容
             if requestUserid == None:
                 #管理员自己的操作
+                # 记录操作内容
                 record = f"""
-                <div>
-                    <p>修改信息</p>
-                    <p>{userid}用户将员工号为{staffId}员工的信息修改</p>
-                </div>
-                """+ oldDataRecord + newDataRecord
+                <div class='update'>
+                    <div>
+                        <p>修改信息请求</p>
+                        <p>{userid}用户修改员工号为{staffId}员工的信息</p>
+                    </div>
+                """+ oldDataRecord + newDataRecord + "</div>"
             else:
                 # 审核修改
                 # 其他用户的操作审核通过
@@ -682,11 +686,12 @@ def updateStaff():
             })
             # 记录操作内容
             record = f"""
-            <div>
-                <p>修改信息请求</p>
-                <p>{userid}用户想要修改员工号为{staffId}员工的信息</p>
-            </div>
-            """+ oldDataRecord + newDataRecord
+            <div class='update'>
+                <div>
+                    <p>修改信息请求</p>
+                    <p>{userid}用户想要修改员工号为{staffId}员工的信息</p>
+                </div>
+            """+ oldDataRecord + newDataRecord + "</div>"
             # 向操作内容审核表添加信息
             opReview = Admin_op_review(staffId = userid, data = data, description = "updateRequest", datetime = getDate(), status = "待审核")
             # 向操作记录表添加信息
@@ -729,7 +734,7 @@ def updateStaff():
 @staff.route('/staff/jobType',methods=['GET'])
 @jwt_required()
 def jobType():
-    dataList = []
+    dataList = ["普通员工","经理","实习生"]
     try:
         userid = get_jwt_identity()
         # 是否登录了
@@ -757,9 +762,6 @@ def jobType():
                 #返回值
                 "data": {}
             }) 
-        data = db.session.query(Staff.job).group_by(Staff.job).all()
-        for item in data:
-            dataList.append(item.job)  # 建议通过label()方法给字段起别名, 以属性方式获取数据
         # 返回体
         return jsonify({
             #返回状态码

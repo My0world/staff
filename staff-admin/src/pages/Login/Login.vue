@@ -31,6 +31,7 @@
             <template v-slot:header>
                 <span :style="{ color: themeType ? '#333' : '#ebeaea' }">反馈</span>
             </template>
+
             <template v-slot:body>
                 <el-form ref="feedbackFormRef" :rules="feedbackFormRules"
                     :class="{ feedback_main_light: themeType, feedback_main_dark: !themeType }" :model="feedbackForm">
@@ -47,6 +48,7 @@
                     </el-form-item>
                 </el-form>
             </template>
+
             <template v-slot:footer>
                 <el-button size="large" @click="hideFeedbackDialog">取消</el-button>
                 <el-button size="large" @click="feedbackSubmit(feedbackFormRef)" type="primary">确认</el-button>
@@ -90,7 +92,7 @@ const {
     sendFeedbackForm,
     // 发送登录信息表单
     sendLoginForm
- } = loginStore
+} = loginStore
 
 //获取全局Element消息提示框
 let $ElMessage = internalInstance.appContext.config.globalProperties.$ElMessage;
@@ -119,17 +121,30 @@ const loginFormRules = reactive({
 //登录表单元素
 let loginFormRef = ref(null)
 
+//等待动画
+let loadingInstance = ref(null)
+
 // 登录提交
 const loginSubmit = debounce(async (el) => {
+
     if (!el) return
     await el.validate(async (valid, fields) => {
         if (valid) {
-            let message = await sendLoginForm(loginForm)
-            $ElMessage({
-                message: message,
-                type: "success"
+            //动画开始
+            loadingInstance.value = ElLoading.service({ fullscreen: true })
+            await sendLoginForm(loginForm).then(resolve => {
+                //动画结束
+                loadingInstance.value.close()
+                $ElMessage({
+                    message: resolve,
+                    type: "success"
+                })
+            }, reject => {
+                //动画结束
+                loadingInstance.value.close()
             })
-            router.push({path:"/"})
+
+            router.push({ path: "/" })
         } else {
             $ElMessage({
                 message: "请输入员工号和密码",
@@ -179,11 +194,20 @@ const feedbackSubmit = debounce(async (el) => {
     if (!el) return
     await el.validate(async (valid, fields) => {
         if (valid) {
-            let message = await sendFeedbackForm(feedbackForm)
-            $ElMessage({
-                message: message,
-                type: "success"
-            })
+            //动画开始
+            loadingInstance.value = ElLoading.service({ fullscreen: true })
+            await sendFeedbackForm(feedbackForm).then((result) => {
+                //动画结束
+                loadingInstance.value.close()
+                $ElMessage({
+                    message: result,
+                    type: "success"
+                })
+            }).catch((err) => {
+                //动画结束
+                loadingInstance.value.close()
+            });
+
         } else {
             $ElMessage({
                 message: "请输入员工号和正确的反馈内容",
@@ -433,4 +457,3 @@ const feedbackSubmit = debounce(async (el) => {
 
 }
 </style>
-

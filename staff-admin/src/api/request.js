@@ -21,10 +21,6 @@ const requests = axios.create({
     //代表请求超时的时间5s
     timeout: 5000
 })
-
-//等待动画
-let loadingInstance = null
-
 //请求拦截器：在发请求之前，请求拦截器可以检测到，可以在请求发出去之前做一些事情
 requests.interceptors.request.use((config) => {
     // 获取login仓库
@@ -37,8 +33,7 @@ requests.interceptors.request.use((config) => {
     if (token.value) {
         config.headers['Authorization'] = "Bearer " + token.value
     }
-    //动画开始
-    loadingInstance = ElLoading.service({ fullscreen: true })
+
     //config：配置对象，对象里面有一个属性很重要，header请求头
     return config
 }, reject => {
@@ -51,9 +46,6 @@ requests.interceptors.request.use((config) => {
 
 //响应拦截器
 requests.interceptors.response.use(config => {
-
-    //动画结束
-    loadingInstance.close()
     const { code, message } = config.data
     if (code == 422) {
         ElMessage.error("身份已过期，请重新登录")
@@ -69,9 +61,6 @@ requests.interceptors.response.use(config => {
         return Promise.reject(message);
     }
 }, reject => {
-    //动画结束
-    loadingInstance.close()
-    console.log(reject);
     if (reject.response) {
         if (reject.response.data.msg === "Missing Authorization Header") {
             ElMessage.error("请重新登录")

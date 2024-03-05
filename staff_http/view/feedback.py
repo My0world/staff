@@ -11,14 +11,17 @@ feedback = Blueprint('feedback',__name__)
 
 # 发送反馈内容
 # 接收的Post格式
-# {
-#     # 发送方员工ID
-#     send_staffId,
-#     # 接受方员工ID
-#     receiver_staffId,
-#     # 反馈内容
-#     content
-# }
+"""
+{
+    # 发送方员工ID
+    send_staffId,
+    # 接受方员工ID
+    receiver_staffId,
+    # 反馈内容
+    content
+}
+"""
+
 @feedback.route('/feedback/feedbackPost',methods=['POST'])
 def feedbackPost():
     try:

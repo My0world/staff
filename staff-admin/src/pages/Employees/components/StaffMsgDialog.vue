@@ -3,13 +3,14 @@
         <template v-slot:header>
             <span :style="{ color: themeType ? '#333' : '#ebeaea' }">{{ title }}</span>
         </template>
+
         <template v-slot:body>
             <el-form ref="FormRef" :rules="FormRules" label-width="37%"
                 :class="{ feedback_main_light: themeType, feedback_main_dark: !themeType }" :model="FormData">
                 <el-row :gutter="20" style="margin-bottom: 15px;">
                     <el-col :span="12">
                         <el-form-item label="部门:" prop="departId">
-                            <el-select v-model="FormData.departId" placeholder="请选择部门" size="large">
+                            <el-select v-model="FormData.departId" placeholder="请选择部门" size="large" :disabled="staffId !== null">
                                 <el-option v-for="i in departmentList" :key="i.departId" :label="i.department_Name"
                                     :value="i.departId" />
                             </el-select>
@@ -20,7 +21,6 @@
                             <div class="input">
                                 <el-input v-model="FormData.staffName" type="text" size="large" placeholder="请输入员工姓名" />
                             </div>
-
                         </el-form-item>
                     </el-col>
 
@@ -40,7 +40,6 @@
                                 <el-input @input="handleInput" v-model="FormData.phoneNum" type="text" size="large"
                                     placeholder="请输入手机号码" />
                             </div>
-
                         </el-form-item>
                     </el-col>
 
@@ -80,6 +79,7 @@
                 </el-row>
             </el-form>
         </template>
+
         <template v-slot:footer>
             <el-button size="large" @click="handleClosed">取消</el-button>
             <el-button size="large" @click="handleSubmit(FormRef)" type="primary">确认</el-button>
@@ -119,6 +119,9 @@ let FormRef = ref(null)
 
 //员工信息对话框
 let formDialog = ref(null)
+
+//等待动画
+let loadingInstance = ref(null)
 
 //数值不能小于0
 const noZore = (rule, value, callback) => {
@@ -259,16 +262,20 @@ const handleSubmit = debounce(async (el) => {
     if (!el) return
     await el.validate(async (valid, fields) => {
         if (valid) {
+            //动画开始
+            loadingInstance.value = ElLoading.service({ fullscreen: true })
             // 是修改还是添加
             if (staffId.value !== null) {
                 let salary = FormData.salary * 1000
                 reqUpdateStaff({ ...FormData, staffId: staffId.value, salary }).then(async reslove => {
                     await filterStaffData(employeesSearchForm.value)
+                    loadingInstance.value.close()
                     $ElMessage({
                         message: "修改成功",
                         type: "success"
                     })
                 }, reject => {
+                    loadingInstance.value.close()
                     $ElMessage({
                         message: "修改失败，请联系管理员",
                         type: "error"
@@ -289,11 +296,13 @@ const handleSubmit = debounce(async (el) => {
                     FormData.age = 0
                     FormData.salary = 0
                     FormData.entryTime = ""
+                    loadingInstance.value.close()
                     $ElMessage({
                         message: "添加成功",
                         type: "success"
                     })
                 }, reject => {
+                    loadingInstance.value.close()
                     $ElMessage({
                         message: "添加失败，请联系管理员",
                         type: "error"
@@ -461,4 +470,3 @@ defineExpose({
     }
 }
 </style>
-

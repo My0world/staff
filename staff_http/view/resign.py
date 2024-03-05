@@ -125,7 +125,7 @@ def resignStaff():
     
 
 
-# 筛选所有员工数据
+# 筛选所有离职员工数据
 # POST
 # 接收的Post格式
 """
@@ -330,3 +330,110 @@ def filterAll():
             "data": {}
         })
     
+
+
+# 添加回员工表
+# GET
+# 接收的Post格式
+"""
+    # 离职员工id
+    resignStaffId
+"""
+@resign.route('/resign/returnStaff',methods=['GET'])
+@jwt_required()
+def returnStaff():
+    try:
+        userid = get_jwt_identity()
+        # 是否登录了
+        if userid == None:
+            return jsonify({           
+                #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "请登录",
+                #返回值
+                "data": {}
+            })
+        # 获取header的token
+        headerToken = request.headers['Authorization'].split('Bearer ')[1]
+        # 获取redis的token
+        token = redis_client.get(userid)
+        # 判断token是否存在并且和头部的token是否一致
+        if not token or token.decode() != headerToken:
+            # 返回体
+            return jsonify({
+            #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "身份已过期，请重新登录",
+                #返回值
+                "data": {}
+            }) 
+        # 查找用户
+        user = Admin_user.query.filter(Admin_user.staffId == userid).first()
+        # 查找权限
+        returnStaffTable = user.schema()["authority"].find("returnStaffTable")
+        # 获取GET数据
+        # 离职员工ID
+        resignStaffId = request.args.get("resignStaffId")
+        # 对权限进行判断
+        if returnStaffTable != -1:
+            # 获取离职员工信息
+            resignStaff = Resign.query.filter(Resign.staffId == resignStaffId).first()
+            if resignStaff == None:
+                # 返回体
+                return jsonify({
+                    #返回状态码
+                    "code": 401,
+                    #返回信息描述
+                    "message": "离职员工中没有这位员工哦",
+                    #返回值
+                    "data": {}
+                })
+            record = f'<div class="shortMsg">{userid}将{resignStaffId}从离职员工移到了正式员工中</div>'
+            # 向员工表添加信息
+            staff = Staff(
+                staffId = resignStaff.schema()["staffId"], 
+                departId = resignStaff.schema()["departId"], 
+                phoneNum = resignStaff.schema()["phoneNum"], 
+                staffName = resignStaff.schema()["staffName"], 
+                sex = resignStaff.schema()["sex"], 
+                age = resignStaff.schema()["age"], 
+                salary = resignStaff.schema()["salary"] ,
+                job = resignStaff.schema()["job"] ,
+                entryTime = resignStaff.schema()["entryTime"]
+            )
+            # 向操作记录表添加信息
+            msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
+            Resign.query.filter(Resign.staffId == resignStaffId).delete()
+            db.session.add_all([staff,msg])
+            db.session.commit()
+            # 返回体
+            return jsonify({
+                #返回状态码
+                "code": 200,
+                #返回信息描述
+                "message": "移动成功",
+                #返回值
+                "data": {}
+            })
+        else:
+            # 返回体
+            return jsonify({
+                #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "你没有权限",
+                #返回值
+                "data": {}
+            })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })

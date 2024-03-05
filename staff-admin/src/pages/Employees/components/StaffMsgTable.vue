@@ -5,7 +5,8 @@
                 <div class="operation">
                     <el-button type="primary" size="large" @click="handleAdd('添加')"
                         v-if="hasUserAddStaff">添加(需审核)</el-button>
-                    <el-button type="primary" size="large" @click="handleAdd('添加')" v-if="hasAdminAddStaff">添加</el-button>
+                    <el-button type="primary" size="large" @click="handleAdd('添加')"
+                        v-if="hasAdminAddStaff">添加</el-button>
                     <el-button type="primary" size="large" disabled
                         v-if="!hasAdminAddStaff && !hasUserAddStaff">添加</el-button>
                     <el-button link type="primary" size="large">您有新的内容可刷新</el-button>
@@ -28,6 +29,7 @@
                     </el-table-column>
                     <el-table-column :resizable="false" fixed="right" label="操作栏"
                         v-if="hasUserUpdateStaff || hasAdminUpdateStaff || hasSettingDimission">
+
                         <template #default="scope">
                             <el-button v-if="hasUserUpdateStaff" size="small" @click="handleUpdate('修改', scope.row)"
                                 type="warning">修改(需审核)</el-button>
@@ -80,6 +82,9 @@ let layoutStore = useLayoutStore()
 
 // 使用employees仓库
 let employeesStore = useEmployeesStore()
+
+//等待动画
+let loadingInstance = ref(null)
 
 // layout仓库的state数据
 const {
@@ -174,20 +179,28 @@ const handleUpdate = (tit, item) => {
     StaffMsgDialogRef.value.StaffMsgDialogShow(tit, item)
 }
 
+// 设置为离职员工
 const handleResign = async (item) => {
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
     await reqResignStaff({ ...item, entryTime: GMTToStr(item.entryTime) }).then(async resolve => {
-        if(staffList.value.length === 1){
+        if (staffList.value.length === 1) {
             employeesSearchForm.value.pageNo = employeesSearchForm.value.pageNo - 1
-            if(employeesSearchForm.value.pageNo === 0){
+            if (employeesSearchForm.value.pageNo === 0) {
                 employeesSearchForm.value.pageNo = 1
             }
         }
+
         await getData()
+        //动画结束
+        loadingInstance.value.close()
         $ElMessage({
             message: resolve.message,
             type: "success"
         })
     }, reject => {
+        //动画结束
+        loadingInstance.value.close()
         $ElMessage({
             message: reject.message,
             type: "error"
@@ -199,28 +212,61 @@ const handleResign = async (item) => {
 
 //获取数据
 const getData = async () => {
+
     if (!hasAllStaffMsgView.value) {
         employeesSearchForm.value.departId = departId.value
     } else {
         employeesSearchForm.value.departId = ""
     }
-    await filterStaffData(employeesSearchForm.value)
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await filterStaffData(employeesSearchForm.value).then((resolve) => {
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        //动画结束
+        loadingInstance.value.close()
+    })
 }
 
 //页码变化
 const handleCurrentChange = async (pageNo) => {
     employeesSearchForm.value.pageNo = pageNo
-    await getData()
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await getData().then((resolve) => {
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        //动画结束
+        loadingInstance.value.close()
+    })
 }
 
 //当前页长度变化
 const handleSizeChange = async (pageSize) => {
     employeesSearchForm.value.pageSize = pageSize
-    await getData()
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await getData().then((resolve) => {
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        //动画结束
+        loadingInstance.value.close()
+    })
 }
 
 onMounted(async () => {
-    await getData()
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await getData().then((resolve) => {
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        //动画结束
+        loadingInstance.value.close()
+    })
 })
 
 
@@ -386,4 +432,3 @@ onMounted(async () => {
     }
 }
 </style>
-

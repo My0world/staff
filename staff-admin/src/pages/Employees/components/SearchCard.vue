@@ -5,8 +5,8 @@
                 <el-row :gutter="15">
                     <el-col :span="6">
                         <el-form-item label="部门名称:">
-                            <el-select clearable v-model="form.departId" :disabled="!hasAllStaffMsgView" placeholder="请选择部门"
-                                size="large">
+                            <el-select clearable v-model="form.departId" :disabled="!hasAllStaffMsgView"
+                                placeholder="请选择部门" size="large">
                                 <el-option v-for="i in departmentList" :key="i.departId" :label="i.department_Name"
                                     :value="i.departId" />
                             </el-select>
@@ -44,8 +44,8 @@
                                 </div>
                                 <span>——</span>
                                 <div class="right">
-                                    <el-input-number v-model="form.endSalary" :precision="1" :step="0.1" :min="0" :max="999"
-                                        size="large" controls-position="right" />
+                                    <el-input-number v-model="form.endSalary" :precision="1" :step="0.1" :min="0"
+                                        :max="999" size="large" controls-position="right" />
                                     <span class="k">K</span>
                                 </div>
 
@@ -56,8 +56,8 @@
                         <el-form-item label="员工年龄范围:">
                             <div class="numRange" style="width: 100%;">
                                 <div class="left">
-                                    <el-input-number v-model="form.startAge" :precision="0" :step="1" :min="0" :max="999"
-                                        size="large" controls-position="right" />
+                                    <el-input-number v-model="form.startAge" :precision="0" :step="1" :min="0"
+                                        :max="999" size="large" controls-position="right" />
                                 </div>
                                 <span>——</span>
                                 <div class="right">
@@ -69,8 +69,8 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="关键字:">
-                            <el-input style="width: 90%;" v-model="form.searchValue" size="large" placeholder="请输入搜索的姓名" class="input"
-                                :suffix-icon="Search" clearable />
+                            <el-input style="width: 90%;" v-model="form.searchValue" size="large" placeholder="请输入搜索的姓名"
+                                class="input" :suffix-icon="Search" clearable />
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
@@ -87,7 +87,7 @@
 
 
 <script setup>
-import { onMounted, computed, reactive, onBeforeUnmount } from "vue"
+import { onMounted, computed, reactive, onBeforeUnmount,ref } from "vue"
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
 // 引入layout仓库
@@ -143,6 +143,10 @@ const {
     employeesSearchForm,
 } = storeToRefs(employeesStore)
 
+//等待动画
+let loadingInstance = ref(null)
+
+// 筛选表单
 const form = reactive({
     departId: "",
     entryTime: "",
@@ -174,7 +178,15 @@ const handleFilter = async () => {
             searchValue: form.searchValue
         }
     }
-    await filterStaffData(employeesSearchForm.value)
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await filterStaffData(employeesSearchForm.value).then((resolve) => {
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        //动画结束
+        loadingInstance.value.close()
+    })
 }
 
 //是否有查看所有员工信息的权力
@@ -239,20 +251,41 @@ const handleClearCard = async () => {
             }
         }
     }
-
-    await filterStaffData(employeesSearchForm.value)
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await filterStaffData(employeesSearchForm.value).then((resolve) => {
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        //动画结束
+        loadingInstance.value.close()
+    })
 }
 
 //获取数据
 const getData = async () => {
-    //获取部门列表
-    await getDepartmentList()
-    //获取公司职位类型
-    await getJobType()
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    //获取部门列表,获取公司职位类型
+    Promise.all([getDepartmentList(), getJobType()]).then((resolve) => {
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        //动画结束
+        loadingInstance.value.close()
+    })
 }
 
 onMounted(async () => {
-    await getData()
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await getData().then((resolve) => {
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        //动画结束
+        loadingInstance.value.close()
+    })
 })
 
 onBeforeUnmount(() => {
@@ -417,5 +450,3 @@ onBeforeUnmount(() => {
     }
 }
 </style>
-
-

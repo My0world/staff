@@ -5,7 +5,8 @@
         <div class="l-content">
             <el-button style="margin-right: 10px;" @click="setCollapse" size="small" type="primary" icon="Menu" />
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><span :style="{color: themeType ? 'rgba(0, 0, 0, 1)':'rgba(255, 255, 255, 1)'}">首页</span></el-breadcrumb-item>
+                <el-breadcrumb-item><span
+                        :style="{ color: themeType ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 255, 255, 1)' }">首页</span></el-breadcrumb-item>
                 <el-breadcrumb-item v-for="(i, index) in currentMenu" :key="index"><span
                         :style="{ color: themeType ? '#f3a694' : '#30d5c8' }">{{ i }}</span></el-breadcrumb-item>
             </el-breadcrumb>
@@ -30,7 +31,7 @@
 
 <script setup>
 
-import { computed, getCurrentInstance } from "vue";
+import { computed, getCurrentInstance,ref } from "vue";
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
 // 图片处理
@@ -52,9 +53,13 @@ let internalInstance = getCurrentInstance();
 let $ElMessage = internalInstance.appContext.config.globalProperties.$ElMessage;
 
 // 使用layout仓库
-const layoutStore = useLayoutStore()
+let layoutStore = useLayoutStore()
+
 // 使用login仓库
-const loginStore = useLoginStore()
+let loginStore = useLoginStore()
+
+//等待动画
+let loadingInstance = ref(null)
 
 const {
     // 主题
@@ -81,22 +86,32 @@ const {
 } = loginStore
 
 // 图片处理（函数）
-const userIcon = imageSrc
+let userIcon = imageSrc
 
 // 退出登录
 const logout = async () => {
-    let message = await setLogoutStatus()
-    $ElMessage({
-        message: message,
-        type: "success"
-    })
-    router.push({ path: "/login" })
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await setLogoutStatus().then((result) => {
+        //动画结束
+        loadingInstance.value.close()
+        $ElMessage({
+            message: result,
+            type: "success"
+        })
+        router.push({ path: "/login" })
+    }).catch((err) => {
+        //动画结束
+        loadingInstance.value.close()
+    });
+    
 
 }
 
 </script>
 
 <!-- elementPlus样式修改 -->
+
 <style lang="less" scoped>
 // 面包屑
 ::v-deep(.el-breadcrumb__item):nth-of-type(1) {
@@ -148,4 +163,3 @@ const logout = async () => {
     }
 }
 </style>
-
