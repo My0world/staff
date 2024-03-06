@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 05/03/2024 15:16:57
+ Date: 06/03/2024 11:40:05
 */
 
 SET NAMES utf8mb4;
@@ -108,23 +108,6 @@ INSERT INTO `admin_op_review` VALUES (4, '{\"oldData\": {\"staffId\": \"012303\"
 INSERT INTO `admin_op_review` VALUES (3, '{\"oldData\": {\"staffId\": \"012302\", \"departId\": \"01\", \"phoneNum\": 17322297254, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u4e07\\u53f6\", \"sex\": \"\\u7537\", \"age\": 22, \"salary\": 5100, \"entryTime\": \"2023-09-15\"}, \"newData\": {\"staffId\": \"012302\", \"departId\": \"01\", \"phoneNum\": 17322297254, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u4e07\\u53f6\", \"sex\": \"\\u7537\", \"age\": 22, \"salary\": 5100, \"entryTime\": \"2024-02-23\"}}', 'updateRequest', '012302', '2024-02-18 09:49:24', '待审核');
 
 -- ----------------------------
--- Table structure for admin_send_notice
--- ----------------------------
-DROP TABLE IF EXISTS `admin_send_notice`;
-CREATE TABLE `admin_send_notice`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of admin_send_notice
--- ----------------------------
-
--- ----------------------------
 -- Table structure for admin_user
 -- ----------------------------
 DROP TABLE IF EXISTS `admin_user`;
@@ -141,7 +124,7 @@ CREATE TABLE `admin_user`  (
 -- ----------------------------
 -- Records of admin_user
 -- ----------------------------
-INSERT INTO `admin_user` VALUES ('012301', '01', '达达利亚', 'admin', '在线', 'home,staff,staffMsg,checkingIn,settingDimission,adminAddStaff,adminUpdateStaff,updateCheckingIn,allStaffCheckingInView,user,allStaffMsgView,operatingRequestAudit,updateOpReviewStatus,showUserPassWord,allotAuthority,updateUserPassWord,deleteUser,operatingData,feedback,dimission,dimissionData,addAdminUser,returnStaffTable');
+INSERT INTO `admin_user` VALUES ('012301', '01', '达达利亚', 'admin', '下线', 'home,staff,staffMsg,checkingIn,settingDimission,adminAddStaff,adminUpdateStaff,updateCheckingIn,allStaffCheckingInView,user,allStaffMsgView,operatingRequestAudit,updateOpReviewStatus,showUserPassWord,allotAuthority,updateUserPassWord,deleteUser,operatingData,feedback,dimission,dimissionData,addAdminUser,returnStaffTable');
 INSERT INTO `admin_user` VALUES ('012302', '01', '万叶', 'admin', '下线', 'home,staff,staffMsg,userAddStaff,userUpdateStaff,user,allotAuthority');
 
 -- ----------------------------
@@ -193,35 +176,19 @@ CREATE TABLE `feedback`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `dateTime` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of feedback
 -- ----------------------------
-INSERT INTO `feedback` VALUES (1, 'adwdada', '012301', 'admin', '2023-11-13 09:48:20');
-INSERT INTO `feedback` VALUES (2, '忘记密码。', '012301', 'admin', '2023-11-13 13:37:06');
-INSERT INTO `feedback` VALUES (3, 'hello 哇', '012301', 'admin', '2023-11-28 09:50:50');
-INSERT INTO `feedback` VALUES (4, '你妈死了草', '012301', 'admin', '2024-03-05 11:09:12');
-INSERT INTO `feedback` VALUES (5, 'hello world', '012301', 'admin', '2024-03-05 11:09:57');
-INSERT INTO `feedback` VALUES (6, 'hello world', '012301', 'admin', '2024-03-05 11:10:00');
-INSERT INTO `feedback` VALUES (7, 'hello world', '012301', 'admin', '2024-03-05 11:10:06');
-INSERT INTO `feedback` VALUES (8, 'hello world', '012301', 'admin', '2024-03-05 11:10:09');
-INSERT INTO `feedback` VALUES (9, 'hhhhhhhhhhhhh', '012301', 'admin', '2024-03-05 11:10:43');
-INSERT INTO `feedback` VALUES (10, 'hhhhhhhhhhhhh', '012301', 'admin', '2024-03-05 11:10:45');
-INSERT INTO `feedback` VALUES (11, 'qqqqqqqqqqqqqqqq', '012301', 'admin', '2024-03-05 11:12:59');
-INSERT INTO `feedback` VALUES (12, 'qweqwe', '012301', 'admin', '2024-03-05 11:14:09');
-INSERT INTO `feedback` VALUES (13, 'asdwqdqwd', '012301', 'admin', '2024-03-05 11:14:49');
-INSERT INTO `feedback` VALUES (14, 'wqeqwewq', '012301', 'admin', '2024-03-05 11:15:22');
-INSERT INTO `feedback` VALUES (15, '12321321321', '012301', 'admin', '2024-03-05 11:16:38');
 
 -- ----------------------------
--- Table structure for receivernotice
+-- Table structure for notice
 -- ----------------------------
-DROP TABLE IF EXISTS `receivernotice`;
-CREATE TABLE `receivernotice`  (
+DROP TABLE IF EXISTS `notice`;
+CREATE TABLE `notice`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -231,7 +198,7 @@ CREATE TABLE `receivernotice`  (
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of receivernotice
+-- Records of notice
 -- ----------------------------
 
 -- ----------------------------
@@ -269,11 +236,13 @@ CREATE TABLE `resignreview`  (
   `dateTime` datetime NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`, `staffId`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of resignreview
 -- ----------------------------
+INSERT INTO `resignreview` VALUES (1, '022403', '不想干了', '2024-03-06 11:03:31', '待审核');
+INSERT INTO `resignreview` VALUES (2, '012302', '家里的矿需要我继承', '2024-02-25 11:07:01', '待审核');
 
 -- ----------------------------
 -- Table structure for staff

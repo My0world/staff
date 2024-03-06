@@ -40,7 +40,6 @@ export const useLoginStore = defineStore("login", {
             // 发送请求
             let res = await reqFeedbackPost({
                 send_staffId: data.staffId,
-                receiver_staffId: 'admin',
                 content: data.content,
             })
             return res.message

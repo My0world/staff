@@ -99,37 +99,6 @@ class Admin_op_review(db.Model):
         db.session.commit()
     
 
-# 管理系统-发送通知表
-class Admin_send_notice(db.Model):
-    __tablename__ = "admin_send_notice"
-    # ID
-    id = db.Column(db.Integer(),primary_key = True,autoincrement = True)
-    # 发送方员工ID
-    send_staffId = db.Column(db.String(7),nullable = False)
-    # 接受方员工ID
-    receiver_staffId = db.Column(db.String(7),nullable = False)
-    # 内容
-    content = db.Column(db.Text(),nullable = False)
-    # 发送时间
-    datetime = db.Column(db.DateTime(),nullable = False)
-
-
-    # 模型的资源序列化函数（方法）
-    def schema(self):
-        return {
-            'id': self.id,
-            'send_staffId': self.send_staffId,
-            'receiver_staffId': self.receiver_staffId,
-            'content': self.content,
-            'datetime': self.datetime,
-        }
-
-    #清空数据
-    def clearData():
-        Admin_send_notice.query.filter_by().delete()
-        # 提交会话 增删改都要提交会话
-        db.session.commit()
-    
 
 # 管理系统-用户表
 class Admin_user(db.Model):
@@ -241,8 +210,6 @@ class Feedback(db.Model):
     content = db.Column(db.Text(),nullable = False)
     # 发送方员工ID
     send_staffId = db.Column(db.String(7),nullable = False)
-    # 接受方员工ID
-    receiver_staffId = db.Column(db.String(7),nullable = False)
     # 反馈时间
     dateTime = db.Column(db.DateTime(),nullable = False)
 
@@ -252,7 +219,6 @@ class Feedback(db.Model):
             'id': self.id,
             'content': self.content,
             'send_staffId': self.send_staffId,
-            'receiver_staffId': self.receiver_staffId,
             'dateTime': self.dateTime,
         }
     
@@ -263,9 +229,9 @@ class Feedback(db.Model):
         db.session.commit()
 
 
-# 接受通知表
-class Receivernotice(db.Model):
-    __tablename__ = "receivernotice"
+# 通知表
+class Notice(db.Model):
+    __tablename__ = "notice"
     # ID
     id = db.Column(db.Integer(),primary_key = True,autoincrement = True)
     # 发送方员工ID
@@ -290,7 +256,7 @@ class Receivernotice(db.Model):
     
     #清空数据
     def clearData():
-        Receivernotice.query.filter_by().delete()
+        Notice.query.filter_by().delete()
         # 提交会话 增删改都要提交会话
         db.session.commit()
 

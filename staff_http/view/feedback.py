@@ -15,19 +15,15 @@ feedback = Blueprint('feedback',__name__)
 {
     # 发送方员工ID
     send_staffId,
-    # 接受方员工ID
-    receiver_staffId,
     # 反馈内容
     content
 }
 """
-
 @feedback.route('/feedback/feedbackPost',methods=['POST'])
 def feedbackPost():
     try:
         # 获取post数据
         send_staffId = request.json.get('send_staffId')
-        receiver_staffId = request.json.get('receiver_staffId')
         content = request.json.get('content')
 
         # 查找是否有该用户
@@ -42,7 +38,7 @@ def feedbackPost():
                 #返回值
                 "data": {}
             })
-        msg = Feedback(send_staffId = send_staffId, receiver_staffId = receiver_staffId, content = content, dateTime = getDate())
+        msg = Feedback(send_staffId = send_staffId, content = content, dateTime = getDate())
         db.session.add_all([msg])
         db.session.commit()
         # 返回体

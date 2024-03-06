@@ -109,13 +109,11 @@ def queryAll():
     
 
 # 审核驳回
-# POST
-# 接收的POST格式
+# GET
+# 接收的GET格式
 """
-{
     # 操作内容id
     id
-}
 """
 @admin_op_review.route('/admin_op_review/checkReject',methods=['GET'])
 @jwt_required()
