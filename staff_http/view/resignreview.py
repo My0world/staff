@@ -72,7 +72,7 @@ def queryAll():
                     "id":item.schema()["id"],
                     "content":item.schema()["content"],
                     "staffId":item.schema()["staffId"],
-                    "datetime":item.schema()["datetime"],
+                    "dateTime":item.schema()["dateTime"],
                     "status":item.schema()["status"],
                 })
             # 返回体
@@ -108,7 +108,7 @@ def queryAll():
         })
     
 
-# 审核驳回
+# 审核
 # POST
 # 接收的GET格式
 """
@@ -177,7 +177,7 @@ def checkReject():
                     #返回值
                     "data": {}
                 })
-            if status == '审核通过':
+            elif status == '审核通过':
                 # 查询要离职的员工
                 staff = Staff.query.filter(Staff.staffId == staffId).first()
                 if staff == None:
@@ -200,6 +200,8 @@ def checkReject():
                 # 向操作记录表添加信息
                 msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
                 db.session.add_all([msg,resignStaff])
+                # 从员工数据表删除
+                Staff.query.filter(Staff.staffId == staffId).delete()
                 db.session.commit()
                 # 返回体
                 return jsonify({
@@ -207,6 +209,15 @@ def checkReject():
                     "code": 200,
                     #返回信息描述
                     "message": status + ',已设为离职员工',
+                    #返回值
+                    "data": {}
+                })
+            else:
+                return jsonify({
+                    #返回状态码
+                    "code": 401,
+                    #返回信息描述
+                    "message": "状态不正确",
                     #返回值
                     "data": {}
                 })

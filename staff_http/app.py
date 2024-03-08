@@ -14,6 +14,7 @@ from view.admin_authority import admin_authority
 from view.admin_op_review import admin_op_review
 from view.admin_op_record import admin_op_record
 from view.resign import resign
+from view.resignreview import resignreview
 
 
 # token
@@ -33,6 +34,8 @@ app.register_blueprint(admin_authority)
 app.register_blueprint(admin_op_review)
 app.register_blueprint(admin_op_record)
 app.register_blueprint(resign)
+app.register_blueprint(resignreview)
+
 
 
 if __name__ == '__main__':

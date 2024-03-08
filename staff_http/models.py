@@ -99,7 +99,6 @@ class Admin_op_review(db.Model):
         db.session.commit()
     
 
-
 # 管理系统-用户表
 class Admin_user(db.Model):
     __tablename__ = "admin_user"
@@ -324,14 +323,11 @@ class Resignreview(db.Model):
     # 模型的资源序列化函数（方法）
     def schema(self):
         return {
-            'staffId': self.staffId,
-            'departId': self.departId,
-            'phoneNum': self.phoneNum,
-            'staffName': self.staffName,
-            'sex': self.sex,
-            'age':self.age,
-            'salary':self.salary,
-            'job': self.job
+            'id': self.id,
+            'staffId':self.staffId,
+            'content': self.content,
+            'dateTime': self.dateTime,
+            'status': self.status,
         }
     
     #清空数据
