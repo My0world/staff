@@ -756,7 +756,7 @@ def allotAuth():
                 for i in authorityList:
                     if i != '':
                         description = Admin_authority.query.filter(Admin_authority.right_name == i).first()
-                        string += f"<span>{description.schema()["description"]}</span>"
+                        string += f"""<span>{description.schema()["description"]}</span>"""
                 # 记下操作记录
                 record = f"""
                     <div class="authority">
