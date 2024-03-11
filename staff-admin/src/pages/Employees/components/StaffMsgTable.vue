@@ -56,7 +56,7 @@ import { ref, computed, onMounted, getCurrentInstance } from 'vue';
 //添加和修改对话框
 import StaffMsgDialog from "./StaffMsgDialog.vue"
 //API
-import { reqResignStaff } from '../../../api'
+import employees from '../../../api'
 // 格式化时间
 import { GMTToStr } from "../../../util/GMTToStr.js"
 // 引入pinia响应式
@@ -109,7 +109,6 @@ const {
     // 员工id
     departId,
 } = storeToRefs(loginStore)
-
 
 // employees仓库的action方法
 const {
@@ -183,7 +182,7 @@ const handleUpdate = (tit, item) => {
 const handleResign = async (item) => {
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
-    await reqResignStaff({ ...item, entryTime: GMTToStr(item.entryTime) }).then(async resolve => {
+    await employees.reqResignStaff({ ...item, entryTime: GMTToStr(item.entryTime) }).then(async resolve => {
         if (staffList.value.length === 1) {
             employeesSearchForm.value.pageNo = employeesSearchForm.value.pageNo - 1
             if (employeesSearchForm.value.pageNo === 0) {

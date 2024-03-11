@@ -41,6 +41,8 @@ onMounted(()=>{
 
 <style scoped lang="less">
 .StaffMsg {
+    padding: 10px;
+    box-sizing: border-box;
     margin-top: 17px;
     width: 100%;
     height: 100%;

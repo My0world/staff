@@ -1,9 +1,7 @@
 import {
     defineStore
 } from "pinia"
-import {
-    reqFeedbackPost, reqLogin, reqLogout
-} from "../api/index"
+import login from "../api/index"
 import socket from "../util/socket"
 
 
@@ -38,7 +36,7 @@ export const useLoginStore = defineStore("login", {
         //发送反馈消息
         async sendFeedbackForm(data) {
             // 发送请求
-            let res = await reqFeedbackPost({
+            let res = await login.reqFeedbackPost({
                 send_staffId: data.staffId,
                 content: data.content,
             })
@@ -48,7 +46,7 @@ export const useLoginStore = defineStore("login", {
         //发送登录信息
         async sendLoginForm(data) {
             // 发送请求
-            let res = await reqLogin({
+            let res = await login.reqLogin({
                 "staffId": data.staffId,
                 "password": data.password
             }).then(reslove => {
@@ -83,7 +81,7 @@ export const useLoginStore = defineStore("login", {
         //设置为下线状态
         async setLogoutStatus() {
             // 发送请求
-            let res = await reqLogout().then(reslove => {
+            let res = await login.reqLogout().then(reslove => {
                 //发送socket（退出登陆）
                 socket.emit("userLogout")
                 return reslove

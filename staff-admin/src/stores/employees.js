@@ -1,11 +1,7 @@
 import {
     defineStore
 } from "pinia"
-import {
-    reqDepartmentList,
-    reqJobType,
-    reqStaffData
-} from "../api/index"
+import employees from "../api/index"
 export const useEmployeesStore = defineStore("employees", {
     state: () => ({
         // 员工信息搜索信息表单
@@ -34,19 +30,19 @@ export const useEmployeesStore = defineStore("employees", {
     actions: {
         //获取部门信息
         async getDepartmentList() {
-            let res = await reqDepartmentList()
+            let res = await employees.reqDepartmentList()
             this.departmentList = res.data.data
         },
 
         //获取职位类型
         async getJobType() {
-            let res = await reqJobType()
+            let res = await employees.reqJobType()
             this.jobType = res.data
         },
 
         //筛选员工信息
         async filterStaffData(item) {
-            let res = await reqStaffData(item)
+            let res = await employees.reqStaffData(item)
             this.staffList = res.data.data
             this.total = res.data.total
         }

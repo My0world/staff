@@ -1,16 +1,25 @@
 <template>
     <div class="OperatingRequestAudit">
-        <el-tabs v-model="activeName" type="card" :class="[theme === 'light' ? 'light' : 'dark']" @tab-click="handleClick">
-            <el-tab-pane label="全部" name="first">User</el-tab-pane>
-            <el-tab-pane label="待审核" name="second">Config</el-tab-pane>
-            <el-tab-pane label="审核通过" name="third">Role</el-tab-pane>
-            <el-tab-pane label="审核驳回" name="fourth">Task</el-tab-pane>
+        <el-tabs v-model="activeName" type="card" :class="[theme === 'light' ? 'light' : 'dark']">
+            <el-tab-pane label="全部" name="全部">
+                <list v-if="activeName === '全部'" status="全部"></list>
+            </el-tab-pane>
+            <el-tab-pane label="待审核" name="待审核">
+                <list v-if="activeName === '待审核'" status="待审核"></list>
+            </el-tab-pane>
+            <el-tab-pane label="审核通过" name="审核通过">
+                <list v-if="activeName === '审核通过'" status="审核通过"></list>
+            </el-tab-pane>
+            <el-tab-pane label="审核驳回" name="审核驳回">
+                <list v-if="activeName === '审核驳回'" status="审核驳回"></list>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
 
 
 <script setup>
+import list from './components/list.vue';
 import { ref, computed, onMounted, getCurrentInstance } from 'vue';
 // 引入layout仓库
 import { useLayoutStore } from '../../stores/layout'
@@ -19,13 +28,13 @@ import { useLoginStore } from '../../stores/login'
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
 // 路由
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 
 //使用路由
 let router = useRouter()
 
 //标签页点击的值
-let activeName = ref('second')
+let activeName = ref('待审核')
 
 // 使用layout仓库
 let layoutStore = useLayoutStore()
@@ -45,9 +54,9 @@ const {
     authorityList,
 } = storeToRefs(loginStore)
 
-onMounted(()=>{
-    if(authorityList.value.indexOf("operatingRequestAudit") === -1){
-        router.push({name:'403'})
+onMounted(() => {
+    if (authorityList.value.indexOf("operatingRequestAudit") === -1) {
+        router.push({ name: '403' })
     }
 })
 
@@ -81,6 +90,7 @@ onMounted(()=>{
         color: #409eff;
     }
 }
+
 :deep(.dark) {
     .el-tabs__nav {
         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -112,6 +122,20 @@ onMounted(()=>{
 <style lang="less" scoped>
 .OperatingRequestAudit {
     margin-top: 17px;
+    height: calc(100% - 17px) ;
+    
+
+    :deep(.el-tabs) {
+        height: 100%;
+
+        .el-tabs__content {
+            height: calc( 100% - 52.5px);
+
+            .el-tab-pane {
+                height: 100%;
+            }
+        }
+    }
+
 }
 </style>
-

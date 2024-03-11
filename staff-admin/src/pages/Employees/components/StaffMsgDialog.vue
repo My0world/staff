@@ -100,7 +100,7 @@ import { useLayoutStore } from '../../../stores/layout'
 // 引入employees仓库
 import { useEmployeesStore } from '../../../stores/employees'
 //API
-import { reqAddStaff, reqUpdateStaff } from '../../../api'
+import employees from '../../../api'
 //格式化时间
 import { GMTToStr } from "../../../util/GMTToStr.js"
 //获取全局挂载
@@ -267,7 +267,7 @@ const handleSubmit = debounce(async (el) => {
             // 是修改还是添加
             if (staffId.value !== null) {
                 let salary = FormData.salary * 1000
-                reqUpdateStaff({ ...FormData, staffId: staffId.value, salary }).then(async reslove => {
+                await employees.reqUpdateStaff({ ...FormData, staffId: staffId.value, salary }).then(async reslove => {
                     await filterStaffData(employeesSearchForm.value)
                     loadingInstance.value.close()
                     $ElMessage({
@@ -284,7 +284,7 @@ const handleSubmit = debounce(async (el) => {
                 })
             } else {
                 let salary = FormData.salary * 1000
-                reqAddStaff(
+                await employees.reqAddStaff(
                     { ...FormData, salary }
                 ).then(async resolve => {
                     await filterStaffData(employeesSearchForm.value)

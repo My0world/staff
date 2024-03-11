@@ -3,11 +3,11 @@
         <!-- 背景 -->
         <div class="moonBg " v-show="!themeType"></div>
         <div class="sunnyBg " v-show="themeType"></div>
-        <el-container>
+        <el-container style="height: 100%;overflow: hidden;">
             <el-aside v-if="!isLoginView" class="aside">
                 <CommonAside></CommonAside>
             </el-aside>
-            <el-container style="width: 100%;">
+            <el-container style="width: 100%; height: 100%; overflow: hidden;">
                 <el-header v-if="!isLoginView" class="header">
                     <CommonHeader></CommonHeader>
                 </el-header>
@@ -120,15 +120,17 @@ let themeType = computed(() => {
 
     .main {
         padding: 20px;
+        height: 100%;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
 
         .container {
             width: 100%;
-            height: 100%;
+            height: calc( 100% - 25.83px );
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
     }
 }

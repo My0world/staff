@@ -1,9 +1,11 @@
 <template>
     <div class="Card"
         :style="{ boxShadow: theme === 'light' ? '0 0 5px 3px rgba(0, 0, 0, .3)' : '0 0 5px 3px rgba(255, 255, 255, .3)' }">
-        <div class="header"
-            :style="{ color: theme === 'light' ? '#333333' : '#EBEAEA' }">
+        <div v-if="title" class="header" :style="{ color: theme === 'light' ? '#333333' : '#EBEAEA' }">
             {{ title }}
+        </div>
+        <div v-else class="header" :style="{ color: theme === 'light' ? '#333333' : '#EBEAEA' }">
+            <slot name="title"></slot>
         </div>
         <div class="body">
             <slot name="body"></slot>
@@ -41,4 +43,3 @@ const prop = defineProps(["title", "theme"])
     }
 }
 </style>
-

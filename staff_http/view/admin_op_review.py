@@ -64,14 +64,14 @@ def queryAll():
             else:
                 queryData = Admin_op_review.query.filter(Admin_op_review.status == status)
             # 分页
-            pn = queryData.paginate(page=int(pageNo), per_page=7, error_out=False)
+            pn = queryData.paginate(page=int(pageNo), per_page=10, error_out=False)
             # 添加到dataList
             for item in pn:
                 dataList.append({
                     "id":item.schema()["id"],
                     "data":item.schema()["data"],
                     "description":item.schema()["description"],
-                    "staffId":item.schema()["staffId"],
+                    "staffName": Admin_user.query.filter(Admin_user.staffId == item.schema()["staffId"]).first().schema()["staffName"],
                     "datetime":item.schema()["datetime"],
                     "status":item.schema()["status"],
                 })

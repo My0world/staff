@@ -1,7 +1,7 @@
 <template>
     <div class="CommonTag">
         <el-tag v-for="(tag, index) in tagList" :key="tag.path" :effect="tag.path === route.path ? 'dark' : 'light'"
-            :closable="tag.path !== '/home' ? true : false" @click="clickTag(tag.path, tag.label)"
+            :closable="tag.path !== '/home' ? true : false" @click="clickTag(tag.path, tag.label)" @click.middle="handleClose(tag.path, index)"
             :disable-transitions="true" @close="handleClose(tag.path, index)">
             {{ tag.label }}
         </el-tag>
