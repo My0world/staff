@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : MySQL
  Source Server Type    : MySQL
  Source Server Version : 50726
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 11/03/2024 16:08:37
+ Date: 12/03/2024 09:26:44
 */
 
 SET NAMES utf8mb4;
@@ -70,9 +70,9 @@ CREATE TABLE `admin_op_record`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
+  `datetime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 98 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 99 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin_op_record
@@ -97,6 +97,7 @@ INSERT INTO `admin_op_record` VALUES (94, '<div class=\"shortMsg\">012301将派�
 INSERT INTO `admin_op_record` VALUES (95, '\n            <div class=\"add\">\n            <div>\n                <p>添加信息</p>\n                <p>012302用户需要添加一位员工</p>\n            </div>\n            \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>人力资源</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>空</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>15312250345</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>540</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>8000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-03-22</span>\n            </p>\n        </div>\n        </div>', '012302', '2024-03-11 14:07:37');
 INSERT INTO `admin_op_record` VALUES (96, '\n            <div class=\"add\">\n            <div>\n                <p>添加信息</p>\n                <p>012302用户需要添加一位员工</p>\n            </div>\n            \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>测试部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>派蒙</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>12322253454</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>女</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>6</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>7000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-03-21</span>\n            </p>\n        </div>\n        </div>', '012302', '2024-03-11 14:32:23');
 INSERT INTO `admin_op_record` VALUES (97, '\n            <div class=\"add\">\n            <div>\n                <p>添加信息</p>\n                <p>012302用户需要添加一位员工</p>\n            </div>\n            \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>星</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19273322110</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>女</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>5</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>5000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-03-13</span>\n            </p>\n        </div>\n        </div>', '012302', '2024-03-11 14:33:10');
+INSERT INTO `admin_op_record` VALUES (98, '<div class=\"shortMsg\">012301将班尼特·卡塔库栗设置为离职</div>', '012301', '2024-03-11 22:38:53');
 
 -- ----------------------------
 -- Table structure for admin_op_review
@@ -107,7 +108,7 @@ CREATE TABLE `admin_op_review`  (
   `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
+  `datetime` datetime(0) NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -130,7 +131,7 @@ CREATE TABLE `admin_send_notice`  (
   `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
+  `datetime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -167,9 +168,9 @@ CREATE TABLE `askforleave`  (
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `startTime` datetime NOT NULL,
-  `endTime` datetime NOT NULL,
-  `dateTime` datetime NOT NULL,
+  `startTime` datetime(0) NOT NULL,
+  `endTime` datetime(0) NOT NULL,
+  `dateTime` datetime(0) NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -207,7 +208,7 @@ CREATE TABLE `feedback`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `dateTime` datetime NOT NULL,
+  `dateTime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -224,7 +225,7 @@ CREATE TABLE `notice`  (
   `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
+  `datetime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -241,7 +242,7 @@ CREATE TABLE `receivernotice`  (
   `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
+  `datetime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -275,6 +276,7 @@ INSERT INTO `resign` VALUES ('012405', '01', 123213213, 'qwe', '男', 3, 3000, '
 INSERT INTO `resign` VALUES ('022403', '02', 12132290117, '荧', '女', 600, 8000, '经理', '2024-03-06', '2024-03-08');
 INSERT INTO `resign` VALUES ('022404', '02', 17432397554, '菲谢尔·冯·露弗施洛斯·那菲多特', '女', 23, 6000, '普通员工', '2024-03-12', '2024-03-08');
 INSERT INTO `resign` VALUES ('022405', '02', 15121190114, '派蒙', '女', 6, 4000, '经理', '2024-03-08', '2024-03-09');
+INSERT INTO `resign` VALUES ('022301', '02', 13376629080, '班尼特·卡塔库栗', '男', 21, 7000, '实习生', '2023-09-15', '2024-03-11');
 
 -- ----------------------------
 -- Table structure for resignreview
@@ -284,7 +286,7 @@ CREATE TABLE `resignreview`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `dateTime` datetime NOT NULL,
+  `dateTime` datetime(0) NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`, `staffId`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -316,7 +318,6 @@ CREATE TABLE `staff`  (
 -- ----------------------------
 -- Records of staff
 -- ----------------------------
-INSERT INTO `staff` VALUES ('022301', '02', 13376629080, '班尼特·卡塔库栗', '男', 21, 7000, '实习生', '2023-09-15');
 INSERT INTO `staff` VALUES ('022302', '02', 13376629080, '胡桃', '女', 16, 7000, '经理', '2023-09-15');
 INSERT INTO `staff` VALUES ('032301', '03', 13232234167, '行秋', '男', 17, 5000, '普通员工', '2023-09-15');
 INSERT INTO `staff` VALUES ('042301', '04', 15238199014, '钟离', '男', 1000, 7000, '经理', '2023-09-15');
@@ -338,8 +339,8 @@ CREATE TABLE `workattendance`  (
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date` date NOT NULL,
-  `startTime` datetime NOT NULL,
-  `endTime` datetime NOT NULL,
+  `startTime` datetime(0) NOT NULL,
+  `endTime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 

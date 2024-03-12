@@ -1,5 +1,5 @@
 <template>
-    <Card class="search" title="人员信息表" :theme="theme">
+    <Card class="table" title="人员信息表" :theme="theme">
         <template v-slot:body>
             <div class="StaffMsgTable" :class="[theme === 'light' ? 'light' : 'dark']">
                 <div class="operation">
@@ -11,7 +11,7 @@
                         v-if="!hasAdminAddStaff && !hasUserAddStaff">添加</el-button>
                     <el-button link type="primary" size="large">您有新的内容可刷新</el-button>
                 </div>
-                <el-table :data="staffList" style="width: 100%;margin: 17px 0px;" border>
+                <el-table :data="staffList" style="width: 100%;margin: 10px 0px; height:calc(100% - 100px) ;" border>
                     <el-table-column :resizable="false" prop="staffId" label="员工ID" min-width="35" />
                     <el-table-column :resizable="false" prop="departName" label="部门名称" min-width="45" />
                     <el-table-column :resizable="false" prop="staffName" label="姓名" min-width="50" />
@@ -382,6 +382,10 @@ onMounted(async () => {
 
 
 <style scoped lang="less">
+.table{
+    height: 100%;
+    display: flex;
+}
 .StaffMsgTable {
     width: 100%;
     height: 100%;

@@ -323,7 +323,7 @@ onBeforeUnmount(() => {
 
 <style scoped lang="less">
 .search {
-    margin-bottom: 24.5px;
+    margin-bottom: 14.5px;
 
     .numRange {
 

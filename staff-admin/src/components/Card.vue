@@ -23,7 +23,6 @@ const prop = defineProps(["title", "theme"])
 <style scoped lang="less">
 .Card {
     width: 100%;
-    height: 100%;
     backdrop-filter: blur(100px);
     display: flex;
     flex-direction: column;
@@ -37,7 +36,7 @@ const prop = defineProps(["title", "theme"])
 
     .body {
         width: 100%;
-        height: 100%;
+        height:calc(100% - 42.19px) ;
         padding: 0 14px 14px 14px;
         box-sizing: border-box;
     }
