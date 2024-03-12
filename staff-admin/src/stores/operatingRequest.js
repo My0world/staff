@@ -20,7 +20,7 @@ export const useOperatingRequestStore = defineStore("operatingRequest", {
             let resetlist = []
             this.list.forEach(element => {
                 if (element.description === "updateRequest") {
-                    let { id, data, datetime, description, staffName, status } = element
+                    let { id, data, datetime, description, staffId, staffName, status } = element
                     let formatterData = JSON.parse(data)
                     //修改后的部门ID
                     let nindex = this.departmentList.findIndex(item => {
@@ -33,10 +33,10 @@ export const useOperatingRequestStore = defineStore("operatingRequest", {
                     })
                     formatterData.oldData.department_Name = this.departmentList[Oindex].department_Name
                     //放到数组中
-                    resetlist.push({ id, data: formatterData, datetime: GMTToStr(datetime), description, staffName, status })
+                    resetlist.push({ id, data: formatterData, datetime: GMTToStr(datetime), description, staffId, staffName, status })
                 }
                 if (element.description === "addRequest") {
-                    let { id, data, datetime, description, staffName, status } = element
+                    let { id, data, datetime, description, staffId, staffName, status } = element
                     let formatterData = JSON.parse(data)
                     //添加的部门ID
                     let index = this.departmentList.findIndex(item => {
@@ -44,7 +44,7 @@ export const useOperatingRequestStore = defineStore("operatingRequest", {
                     })
                     formatterData.department_Name = this.departmentList[index].department_Name
 
-                    resetlist.push({ id, data: formatterData, datetime: GMTToStr(datetime), description, staffName, status })
+                    resetlist.push({ id, data: formatterData, datetime: GMTToStr(datetime), description, staffId, staffName, status })
                 }
 
             });

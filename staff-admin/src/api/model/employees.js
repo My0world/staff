@@ -27,8 +27,7 @@ export default {
         url: "/staff/addStaff",
         method: 'post',
         data: params
-    })
-    ,
+    }),
 
     //修改员工信息
     reqUpdateStaff: (params) => request({

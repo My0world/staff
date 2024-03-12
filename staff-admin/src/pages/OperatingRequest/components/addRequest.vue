@@ -5,11 +5,11 @@
                 <div>
                     <div class="msg">
                         <p>
-                            <span>请求者员工姓名：</span>
+                            <span>请求者员工姓名:</span>
                             <span>{{ data.staffName }}</span>
                         </p>
                         <p>
-                            <span>请求时间：</span>
+                            <span>请求时间:</span>
                             <span>{{ data.datetime }}</span>
                         </p>
                     </div>
@@ -18,35 +18,35 @@
                         <div class="data_item">
                             <p>添加数据</p>
                             <p>
-                                <span>部门名称：</span>
+                                <span>部门名称:</span>
                                 <span>{{ data.data.department_Name }}</span>
                             </p>
                             <p>
-                                <span>员工姓名：</span>
+                                <span>员工姓名:</span>
                                 <span>{{ data.data.staffName }}</span>
                             </p>
                             <p>
-                                <span>年龄：</span>
+                                <span>年龄:</span>
                                 <span>{{ data.data.age }}</span>
                             </p>
                             <p>
-                                <span>性别：</span>
+                                <span>性别:</span>
                                 <span>{{ data.data.sex }}</span>
                             </p>
                             <p>
-                                <span>手机号码：</span>
+                                <span>手机号码:</span>
                                 <span>{{ data.data.phoneNum }}</span>
                             </p>
                             <p>
-                                <span>职位：</span>
+                                <span>职位:</span>
                                 <span>{{ data.data.job }}</span>
                             </p>
                             <p>
-                                <span>薪资：</span>
+                                <span>薪资:</span>
                                 <span>{{ data.data.salary }}</span>
                             </p>
                             <p>
-                                <span>进入时间：</span>
+                                <span>进入时间:</span>
                                 <span>{{ data.data.entryTime }}</span>
                             </p>
                         </div>
@@ -54,7 +54,14 @@
                 </div>
 
                 <div class="btn_wrap">
-                    <el-button type="primary" size="large" @click="handleExamine">审核</el-button>
+                    <div class="btn_wrap">
+                        <el-button type="primary" :disabled="!isAut" v-if="data.status === '待审核'" size="large"
+                            @click="handleExamine">{{
+        data.status }}</el-button>
+                        <span :class="theme" class="status"
+                            :style="{ color: data.status === '审核通过' ? '#67C23A' : '#F56C6C' }" v-else>{{ data.status
+                            }}</span>
+                    </div>
                 </div>
             </div>
         </template>
@@ -73,29 +80,58 @@
         </template>
 
         <template v-slot:footer>
-            <el-button><el-icon class="el-icon--right">
+            <el-button @click="handleReject">
+                <el-icon class="el-icon--right">
                     <CloseBold />
-                </el-icon> 否决</el-button>
-            <el-button type="primary"> <el-icon class="el-icon--right">
+                </el-icon> 
+                否决
+            </el-button>
+            <el-button type="primary" @click="handleAllow"> 
+                <el-icon class="el-icon--right">
                     <Select />
-                </el-icon> 允许 </el-button>
+                </el-icon> 
+                允许 
+            </el-button>
         </template>
     </Dialog>
 </template>
 
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, inject, getCurrentInstance } from 'vue';
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
 // 引入layout仓库
 import { useLayoutStore } from '../../../stores/layout'
+// 引入操作请求审核仓库
+import { useOperatingRequestStore } from '../../../stores/operatingRequest'
+//API
+import employees from '../../../api'
+import operatingRequest from '../../../api'
+
+//获取全局挂载
+let internalInstance = getCurrentInstance();
+
+//获取全局Element消息提示框
+let $ElMessage = internalInstance.appContext.config.globalProperties.$ElMessage;
 
 //prop
-const prop = defineProps(["data"])
+const prop = defineProps(["data", "isAut", "status", "length"])
+
+//等待动画
+let loadingInstance = ref(null)
 
 // 使用layout仓库
 let layoutStore = useLayoutStore()
+
+// 使用operatingRequest仓库
+let operatingRequestStore = useOperatingRequestStore()
+
+// operatingRequest仓库的action方法
+const {
+    //获取操作请求审核数据
+    getOpReviewData,
+} = operatingRequestStore
 
 //审核对话框
 let examineDialog = ref(null)
@@ -111,10 +147,67 @@ const themeType = computed(() => {
     return theme.value === "light" ? true : false
 })
 
-
-
+//确认框
 const handleExamine = () => {
     examineDialog.value.dialogStatus = true
+}
+
+//页码
+const pageNo = inject("pageNo");
+
+
+//允许添加
+const handleAllow = async () => {
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await employees.reqAddStaff(
+        { ...prop.data.data, requestUserid: prop.data.staffId, opid: prop.data.id }
+    ).then(async resolve => {
+        if (prop.length === 1) {
+            pageNo.value = pageNo.value - 1
+            if (pageNo.value === 0) {
+                pageNo.value = 1
+            }
+        }
+        await getOpReviewData(prop.status, pageNo.value)
+        loadingInstance.value.close()
+        $ElMessage({
+            message: "审核成功,允许添加",
+            type: "success"
+        })
+    }, reject => {
+        loadingInstance.value.close()
+        $ElMessage({
+            message: "审核失败，请联系管理员",
+            type: "error"
+        })
+    })
+}
+
+//拒绝添加
+const handleReject = async () => {
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await operatingRequest.reqCheckReject(prop.data.id).then(async resolve => {
+        if (prop.length === 1) {
+            pageNo.value = pageNo.value - 1
+            if (pageNo.value === 0) {
+                pageNo.value = 1
+            }
+        }
+        await getOpReviewData(prop.status, pageNo.value)
+        loadingInstance.value.close()
+        $ElMessage({
+            message: "审核成功,不允许添加",
+            type: "success"
+        })
+    }, reject => {
+        loadingInstance.value.close()
+        $ElMessage({
+            message: "审核失败，请联系管理员",
+            type: "error"
+        })
+    })
 }
 
 </script>
@@ -135,6 +228,14 @@ const handleExamine = () => {
             p {
                 margin-bottom: 10px;
 
+                span {
+                    font-size: 16px;
+                }
+
+                span:nth-of-type(1) {
+                    margin-right: 4px;
+                }
+
                 span:nth-of-type(2) {
                     font-weight: 100;
                 }
@@ -150,6 +251,14 @@ const handleExamine = () => {
 
                 p {
                     margin-bottom: 10px;
+
+                    span {
+                        font-size: 16px;
+                    }
+
+                    span:nth-of-type(1) {
+                        margin-right: 4px;
+                    }
 
                     span:nth-of-type(2) {
                         font-weight: 100;
@@ -167,6 +276,13 @@ const handleExamine = () => {
 
         .btn_wrap {
             text-align: right;
+
+            .status {
+                padding: 12px 20px;
+                box-sizing: border-box;
+                line-height: 40px;
+                font-weight: bold;
+            }
         }
 
 

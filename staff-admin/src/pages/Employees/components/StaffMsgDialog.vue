@@ -10,7 +10,8 @@
                 <el-row :gutter="20" style="margin-bottom: 15px;">
                     <el-col :span="12">
                         <el-form-item label="部门:" prop="departId">
-                            <el-select v-model="FormData.departId" placeholder="请选择部门" size="large" :disabled="staffId !== null">
+                            <el-select v-model="FormData.departId" placeholder="请选择部门" size="large"
+                                :disabled="setDisabled">
                                 <el-option v-for="i in departmentList" :key="i.departId" :label="i.department_Name"
                                     :value="i.departId" />
                             </el-select>
@@ -99,6 +100,8 @@ import { debounce } from "lodash"
 import { useLayoutStore } from '../../../stores/layout'
 // 引入employees仓库
 import { useEmployeesStore } from '../../../stores/employees'
+// 引入login仓库
+import { useLoginStore } from '../../../stores/login'
 //API
 import employees from '../../../api'
 //格式化时间
@@ -107,6 +110,16 @@ import { GMTToStr } from "../../../util/GMTToStr.js"
 let internalInstance = getCurrentInstance();
 // 使用employees仓库
 let employeesStore = useEmployeesStore()
+// 使用login仓库
+let loginStore = useLoginStore()
+
+//login仓库的state数据
+const {
+    // 权限列表
+    authorityList,
+    // 部门号
+    departId
+} = storeToRefs(loginStore)
 
 //表单头部标题
 let title = ref("")
@@ -122,6 +135,9 @@ let formDialog = ref(null)
 
 //等待动画
 let loadingInstance = ref(null)
+
+//提示信息
+let message = ref(null)
 
 //数值不能小于0
 const noZore = (rule, value, callback) => {
@@ -239,6 +255,28 @@ const themeType = computed(() => {
     return theme.value === "light" ? true : false
 })
 
+//设置不可使用
+const setDisabled = computed(() => {
+    //不可以修改部门
+    if (title.value === '修改') {
+        return true
+    }
+    else {
+        let index = authorityList.value.findIndex((item) => {
+            return item === 'allStaffMsgView'
+        })
+        if(index === -1){
+            FormData.departId = departId.value
+            return true
+        }else{
+            return false
+        }
+    }
+
+})
+
+
+
 //关闭对话框
 const handleClosed = () => {
     FormData.departId = ""
@@ -270,17 +308,24 @@ const handleSubmit = debounce(async (el) => {
                 await employees.reqUpdateStaff({ ...FormData, staffId: staffId.value, salary }).then(async reslove => {
                     await filterStaffData(employeesSearchForm.value)
                     loadingInstance.value.close()
-                    $ElMessage({
-                        message: "修改成功",
-                        type: "success"
-                    })
+                    if (message.value) {
+                        $ElMessage({
+                            message: message.value,
+                            type: "success"
+                        })
+                    } else {
+                        $ElMessage({
+                            message: "修改成功",
+                            type: "success"
+                        })
+                    }
+
                 }, reject => {
                     loadingInstance.value.close()
                     $ElMessage({
-                        message: "修改失败，请联系管理员",
+                        message: "失败，请联系管理员",
                         type: "error"
                     })
-
                 })
             } else {
                 let salary = FormData.salary * 1000
@@ -297,10 +342,17 @@ const handleSubmit = debounce(async (el) => {
                     FormData.salary = 0
                     FormData.entryTime = ""
                     loadingInstance.value.close()
-                    $ElMessage({
-                        message: "添加成功",
-                        type: "success"
-                    })
+                    if (message.value) {
+                        $ElMessage({
+                            message: message.value,
+                            type: "success"
+                        })
+                    } else {
+                        $ElMessage({
+                            message: "添加成功",
+                            type: "success"
+                        })
+                    }
                 }, reject => {
                     loadingInstance.value.close()
                     $ElMessage({
@@ -320,11 +372,10 @@ const handleSubmit = debounce(async (el) => {
 
 defineExpose({
     //员工信息对话框显示
-    StaffMsgDialogShow: (tit, item) => {
-        console.log(item)
+    StaffMsgDialogShow: (tit, item, msg) => {
         title.value = tit
         formDialog.value.dialogStatus = true
-
+        message.value = msg
         if (item && item.staffId !== null) {
             staffId.value = item.staffId
             FormData.departId = item.departId

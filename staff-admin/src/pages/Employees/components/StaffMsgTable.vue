@@ -3,7 +3,7 @@
         <template v-slot:body>
             <div class="StaffMsgTable" :class="[theme === 'light' ? 'light' : 'dark']">
                 <div class="operation">
-                    <el-button type="primary" size="large" @click="handleAdd('添加')"
+                    <el-button type="primary" size="large" @click="handleAdd('添加', '添加信息已发送请等待审核')"
                         v-if="hasUserAddStaff">添加(需审核)</el-button>
                     <el-button type="primary" size="large" @click="handleAdd('添加')"
                         v-if="hasAdminAddStaff">添加</el-button>
@@ -31,11 +31,12 @@
                         v-if="hasUserUpdateStaff || hasAdminUpdateStaff || hasSettingDimission">
 
                         <template #default="scope">
-                            <el-button v-if="hasUserUpdateStaff" size="small" @click="handleUpdate('修改', scope.row)"
+                            <el-button v-if="hasUserUpdateStaff" size="small"
+                                @click="handleUpdate('修改', scope.row, '修改信息已发送请等待审核')"
                                 type="warning">修改(需审核)</el-button>
                             <el-button v-if="hasAdminUpdateStaff" size="small" @click="handleUpdate('修改', scope.row)"
                                 type="warning">修改</el-button>
-                            <el-button v-if="hasSettingDimission" size="small" @click="handleResign(scope.row)"
+                            <el-button v-if="hasSettingDimission" size="small" @click="isResign(scope.row)"
                                 type="danger">设置为离职状态</el-button>
                         </template>
                     </el-table-column>
@@ -48,6 +49,24 @@
         </template>
     </Card>
     <StaffMsgDialog ref="StaffMsgDialogRef"></StaffMsgDialog>
+    <Dialog class="confirmDialog" ref="confirmDialog" width="15%" top="15%">
+        <template v-slot:header>
+            <span :style="{ color: themeType ? '#333' : '#ebeaea' }">确认弹窗</span>
+        </template>
+        <template v-slot:body>
+            <div :class="themeType ? 'lightFont' : 'darkFont'">
+                确认将{{ resignStaff.staffName }}员工设置为离职吗?
+            </div>
+        </template>
+        <template v-slot:footer>
+            <el-button @click="confirmDialog.dialogStatus = false"><el-icon class="el-icon--right">
+                    <CloseBold />
+                </el-icon> 取消</el-button>
+            <el-button type="primary" @click="handleResign"> <el-icon class="el-icon--right">
+                    <Select />
+                </el-icon> 确认 </el-button>
+        </template>
+    </Dialog>
 </template>
 
 
@@ -86,6 +105,9 @@ let employeesStore = useEmployeesStore()
 //等待动画
 let loadingInstance = ref(null)
 
+//离职员工
+let resignStaff = ref(null)
+
 // layout仓库的state数据
 const {
     // 主题
@@ -116,6 +138,10 @@ const {
     filterStaffData,
 } = employeesStore
 
+//主题类型
+const themeType = computed(() => {
+    return theme.value === "light" ? true : false
+})
 
 // 是否有设置员工为离职的权限
 const hasSettingDimission = computed(() => {
@@ -169,30 +195,40 @@ const hasAllStaffMsgView = computed(() => {
 let StaffMsgDialogRef = ref(null)
 
 //添加员工信息
-const handleAdd = (tit) => {
-    StaffMsgDialogRef.value.StaffMsgDialogShow(tit)
+const handleAdd = (tit, msg) => {
+    StaffMsgDialogRef.value.StaffMsgDialogShow(tit, null, msg)
 }
 
 //修改员工信息
-const handleUpdate = (tit, item) => {
-    StaffMsgDialogRef.value.StaffMsgDialogShow(tit, item)
+const handleUpdate = (tit, item,msg) => {
+    StaffMsgDialogRef.value.StaffMsgDialogShow(tit, item, msg)
+}
+
+//确认对话框
+let confirmDialog = ref(null)
+
+// 是否设置为离职员工
+const isResign = async (item) => {
+    confirmDialog.value.dialogStatus = true
+    resignStaff.value = item
+
 }
 
 // 设置为离职员工
-const handleResign = async (item) => {
+const handleResign = async () => {
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
-    await employees.reqResignStaff({ ...item, entryTime: GMTToStr(item.entryTime) }).then(async resolve => {
+    await employees.reqResignStaff({ ...resignStaff.value, entryTime: GMTToStr(resignStaff.value.entryTime) }).then(async resolve => {
         if (staffList.value.length === 1) {
             employeesSearchForm.value.pageNo = employeesSearchForm.value.pageNo - 1
             if (employeesSearchForm.value.pageNo === 0) {
                 employeesSearchForm.value.pageNo = 1
             }
         }
-
         await getData()
         //动画结束
         loadingInstance.value.close()
+        confirmDialog.value.dialogStatus = false
         $ElMessage({
             message: resolve.message,
             type: "success"
@@ -200,6 +236,7 @@ const handleResign = async (item) => {
     }, reject => {
         //动画结束
         loadingInstance.value.close()
+        confirmDialog.value.dialogStatus = false
         $ElMessage({
             message: reject.message,
             type: "error"
@@ -382,56 +419,73 @@ onMounted(async () => {
 
 
 <style scoped lang="less">
-.table{
+.table {
     height: 100%;
     display: flex;
+
+    .StaffMsgTable {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+
+    .light {
+        :deep(.el-pagination__goto) {
+            color: #333333 !important;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        :deep(.el-pagination__classifier) {
+            color: #333333 !important;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        :deep(.el-pagination__total) {
+            color: #333333 !important;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    }
+
+    .dark {
+        :deep(.el-pagination__goto) {
+            color: #EBEAEA !important;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        :deep(.el-pagination__classifier) {
+            color: #EBEAEA !important;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        :deep(.el-pagination__total) {
+            color: #EBEAEA !important;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    }
 }
-.StaffMsgTable {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-sizing: border-box;
-}
 
-.light {
-    :deep(.el-pagination__goto) {
-        color: #333333 !important;
+.confirmDialog {
+    .lightFont {
+        color: #333;
         font-size: 16px;
         font-weight: bold;
+        text-align: center;
     }
 
-    :deep(.el-pagination__classifier) {
-        color: #333333 !important;
+    .darkFont {
+        color: #ebeaea;
         font-size: 16px;
         font-weight: bold;
-    }
-
-    :deep(.el-pagination__total) {
-        color: #333333 !important;
-        font-size: 16px;
-        font-weight: bold;
-    }
-}
-
-.dark {
-    :deep(.el-pagination__goto) {
-        color: #EBEAEA !important;
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    :deep(.el-pagination__classifier) {
-        color: #EBEAEA !important;
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    :deep(.el-pagination__total) {
-        color: #EBEAEA !important;
-        font-size: 16px;
-        font-weight: bold;
+        text-align: center;
     }
 }
 </style>
