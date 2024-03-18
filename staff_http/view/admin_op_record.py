@@ -65,7 +65,7 @@ def queryAll():
         operatingData = userData.schema()["authority"].find("operatingData")
         if operatingData != -1:
             # 查询出所有数据
-            queryData = Admin_op_record.query.order_by(Admin_op_record.datetime)
+            queryData = Admin_op_record.query.order_by(-Admin_op_record.datetime)
             # 时间区域查找
             if (startTime != None) and (endTime != None and endTime != ""):
                 queryData = queryData.filter(Admin_op_record.datetime.between(startTime, endTime))
@@ -73,12 +73,13 @@ def queryAll():
             if searchText != None and searchText != "":
                 queryData = queryData.filter(Admin_op_record.content.like("%" + searchText + "%"))
             # 分页
-            pn = queryData.paginate(page=int(pageNo), per_page=7, error_out=False)
+            pn = queryData.paginate(page=int(pageNo), per_page=12, error_out=False)
             # 添加到dataList
             for item in pn:
                 dataList.append({
                     "id":item.schema()["id"],
                     "content":item.schema()["content"],
+                    "staffName": Admin_user.query.filter(Admin_user.staffId == item.schema()["staffId"]).first().schema()["staffName"],
                     "staffId":item.schema()["staffId"],
                     "datetime":item.schema()["datetime"],
                 })

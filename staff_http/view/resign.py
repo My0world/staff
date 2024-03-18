@@ -138,10 +138,6 @@ def resignStaff():
     job,
     # 年龄(区间)
     (startAge-endAge),
-    # 薪资(区间)
-    (startSalary-endSalary),
-    # 加入公司的时间(区间)
-    (startEntryTime-endEntryTime),
     # 离职公司的时间(区间)
     (startResignTime-endResignTime),
     # 搜索关键字
@@ -189,16 +185,8 @@ def filterAll():
         job = request.json.get('job')
         startAge = request.json.get('startAge')
         endAge = request.json.get('endAge')
-
-        startSalary = request.json.get('startSalary')
-        endSalary = request.json.get('endSalary')
-
-        startEntryTime = request.json.get('startEntryTime')
-        endEntryTime = request.json.get('endEntryTime')
-
         startResignTime = request.json.get('startResignTime')
         endResignTime = request.json.get('endResignTime')
-
         searchValue = request.json.get('searchValue')
         pageNo = request.json.get('pageNo')
         pageSize = request.json.get('pageSize')
@@ -218,10 +206,6 @@ def filterAll():
                 queryData = queryData.filter(Resign.job == job)
             if (startAge != None and endAge != None) and (endAge != 0):
                 queryData = queryData.filter(Resign.age.between(startAge, endAge))
-            if (startSalary != None and endSalary != None) and (endSalary != 0):
-                queryData = queryData.filter(Resign.salary.between(startSalary, endSalary))
-            if (startEntryTime != None) and (endEntryTime != None and endEntryTime != ""):
-                queryData = queryData.filter(Resign.entryTime.between(startEntryTime, endEntryTime))
             if (startResignTime != None) and (endResignTime != None and endResignTime != ""):
                 queryData = queryData.filter(Resign.resignTime.between(startResignTime, endResignTime))
             if searchValue != None and searchValue != "":
@@ -279,10 +263,6 @@ def filterAll():
                 queryData = queryData.filter(Resign.job == job)
             if (startAge != None and endAge != None) and (endAge != 0):
                 queryData = queryData.filter(Resign.age.between(startAge, endAge))
-            if (startSalary != None and endSalary != None) and (endSalary != 0):
-                queryData = queryData.filter(Resign.salary.between(startSalary, endSalary))
-            if (startEntryTime != None) and (endEntryTime != None and endEntryTime != ""):
-                queryData = queryData.filter(Resign.entryTime.between(startEntryTime, endEntryTime))
             if (startResignTime != None) and (startResignTime != None and endResignTime != ""):
                 queryData = queryData.filter(Resign.resignTime.between(startResignTime, endResignTime))
             if searchValue != None and searchValue != "":

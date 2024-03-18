@@ -313,6 +313,8 @@ class Resignreview(db.Model):
     id = db.Column(db.Integer(),primary_key = True,autoincrement = True)
     # 员工ID
     staffId = db.Column(db.String(7),primary_key = True,autoincrement = False)
+    # 员工姓名
+    staffName = db.Column(db.String(255),nullable = False)
     # 内容
     content = db.Column(db.Text(),nullable = False)
     # 申请时间
@@ -325,6 +327,7 @@ class Resignreview(db.Model):
         return {
             'id': self.id,
             'staffId':self.staffId,
+            'staffName': self.staffName,
             'content': self.content,
             'dateTime': self.dateTime,
             'status': self.status,
@@ -388,6 +391,8 @@ class Workattendance(db.Model):
     status = db.Column(db.String(255),nullable = False)
     # 员工ID
     staffId = db.Column(db.String(7),nullable = False)
+    # 员工姓名
+    staffName = db.Column(db.String(255),nullable = False)
     # 日期
     date = db.Column(db.Date(),nullable = False)
     # 开始时间
@@ -401,6 +406,7 @@ class Workattendance(db.Model):
             'id': self.id,
             'status': self.status,
             'staffId': self.staffId,
+            'staffName': self.staffName,
             'date': self.date,
             'startTime':self.startTime,
             'endTime':self.endTime,

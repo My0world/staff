@@ -8,7 +8,7 @@
             </el-col>
         </el-row>
         <div class="pagination" :class="theme">
-            <el-pagination class="trans" v-model:current-page="pageNo" :page-size="10"
+            <el-pagination class="trans" v-model:current-page="pageNo" :page-size="8"
                 layout=" jumper, total,->, prev, pager, next" :total="total" :background="true"
                 @current-change="handleCurrentChange" />
         </div>
@@ -104,11 +104,11 @@ export default {
         } = operatingRequestStore
 
         // 获取数据
-        const getData = async (status, pageNo) => {
+        const getData = async (status, PNo) => {
             // 动画开始
             loadingInstance.value = ElLoading.service({ fullscreen: true })
             // 获取数据
-            await Promise.all(getOpReviewData(status, pageNo), getDepartmentList()).then(reslove => {
+            await Promise.all(getOpReviewData(status, PNo), getDepartmentList()).then(reslove => {
                 // 动画结束
                 loadingInstance.value.close()
             }, reject => {

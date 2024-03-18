@@ -1,18 +1,29 @@
 <template>
-    <div class="Feedback">
-        <h1>反馈消息</h1> 
+    <div class="StaffMsg">
+        <el-row :gutter="20" class="container">
+            <el-col :span="24" style="height: 100%;">
+                <SearchCard></SearchCard>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20" class="container">
+            <el-col :span="24" style="height: 100%;">
+                <FeedbackList></FeedbackList>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
 
 <script setup>
 import { onMounted } from 'vue';
+import SearchCard from './components/SearchCard.vue';
+import FeedbackList from './components/FeedbackList.vue';
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
 // 引入login仓库
 import { useLoginStore } from '../../stores/login'
 // 路由
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 
 //使用路由
 let router = useRouter()
@@ -26,17 +37,31 @@ const {
     authorityList,
 } = storeToRefs(loginStore)
 
-onMounted(()=>{
-    if(authorityList.value.indexOf("feedback") === -1){
-        router.push({name:'403'})
+onMounted(() => {
+    if (authorityList.value.indexOf("feedback") === -1) {
+        router.push({ name: '403' })
     }
 })
+
+
 </script>
 
 
-<style>
-    .Feedback{
-        
-    }
-</style>
+<style scoped lang="less">
+.StaffMsg {
+    margin-top: 17px;
+    height: calc(100% - 17px);
 
+    .container {
+        overflow-y: auto;
+        padding: 10px;
+        padding-bottom: 0px;
+        box-sizing: border-box;
+        &:nth-last-of-type(1){
+            padding-top: 10px;
+            height: calc(100% - 140px);
+            padding-bottom: 10px;
+        }
+    }
+}
+</style>

@@ -64,14 +64,17 @@ def queryAll():
                 queryData = Resignreview.query.filter_by()
             else:
                 queryData = Resignreview.query.filter(Resignreview.status == status)
+            # 排序
+            queryData = queryData.order_by(-Resignreview.dateTime)
             # 分页
-            pn = queryData.paginate(page=int(pageNo), per_page=7, error_out=False)
+            pn = queryData.paginate(page=int(pageNo), per_page=15, error_out=False)
             # 添加到dataList
             for item in pn:
                 dataList.append({
                     "id":item.schema()["id"],
                     "content":item.schema()["content"],
                     "staffId":item.schema()["staffId"],
+                    "staffName":item.schema()["staffName"],
                     "dateTime":item.schema()["dateTime"],
                     "status":item.schema()["status"],
                 })
@@ -123,7 +126,7 @@ def queryAll():
 """
 @resignreview.route('/resignreview/updateStatus',methods=['POST'])
 @jwt_required()
-def checkReject():
+def updateStatus():
     try:
         userid = get_jwt_identity()
         opid = request.json.get("opid")

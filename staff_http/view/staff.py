@@ -379,7 +379,7 @@ def addStaff():
             else:
                 # 其他用户的操作审核通过
                 Admin_op_review.query.filter(Admin_op_review.id == opid).update({'status': "审核通过"})
-                record = f'<div class="shortMsg">{requestUserid}用户的添加信息请求已被{userid}用户审核并通过</div>'
+                record = f'<div class="shortMsg">{requestUserid}用户的添加信息请求编号为{opid}已被{userid}用户审核并通过</div>'
             # 向员工表添加信息
             staff = Staff(staffId = staffId, departId = departId, phoneNum = phoneNum, staffName = staffName, sex = sex, age = age, salary = salary ,job = job ,entryTime = entryTime)
             # 向操作记录表添加信息
@@ -632,7 +632,7 @@ def updateStaff():
                 # 审核修改
                 # 其他用户的操作审核通过
                 Admin_op_review.query.filter(Admin_op_review.id == opid).update({'status': "审核通过"})
-                record = f'<div class="shortMsg">{requestUserid}用户的修改信息请求已被{userid}用户审核并通过</div>'
+                record = f'<div class="shortMsg">{requestUserid}用户的修改信息请求编号为{opid}已被{userid}用户审核并通过</div>'
             # 向员工表更新信息
             Staff.query.filter(Staff.staffId == staffId).update({
                         'departId': departId,

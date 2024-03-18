@@ -20,7 +20,7 @@
 
 <script setup>
 import list from './components/list.vue';
-import { ref, computed, onMounted, getCurrentInstance } from 'vue';
+import { ref, onMounted,provide } from 'vue';
 // 引入layout仓库
 import { useLayoutStore } from '../../stores/layout'
 // 引入login仓库
@@ -35,6 +35,7 @@ let router = useRouter()
 
 //标签页点击的值
 let activeName = ref('待审核')
+provide("activeName",activeName)
 
 // 使用layout仓库
 let layoutStore = useLayoutStore()

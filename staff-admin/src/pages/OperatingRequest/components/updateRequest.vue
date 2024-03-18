@@ -226,9 +226,7 @@ const handleAllow = async () => {
 const handleReject = async () => {
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
-    await employees.reqUpdateStaff(
-        { ...prop.data.data, requestUserid: prop.data.staffId, opid: prop.data.id }
-    ).then(async resolve => {
+    await operatingRequest.reqCheckReject(prop.data.id).then(async resolve => {
         if (prop.length === 1) {
             pageNo.value = pageNo.value - 1
             if (pageNo.value === 0) {
@@ -238,7 +236,7 @@ const handleReject = async () => {
         await getOpReviewData(prop.status, pageNo.value)
         loadingInstance.value.close()
         $ElMessage({
-            message: "审核成功,允许添加",
+            message: "审核成功,不允许审核",
             type: "success"
         })
     }, reject => {

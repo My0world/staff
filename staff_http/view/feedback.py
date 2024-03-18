@@ -135,6 +135,7 @@ def queryAll():
                 dataList.append({
                     "id":item.schema()["id"],
                     "content":item.schema()["content"],
+                    "send_staffName":Staff.query.filter(Staff.staffId == item.schema()["send_staffId"]).first().schema()["staffName"],
                     "send_staffId":item.schema()["send_staffId"],
                     "dateTime":item.schema()["dateTime"],
                 })
