@@ -91,6 +91,7 @@ export const useLoginStore = defineStore("login", {
             return res.message
         },
         resetToken() {
+            //删除cookie
             this.$reset()
         }
     },

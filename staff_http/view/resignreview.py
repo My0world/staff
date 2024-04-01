@@ -187,7 +187,7 @@ def updateStatus():
                     # 返回体
                     return jsonify({
                         #返回状态码
-                        "code": 401,
+                        "code": 400,
                         #返回信息描述
                         "message": '未找到该名员工',
                         #返回值
@@ -218,7 +218,7 @@ def updateStatus():
             else:
                 return jsonify({
                     #返回状态码
-                    "code": 401,
+                    "code": 400,
                     #返回信息描述
                     "message": "状态不正确",
                     #返回值

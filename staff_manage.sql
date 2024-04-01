@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 18/03/2024 11:18:06
+ Date: 01/04/2024 09:19:50
 */
 
 SET NAMES utf8mb4;
@@ -72,11 +72,13 @@ CREATE TABLE `admin_op_record`  (
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `datetime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 198 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 202 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin_op_record
 -- ----------------------------
+INSERT INTO `admin_op_record` VALUES (200, '<div class=\"shortMsg\">012302用户的修改信息请求编号为46已被012301用户审核并通过</div>', '012301', '2024-03-31 22:29:12');
+INSERT INTO `admin_op_record` VALUES (201, '<div class=\"shortMsg\">012302用户的操作请求编号为45已被012301用户驳回</div>', '012301', '2024-03-31 22:29:15');
 INSERT INTO `admin_op_record` VALUES (190, '<div class=\"shortMsg\">012301用户通过了042301员工的离职申请</div>', '012301', '2024-03-17 20:57:40');
 INSERT INTO `admin_op_record` VALUES (191, '<div class=\"shortMsg\">012301用户通过了012408员工的离职申请</div>', '012301', '2024-03-17 20:58:51');
 INSERT INTO `admin_op_record` VALUES (192, '<div class=\"shortMsg\">022302员工的离职申请已被012301用户驳回</div>', '012301', '2024-03-17 20:58:58');
@@ -85,6 +87,8 @@ INSERT INTO `admin_op_record` VALUES (194, '<div class=\"shortMsg\">032301员工
 INSERT INTO `admin_op_record` VALUES (195, '<div class=\"shortMsg\">012301将012408从离职员工移到了正式员工中</div>', '012301', '2024-03-17 22:45:16');
 INSERT INTO `admin_op_record` VALUES (196, '<div class=\"shortMsg\">012301将042301从离职员工移到了正式员工中</div>', '012301', '2024-03-17 22:45:21');
 INSERT INTO `admin_op_record` VALUES (197, '<div class=\"shortMsg\">012301将022405从离职员工移到了正式员工中</div>', '012301', '2024-03-17 22:45:23');
+INSERT INTO `admin_op_record` VALUES (198, '\n            <div class=\"add\">\n            <div>\n                <p>添加信息</p>\n                <p>012302用户需要添加一位员工</p>\n            </div>\n            \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>帕姆</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>18131129667</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>4</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>6000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-03-02</span>\n            </p>\n        </div>\n        </div>', '012302', '2024-03-31 22:17:07');
+INSERT INTO `admin_op_record` VALUES (199, '\n            <div class=\'update\'>\n                <div>\n                    <p>修改信息请求</p>\n                    <p>012302用户想要修改员工号为012408员工的信息</p>\n                </div>\n            \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19231239223</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19231000000</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        </div>', '012302', '2024-03-31 22:17:29');
 INSERT INTO `admin_op_record` VALUES (187, '\n            <div class=\'update\'>\n                <div>\n                    <p>修改信息请求</p>\n                    <p>012302用户想要修改员工号为012408员工的信息</p>\n                </div>\n            \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19231239223</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>1</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        </div>', '012302', '2024-03-17 20:32:30');
 INSERT INTO `admin_op_record` VALUES (188, '<div class=\"shortMsg\">012302用户的操作请求编号为44已被012301用户驳回</div>', '012301', '2024-03-17 20:32:44');
 INSERT INTO `admin_op_record` VALUES (189, '<div class=\"shortMsg\">012302用户的修改信息请求编号为43已被012301用户审核并通过</div>', '012301', '2024-03-17 20:32:47');
@@ -106,7 +110,7 @@ CREATE TABLE `admin_op_review`  (
   `datetime` datetime(0) NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 47 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin_op_review
@@ -153,6 +157,8 @@ INSERT INTO `admin_op_review` VALUES (41, '{\"oldData\": {\"staffId\": \"012408\
 INSERT INTO `admin_op_review` VALUES (42, '{\"oldData\": {\"staffId\": \"012408\", \"departId\": \"01\", \"phoneNum\": 19231239223, \"job\": \"\\u7ecf\\u7406\", \"staffName\": \"\\u7a79\", \"sex\": \"\\u7537\", \"age\": 9, \"salary\": 10000, \"entryTime\": \"2023-07-20\"}, \"newData\": {\"staffId\": \"012408\", \"departId\": \"01\", \"phoneNum\": \"1\", \"job\": \"\\u7ecf\\u7406\", \"staffName\": \"\\u7a79\", \"sex\": \"\\u7537\", \"age\": 9, \"salary\": 10000, \"entryTime\": \"2023-07-20\"}}', 'updateRequest', '012302', '2024-03-17 20:31:41', '审核驳回');
 INSERT INTO `admin_op_review` VALUES (43, '{\"oldData\": {\"staffId\": \"012408\", \"departId\": \"01\", \"phoneNum\": 19231239223, \"job\": \"\\u7ecf\\u7406\", \"staffName\": \"\\u7a79\", \"sex\": \"\\u7537\", \"age\": 9, \"salary\": 10000, \"entryTime\": \"2023-07-20\"}, \"newData\": {\"staffId\": \"012408\", \"departId\": \"01\", \"phoneNum\": 19231239223, \"job\": \"\\u7ecf\\u7406\", \"staffName\": \"\\u7a79\", \"sex\": \"\\u7537\", \"age\": 9, \"salary\": 10000, \"entryTime\": \"2023-07-20\"}}', 'updateRequest', '012302', '2024-03-17 20:32:27', '审核通过');
 INSERT INTO `admin_op_review` VALUES (44, '{\"oldData\": {\"staffId\": \"012408\", \"departId\": \"01\", \"phoneNum\": 19231239223, \"job\": \"\\u7ecf\\u7406\", \"staffName\": \"\\u7a79\", \"sex\": \"\\u7537\", \"age\": 9, \"salary\": 10000, \"entryTime\": \"2023-07-20\"}, \"newData\": {\"staffId\": \"012408\", \"departId\": \"01\", \"phoneNum\": \"1\", \"job\": \"\\u7ecf\\u7406\", \"staffName\": \"\\u7a79\", \"sex\": \"\\u7537\", \"age\": 9, \"salary\": 10000, \"entryTime\": \"2023-07-20\"}}', 'updateRequest', '012302', '2024-03-17 20:32:30', '审核驳回');
+INSERT INTO `admin_op_review` VALUES (45, '{\"departId\": \"01\", \"phoneNum\": \"18131129667\", \"staffName\": \"\\u5e15\\u59c6\", \"sex\": \"\\u7537\", \"age\": 4, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"salary\": 6000, \"entryTime\": \"2024-03-02\"}', 'addRequest', '012302', '2024-03-31 22:17:07', '审核驳回');
+INSERT INTO `admin_op_review` VALUES (46, '{\"oldData\": {\"staffId\": \"012408\", \"departId\": \"01\", \"phoneNum\": 19231239223, \"job\": \"\\u7ecf\\u7406\", \"staffName\": \"\\u7a79\", \"sex\": \"\\u7537\", \"age\": 9, \"salary\": 10000, \"entryTime\": \"2023-07-20\"}, \"newData\": {\"staffId\": \"012408\", \"departId\": \"01\", \"phoneNum\": \"19231000000\", \"job\": \"\\u7ecf\\u7406\", \"staffName\": \"\\u7a79\", \"sex\": \"\\u7537\", \"age\": 9, \"salary\": 10000, \"entryTime\": \"2023-07-20\"}}', 'updateRequest', '012302', '2024-03-31 22:17:29', '审核通过');
 
 -- ----------------------------
 -- Table structure for admin_send_notice
@@ -189,7 +195,7 @@ CREATE TABLE `admin_user`  (
 -- Records of admin_user
 -- ----------------------------
 INSERT INTO `admin_user` VALUES ('012301', '01', '达达利亚', 'admin', '在线', 'home,staff,staffMsg,checkingIn,settingDimission,adminAddStaff,adminUpdateStaff,updateCheckingIn,allStaffCheckingInView,user,allStaffMsgView,operatingRequestAudit,updateOpReviewStatus,showUserPassWord,allotAuthority,updateUserPassWord,deleteUser,operatingData,feedback,dimission,dimissionData,addAdminUser,returnStaffTable,dimissionAudit,updateResignReviewStatus');
-INSERT INTO `admin_user` VALUES ('012302', '01', '万叶', 'admin', '下线', 'home,staff,staffMsg,userAddStaff,userUpdateStaff,user,allotAuthority,operatingRequestAudit,allStaffMsgView');
+INSERT INTO `admin_user` VALUES ('012302', '01', '万叶', 'admin', '下线', 'home,staff,staffMsg,userAddStaff,userUpdateStaff,user,allotAuthority,operatingRequestAudit');
 
 -- ----------------------------
 -- Table structure for askforleave
@@ -370,7 +376,7 @@ INSERT INTO `staff` VALUES ('022406', '02', 19273322110, '星', '女', 5, 5000, 
 INSERT INTO `staff` VALUES ('042403', '04', 18293321991, '三月七', '女', 22, 9000, '普通员工', '2024-03-07');
 INSERT INTO `staff` VALUES ('042404', '04', 18293318992, '姬子', '女', 32, 13000, '普通员工', '2024-03-06');
 INSERT INTO `staff` VALUES ('012407', '01', 19191923128, '瓦尔特·杨', '男', 500, 10000, '普通员工', '2024-03-14');
-INSERT INTO `staff` VALUES ('012408', '01', 19231239223, '穹', '男', 9, 10000, '经理', '2023-07-20');
+INSERT INTO `staff` VALUES ('012408', '01', 19231000000, '穹', '男', 9, 10000, '经理', '2023-07-20');
 INSERT INTO `staff` VALUES ('032403', '03', 18173209421, '丹恒•饮月', '男', 600, 7000, '普通员工', '2024-03-13');
 INSERT INTO `staff` VALUES ('032404', '03', 12689931884, '艾吉奥·奥迪托雷·达·佛罗伦萨', '男', 35, 10000, '普通员工', '2024-03-14');
 INSERT INTO `staff` VALUES ('022405', '02', 15121190114, '派蒙', '女', 6, 4000, '普通员工', '2024-03-08');

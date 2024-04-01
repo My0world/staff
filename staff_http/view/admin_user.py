@@ -65,7 +65,7 @@ def resetData():
 """
 @admin_user.route('/admin_user/login',methods=['POST'])
 def login():
-    # try:
+    try:
         # 获取post数据
         staffId = request.json.get('staffId')
         password = request.json.get('password')
@@ -115,16 +115,16 @@ def login():
                     "authority":adminUser[0].schema()["authority"],
                 }
             })
-    # except:
-    #     # 返回体
-    #     return jsonify({
-    #         #返回状态码
-    #         "code": 500,
-    #         #返回信息描述
-    #         "message": "内部服务器错误",
-    #         #返回值
-    #         "data": {}
-    #     })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
 
 
 # 退出登录
@@ -744,7 +744,7 @@ def allotAuth():
                     if len(islast) <= 1 :
                         return jsonify({           
                             #返回状态码
-                            "code": 401,
+                            "code": 400,
                             #返回信息描述
                             "message": "必须要有一个拥有分配权限的人",
                             #返回值

@@ -184,7 +184,7 @@ def filterAll():
                 # 返回体
                 return jsonify({
                     #返回状态码
-                    "code": 401,
+                    "code": 400,
                     #返回信息描述
                     "message": "请确认你所在的部门是否存在",
                     #返回值
@@ -434,7 +434,7 @@ def addStaff():
             # 返回体
             return jsonify({
                 #返回状态码
-                "code": 401,
+                "code": 403,
                 #返回信息描述
                 "message": "你没有权限",
                 #返回值

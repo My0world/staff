@@ -166,64 +166,14 @@ const {
 
 //表单规则
 const FormRules = reactive({
-    departId: [
-        {
-            required: true,
-            message: '请选择部门',
-            trigger: 'change',
-        },
-    ],
-    staffName: [
-        {
-            required: true,
-            message: '请输入姓名',
-            trigger: 'change',
-        },
-    ],
-    job: [
-        {
-            required: true,
-            message: '请选择职位',
-            trigger: 'change',
-        },
-    ],
-    phoneNum: [
-        {
-            required: true,
-            message: '请输入手机号码',
-            trigger: 'change',
-        },
-    ],
-    sex: [
-        {
-            required: true,
-            message: '请选择性别',
-            trigger: 'change',
-        },
-    ],
-    age: [
-        {
-            required: true,
-            message: '请输入年龄',
-            trigger: 'change',
-        },
-        { validator: noZore, trigger: 'blur' }
-    ],
-    salary: [
-        {
-            required: true,
-            message: '请输入薪资',
-            trigger: 'change',
-        },
-        { validator: noZore, trigger: 'blur' }
-    ],
-    entryTime: [
-        {
-            required: true,
-            message: '请选择日期',
-            trigger: 'change',
-        },
-    ],
+    departId: [{ required: true, message: '请选择部门', trigger: 'change', },],
+    staffName: [{ required: true, message: '请输入姓名', trigger: 'change', },],
+    job: [{ required: true, message: '请选择职位', trigger: 'change', },],
+    phoneNum: [{ required: true, message: '请输入手机号码', trigger: 'change', },],
+    sex: [{ required: true, message: '请选择性别', trigger: 'change', },],
+    age: [{ required: true, message: '请输入年龄', trigger: 'change', }, { validator: noZore, trigger: 'blur' }],
+    salary: [{ required: true, message: '请输入薪资', trigger: 'change', }, { validator: noZore, trigger: 'blur' }],
+    entryTime: [{ required: true, message: '请选择日期', trigger: 'change', },],
 })
 
 //表单数据
@@ -265,10 +215,10 @@ const setDisabled = computed(() => {
         let index = authorityList.value.findIndex((item) => {
             return item === 'allStaffMsgView'
         })
-        if(index === -1){
+        if (index === -1) {
             FormData.departId = departId.value
             return true
-        }else{
+        } else {
             return false
         }
     }

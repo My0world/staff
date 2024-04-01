@@ -364,7 +364,7 @@ def returnStaff():
                 # 返回体
                 return jsonify({
                     #返回状态码
-                    "code": 401,
+                    "code": 400,
                     #返回信息描述
                     "message": "离职员工中没有这位员工哦",
                     #返回值
