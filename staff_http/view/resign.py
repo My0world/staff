@@ -39,7 +39,7 @@ resign = Blueprint('resign',__name__)
 @resign.route('/resign/resignStaff',methods=['POST'])
 @jwt_required()
 def resignStaff():
-    try:
+    # try:
         userid = get_jwt_identity()
         # 是否登录了
         if userid == None:
@@ -82,15 +82,34 @@ def resignStaff():
         # 对权限进行判断
         if settingDimission != -1:    
             record = f'<div class="shortMsg">{userid}将{staffName}设置为离职</div>'
-            # 向离职员工表添加信息
-            resign = Resign(staffId = staffId, departId = departId, phoneNum = phoneNum, staffName = staffName, sex = sex, age = age, salary = salary ,job = job ,entryTime = entryTime ,resignTime = getDate())
+
             # 向操作记录表添加信息
             msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
+            # 如果用户表存在就删除用户表
+            adminUser = Admin_user.query.filter(Admin_user.staffId == staffId).first()
+            if adminUser != None:
+                print(adminUser.schema()["staffId"])
+                # 查找权限
+                allotAuthority = adminUser.schema()["authority"].find("allotAuthority")
+                # 如果有分配权限的能力
+                if allotAuthority != -1:
+                    # 查找是否当前有分配权限的人
+                    islast = Admin_user.query.filter(Admin_user.authority.like("%allotAuthority%")).all()
+                    if len(islast) <= 1 :
+                        return jsonify({           
+                            #返回状态码
+                            "code": 400,
+                            #返回信息描述
+                            "message": "必须要有一个拥有分配权限的人",
+                            #返回值
+                            "data": {}
+                        })
+                # 删除用户表
+                Admin_user.query.filter(Admin_user.staffId == staffId).delete()
             # 删除员工表
             Staff.query.filter(Staff.staffId == staffId).delete()
-            # 如果用户表存在就删除用户表
-            if Admin_user.query.filter(Admin_user.staffId == staffId).first() != None:
-                Admin_user.query.filter(Staff.staffId == staffId).delete()
+            # 向离职员工表添加信息
+            resign = Resign(staffId = staffId, departId = departId, phoneNum = phoneNum, staffName = staffName, sex = sex, age = age, salary = salary ,job = job ,entryTime = entryTime ,resignTime = getDate())
             db.session.add_all([resign,msg])
             db.session.commit()
             # 返回体
@@ -112,16 +131,16 @@ def resignStaff():
                 #返回值
                 "data": {}
             })
-    except:
-        # 返回体
-        return jsonify({
-            #返回状态码
-            "code": 500,
-            #返回信息描述
-            "message": "内部服务器错误",
-            #返回值
-            "data": {}
-        })
+    # except:
+    #     # 返回体
+    #     return jsonify({
+    #         #返回状态码
+    #         "code": 500,
+    #         #返回信息描述
+    #         "message": "内部服务器错误",
+    #         #返回值
+    #         "data": {}
+    #     })
     
 
 

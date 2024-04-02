@@ -1,6 +1,15 @@
 <template>
     <div class="User">
-        <h1>用户管理</h1>
+        <el-row :gutter="20" class="container">
+            <el-col :span="24" style="height: 100%;">
+                <SearchCard></SearchCard>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20" class="container">
+            <el-col :span="24" style="height: 100%;">
+                <UserTable></UserTable>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -12,7 +21,10 @@ import { storeToRefs } from 'pinia'
 // 引入login仓库
 import { useLoginStore } from '../../stores/login'
 // 路由
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
+
+import SearchCard from './components/SearchCard.vue';
+import UserTable from './components/UserTable.vue';
 
 //使用路由
 let router = useRouter()
@@ -26,17 +38,29 @@ const {
     authorityList,
 } = storeToRefs(loginStore)
 
-onMounted(()=>{
-    if(authorityList.value.indexOf("user") === -1){
-        router.push({name:'403'})
+onMounted(() => {
+    if (authorityList.value.indexOf("user") === -1) {
+        router.push({ name: '403' })
     }
 })
 </script>
 
 
 <style>
-    .User{
-        
-    }
-</style>
+.User {
+    margin-top: 17px;
+    height: calc(100% - 17px);
 
+    .container {
+        overflow-y: auto;
+        padding: 10px;
+        padding-bottom: 0px;
+        box-sizing: border-box;
+        &:nth-last-of-type(1){
+            padding-top: 10px;
+            height: calc(100% - 140px);
+            padding-bottom: 10px;
+        }
+    }
+}
+</style>

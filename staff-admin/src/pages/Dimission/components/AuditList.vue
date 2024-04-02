@@ -4,7 +4,7 @@
             <div class="AuditList" :class="[theme === 'light' ? 'light' : 'dark']">
                 <el-table :data="auditList" style="width: 100%;margin: 10px 0px; height:calc(100% - 60px) ;" border>
                     <el-table-column :resizable="false" prop="staffId" label="员工号" min-width="35" />
-                    <el-table-column :resizable="false" prop="staffName" label="员工姓名" min-width="45" />
+                    <el-table-column :resizable="false" prop="staffName" label="员工姓名" min-width="55" />
                     <el-table-column :resizable="false" prop="content" label="内容" min-width="250" />
                     <el-table-column :resizable="false" prop="dateTime" label="发送时间" min-width="50">
                         <template #default="scope">
@@ -13,7 +13,7 @@
                             </span>
                         </template>
                     </el-table-column>
-                    <el-table-column :resizable="false" prop="dateTime" label="操作栏" min-width="150" v-if="hasUpdateResignReviewStatus">
+                    <el-table-column :resizable="false" prop="dateTime" label="操作栏" min-width="50" v-if="hasUpdateResignReviewStatus">
                         <template #default="scope">
                             <div class="btn_wrap" v-if="scope.row.status === '待审核'">
                                 <el-button size="small" @click="handAudit(scope.row, '审核驳回')"

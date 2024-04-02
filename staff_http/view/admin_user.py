@@ -1,6 +1,6 @@
 from flask import Blueprint
 from extension import db
-from models import Admin_user,Admin_op_record,Staff,Admin_authority
+from models import Admin_user,Admin_op_record,Staff,Admin_authority,Department
 from flask import jsonify
 from flask import request
 from sqlalchemy import and_
@@ -23,7 +23,7 @@ def timerLogin(i):
 @admin_user.route('/admin_user/resetData',methods=['GET'])
 def resetData():
     # 默认数据
-    user1 = Admin_user(staffId = "admin",departId = "01", staffName = "admin",password = "admin",status = "在线", authority = "home,staff,staffMsg,checkingIn,settingDimission,allStaffMsgView,adminAddStaff,adminUpdateStaff,updateCheckingIn,allStaffCheckingInView")
+    user1 = Admin_user(staffId = "012301",departId = "01", staffName = "达达利亚",password = "admin",status = "在线", authority = "home,staff,staffMsg,checkingIn,userAddStaff,userUpdateStaff,settingDimission,allStaffMsgView,adminAddStaff,adminUpdateStaff,updateCheckingIn,allStaffCheckingInView,user,operatingRequestAudit,updateOpReviewStatus,showUserPassWord,allotAuthority,updateUserPassWord,deleteUser,operatingData,feedback,dimission,dimissionData,addAdminUser,returnStaffTable,dimissionAudit,updateResignReviewStatus")
     try:
         #清空原来表的数据
         Admin_user.clearData()
@@ -225,7 +225,7 @@ def queryAll():
         if user != -1:
             # 查询用户表所有数据
             queryData = Admin_user.query.filter_by()
-            # 时间区域查找
+            # 状态查找
             if status != None and status != "":
                 queryData = Admin_user.query.filter(Admin_user.status == status)
             # 关键字查找
@@ -239,8 +239,10 @@ def queryAll():
                     "staffId":item.schema()["staffId"],
                     "staffName":item.schema()["staffName"],
                     "departId":item.schema()["departId"],
-                    "password":"XXXXXXXXX",
+                    "departName":Department.query.filter(Department.departId == item.schema()["departId"]).first().schema()["department_Name"],
+                    "password":"none",
                     "status":item.schema()["status"],
+                    "authority":item.schema()["authority"],
                 })
             # 返回体
             return jsonify({

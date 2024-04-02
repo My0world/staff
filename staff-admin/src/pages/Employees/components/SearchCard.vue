@@ -175,7 +175,8 @@ const handleFilter = async () => {
             endSalary: form.endSalary * 1000,
             startAge: form.startAge,
             endAge: form.endAge,
-            searchValue: form.searchValue
+            searchValue: form.searchValue,
+            pageNo:1
         }
     }
     //动画开始
@@ -223,7 +224,8 @@ const handleClearCard = async () => {
                 endSalary: 0,
                 startAge: 0,
                 endAge: 0,
-                searchValue: ""
+                searchValue: "",
+                pageNo:1
             }
         }
     } else {
@@ -247,7 +249,8 @@ const handleClearCard = async () => {
                 endSalary: 0,
                 startAge: 0,
                 endAge: 0,
-                searchValue: ""
+                searchValue: "",
+                pageNo:1
             }
         }
     }

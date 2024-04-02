@@ -6,6 +6,7 @@ import operatingRequest from './model/operatingRequest'
 import operatingData from './model/operatingData'
 import feedback from './model/feedback'
 import dimission from './model/dimission'
+import user from './model/user'
 
 
 export default {
@@ -14,5 +15,6 @@ export default {
     ...operatingRequest,
     ...operatingData,
     ...feedback,
-    ...dimission
+    ...dimission,
+    ...user
 }

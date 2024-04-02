@@ -133,6 +133,7 @@ onMounted(async () => {
 <style lang="less">
 .el-overlay {
     .el-drawer {
+    
         .el-drawer__header {
             margin-bottom: 10px !important;
         }

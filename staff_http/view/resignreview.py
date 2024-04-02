@@ -193,18 +193,38 @@ def updateStatus():
                         #返回值
                         "data": {}
                     })
-                # 添加到离职员工表
-                resignStaff = Resign(staffId = staffId, departId = staff.schema()["departId"], phoneNum = staff.schema()["phoneNum"], staffName = staff.schema()["staffName"], sex = staff.schema()["sex"], age = staff.schema()["age"], salary = staff.schema()["salary"] ,job = staff.schema()["job"] ,entryTime = staff.schema()["entryTime"] ,resignTime = getDate())
                 # 审核修改
                 # 其他用户的操作审核通过
                 Resignreview.query.filter(Resignreview.id == opid).update({'status': status})
+                # 如果用户表存在就删除用户表
+                adminUser = Admin_user.query.filter(Admin_user.staffId == staffId).first()
+                if adminUser != None:
+                    # 查找权限
+                    allotAuthority = adminUser.schema()["authority"].find("allotAuthority")
+                    # 如果有分配权限的能力
+                    if allotAuthority != -1:
+                        # 查找是否当前有分配权限的人
+                        islast = Admin_user.query.filter(Admin_user.authority.like("%allotAuthority%")).all()
+                        if len(islast) <= 1 :
+                            return jsonify({           
+                                #返回状态码
+                                "code": 400,
+                                #返回信息描述
+                                "message": "必须要有一个拥有分配权限的人",
+                                #返回值
+                                "data": {}
+                            })
+                    # 删除用户表
+                    Admin_user.query.filter(Admin_user.staffId == staffId).delete()
+                # 添加到离职员工表
+                resignStaff = Resign(staffId = staffId, departId = staff.schema()["departId"], phoneNum = staff.schema()["phoneNum"], staffName = staff.schema()["staffName"], sex = staff.schema()["sex"], age = staff.schema()["age"], salary = staff.schema()["salary"] ,job = staff.schema()["job"] ,entryTime = staff.schema()["entryTime"] ,resignTime = getDate())
+                # 从员工数据表删除
+                Staff.query.filter(Staff.staffId == staffId).delete()
                 # 记下操作记录
                 record = f'<div class="shortMsg">{userid}用户通过了{staffId}员工的离职申请</div>'
                 # 向操作记录表添加信息
                 msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
                 db.session.add_all([msg,resignStaff])
-                # 从员工数据表删除
-                Staff.query.filter(Staff.staffId == staffId).delete()
                 db.session.commit()
                 # 返回体
                 return jsonify({

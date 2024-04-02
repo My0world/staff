@@ -20,7 +20,6 @@ export const useOperatingDataStore = defineStore("operatingData", {
     actions: {
         //筛选员工信息
         async filterOperatingData(item) {
-            console.log(item);
             let res = await operatingData.reqOperatingData(item)
             this.operatingList = res.data.data
             this.total = res.data.total

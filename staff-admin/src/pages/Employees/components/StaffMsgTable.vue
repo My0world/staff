@@ -237,10 +237,6 @@ const handleResign = async () => {
         //动画结束
         loadingInstance.value.close()
         confirmDialog.value.dialogStatus = false
-        $ElMessage({
-            message: reject.message,
-            type: "error"
-        })
     })
 }
 

@@ -4,16 +4,19 @@
             <el-form :model="form" label-width="27%">
                 <el-row :gutter="15">
                     <el-col :span="6">
-                        <el-form-item label="进入公司时间:">
-                            <el-date-picker v-model="form.time" type="daterange" range-separator="——"
-                                start-placeholder="开始时间" end-placeholder="结束时间" value-format="YYYY-MM-DD"
-                                :unlink-panels="true" size="large" />
+                        <el-form-item label="用户状态:">
+                            <el-select clearable v-model="form.status" placeholder="请选择用户状态" size="large">
+                                <el-option label="在线" value="在线" />
+                                <el-option label="下线" value="下线" />
+                            </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="关键字:">
-                            <el-input style="width: 90%;" v-model="form.searchText" size="large" placeholder="请输入搜索的姓名"
-                                class="input" :suffix-icon="Search" clearable />
+                        <el-form-item label="部门:">
+                            <el-select clearable v-model="form.departId" placeholder="请选择部门" size="large">
+                                <el-option v-for="i in departmentList" :key="i.departId" :label="i.department_Name"
+                                    :value="i.departId" />
+                            </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
@@ -35,18 +38,21 @@ import { onMounted, computed, reactive, onBeforeUnmount, ref } from "vue"
 import { storeToRefs } from 'pinia'
 // 引入layout仓库
 import { useLayoutStore } from '../../../stores/layout'
-// 引入operatingData仓库
-import { useOperatingDataStore } from '../../../stores/operatingData'
+// 引入employees仓库
+import { useEmployeesStore } from '../../../stores/employees'
+// 引入user仓库
+import { useUserStore } from '../../../stores/user'
 //搜索
 import { Search } from '@element-plus/icons-vue'
 
+// 使用user仓库
+let userStore = useUserStore()
 
 // 获取layout仓库
 let layoutStore = useLayoutStore()
 
-
-// 使用operatingData仓库
-let operatingDataStore = useOperatingDataStore()
+// 获取employees仓库
+let employeesStore = useEmployeesStore()
 
 // layout仓库的state数据
 const {
@@ -54,67 +60,53 @@ const {
     theme,
 } = storeToRefs(layoutStore)
 
-
 // employees仓库的action方法
 const {
-    //筛选操作记录信息
-    filterOperatingData
-} = operatingDataStore
+    //获取部门信息
+    getDepartmentList,
+} = employeesStore
 
 // employees仓库的state数据
 const {
-    // 操作记录搜索信息表单
-    operatingDataForm,
-} = storeToRefs(operatingDataStore)
+    // 部门列表
+    departmentList,
+} = storeToRefs(employeesStore)
+
+// user仓库的action方法
+const {
+    //筛选用户信息
+    filterUserData
+} = userStore
+
+// user仓库的state数据
+const {
+    // 用户信息搜索信息表单
+    userForm,
+} = storeToRefs(userStore)
 
 //等待动画
 let loadingInstance = ref(null)
 
 // 筛选表单
 const form = reactive({
-    time: "",
-    searchText: ""
+    status: "",
+    departId: ""
 })
 
-//筛选操作
-const handleFilter = async () => {
-    if (!form.time) {
-        form.time = ["", ""]
-    }
-    operatingDataForm.value = {
-        ...operatingDataForm.value, ...{
-            startTime: form.time[0],
-            endTime: form.time[1],
-            searchText: form.searchText,
-            pageNo:1
-        }
-    }
-    //动画开始
-    loadingInstance.value = ElLoading.service({ fullscreen: true })
-    await filterOperatingData(operatingDataForm.value).then((resolve) => {
-        //动画结束
-        loadingInstance.value.close()
-    }).catch(() => {
-        //动画结束
-        loadingInstance.value.close()
-    })
-}
-
-// 清除搜索内容
+// 清除搜索
 const handleClearCard = async () => {
     form.time = ""
     form.searchText = ""
-    operatingDataForm.value = {
-        ...operatingDataForm.value, ...{
-            startTime: "",
-            endTime: "",
-            searchText: "",
+    userForm.value = {
+        ...userForm.value, ...{
+            status: "",
+            departId: "",
             pageNo:1
         }
     }
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
-    await filterOperatingData(operatingDataForm.value).then((resolve) => {
+    await filterUserData(userForm.value).then((resolve) => {
         //动画结束
         loadingInstance.value.close()
     }).catch(() => {
@@ -122,6 +114,44 @@ const handleClearCard = async () => {
         loadingInstance.value.close()
     })
 }
+
+// 对数据筛选
+const handleFilter = async () => {
+    userForm.value = {
+        ...userForm.value, ...{
+            status: form.status,
+            departId: form.departId,
+            pageNo:1
+        }
+    }
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await filterUserData(userForm.value).then((resolve) => {
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        //动画结束
+        loadingInstance.value.close()
+    })
+}
+
+//获取数据
+const getData = async () => {
+    //动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    //获取部门列表
+    await getDepartmentList().then((resolve) => {
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        //动画结束
+        loadingInstance.value.close()
+    })
+}
+
+onMounted(async () => {
+    getData()
+})
 
 onBeforeUnmount(() => {
     handleClearCard()
