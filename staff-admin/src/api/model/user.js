@@ -42,4 +42,18 @@ export default {
         method: 'POST',
         data
     }),
+
+    // 选择员工
+    reqSearchStaff: (keyValue) => request({
+        url: `/staff/search?keyValue=${keyValue}`,
+        method: 'GET',
+    }),
+
+    // 添加用户
+    reqAddUser: (data) => request({
+        url: `/admin_user/addAdmin`,
+        method: 'POST',
+        data
+    }),
+    
 }

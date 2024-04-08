@@ -1,14 +1,24 @@
 <template>
-    <Card class="table" title="操作记录" :theme="theme">
+    <Card class="table" title="用户表" :theme="theme">
         <template v-slot:body>
             <div class="UserTable" :class="[theme === 'light' ? 'light' : 'dark']">
                 <div class="operation">
-                    <el-button type="primary" size="large" :disabled="!hasAddAdminUser">添加用户</el-button>
+                    <el-button type="primary" size="large" @click="handleAddUser"
+                        :disabled="!hasAddAdminUser">添加用户</el-button>
                     <el-button link type="primary" size="large">您有新的内容可刷新</el-button>
                 </div>
                 <el-table :data="userList" style="width: 100%;margin: 10px 0px; height:calc(100% - 100px) ;" border>
                     <el-table-column :resizable="false" prop="departName" label="部门名称" min-width="50" />
-                    <el-table-column :resizable="false" prop="staffId" label="员工号" min-width="45" />
+                    <el-table-column :resizable="false" prop="staffId" label="员工号" min-width="45">
+                        <template #default="scope">
+                            <div style="display: flex;justify-content: center; align-items: center;">
+                                <el-icon v-if="scope.row.staffId === staffId" :size="20" style="margin-right: 2px;">
+                                    <Avatar />
+                                </el-icon> {{ scope.row.staffId }}
+                            </div>
+
+                        </template>
+                    </el-table-column>
                     <el-table-column :resizable="false" prop="staffName" label="姓名" min-width="50" />
                     <el-table-column :resizable="false" prop="password" label="密码" min-width="50">
                         <template #default="scope">
@@ -17,16 +27,18 @@
                             </span>
                             <div class="editPassword" v-else>
                                 <span>{{ scope.row.password }}</span>
-                                <el-button type="info" size="small" :disabled="!hasUpdateUserPassWord" @click="editPassword(scope.row)">修改密码</el-button>
+                                <el-button type="info" size="small" :disabled="!hasUpdateUserPassWord"
+                                    @click="editPassword(scope.row)">修改密码</el-button>
                             </div>
                         </template>
                     </el-table-column>
                     <el-table-column :resizable="false" prop="status" label="用户状态" min-width="50" />
                     <el-table-column :resizable="false" fixed="right" label="操作栏">
-
                         <template #default="scope">
-                            <el-button size="small" type="warning" v-if="hasAllotAuthority" @click="handleAllot(scope.row)">分配权限</el-button>
-                            <el-button size="small" type="danger" v-if="hasDeleteUser" @click="handleDelUser(scope.row)">删除用户</el-button>
+                            <el-button size="small" type="warning" v-if="hasAllotAuthority"
+                                @click="handleAllot(scope.row)">分配权限</el-button>
+                            <el-button size="small" type="danger" v-if="hasDeleteUser"
+                                @click="handleDelUser(scope.row)">删除用户</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -47,6 +59,43 @@
         </template>
     </el-drawer>
 
+    <Dialog @handleOpen="handleAddOpen" class="addUserDialog" ref="addUserDialog" width="25%" top="15%">
+        <template v-slot:header>
+            <span :style="{ color: themeType ? '#333' : '#ebeaea' }">添加用户</span>
+        </template>
+        <template v-slot:body>
+            <el-form :class="{ feedback_main_light: themeType, feedback_main_dark: !themeType }" ref="editRef"
+                :model="editForm" :rules="editrules">
+                <el-form-item style="margin-bottom: 35px;" label="员工姓名" label-width='120px'>
+                    <el-select v-model="editForm.staffName" filterable remote reserve-keyword placeholder="请输入员工姓名关键字"
+                        :remote-method="remoteMethod" @change="selectMan" :loading="loading" style="width: 100%">
+                        <el-option v-for="item in staffNameOptions" :key="item.staffId"
+                            :value="item.staffId + ' || ' + item.staffName" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item style="margin-bottom: 35px;" label="员工号" label-width='120px' prop="staffId">
+                    <el-input placeholder="请输入员工号" v-model="editForm.staffId"></el-input>
+                </el-form-item>
+                <el-form-item style="margin-bottom: 35px;" label="密码" label-width='120px' prop="password">
+                    <el-input placeholder="请输入密码" autocomplete="new-password" type="password"
+                        v-model="editForm.password"></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码" label-width='120px' prop="repassword">
+                    <el-input placeholder="请再次输入密码" autocomplete="new-password" type="password"
+                        v-model="editForm.repassword"></el-input>
+                </el-form-item>
+            </el-form>
+        </template>
+        <template v-slot:footer>
+            <el-button @click="editDialog.dialogStatus = false"><el-icon class="el-icon--right">
+                    <CloseBold />
+                </el-icon> 取消</el-button>
+            <el-button type="primary" @click="AddUserSubmit(editRef)"> <el-icon class="el-icon--right">
+                    <Select />
+                </el-icon> 确认 </el-button>
+        </template>
+    </Dialog>
+
     <Dialog @handleOpen="handleEditOpen" class="editDialog" ref="editDialog" width="25%" top="15%">
         <template v-slot:header>
             <span :style="{ color: themeType ? '#333' : '#ebeaea' }">修改密码</span>
@@ -58,10 +107,12 @@
                     <el-input placeholder="请输入员工号" :disabled="true" v-model="editForm.staffId"></el-input>
                 </el-form-item>
                 <el-form-item style="margin-bottom: 35px;" label="密码" label-width='120px' prop="password">
-                    <el-input placeholder="请输入密码" v-model="editForm.password"></el-input>
+                    <el-input placeholder="请输入密码" autocomplete="new-password" type="password"
+                        v-model="editForm.password"></el-input>
                 </el-form-item>
                 <el-form-item label="确认密码" label-width='120px' prop="repassword">
-                    <el-input placeholder="请再次输入密码" v-model="editForm.repassword"></el-input>
+                    <el-input placeholder="请再次输入密码" autocomplete="new-password" type="password"
+                        v-model="editForm.repassword"></el-input>
                 </el-form-item>
             </el-form>
         </template>
@@ -154,11 +205,37 @@ let authorityString = ref("")
 //等待动画
 let loadingInstance = ref(null)
 
+//搜索框等待
+let loading = ref(false)
+
 // layout仓库的state数据
 const {
     // 主题
     theme,
 } = storeToRefs(layoutStore)
+
+// 搜索名称表格
+let staffNameOptions = ref([])
+
+//搜索
+const remoteMethod = (query) => {
+    if (query) {
+        loading.value = true
+        user.reqSearchStaff(query).then(resolve => {
+            staffNameOptions.value = resolve.data
+            loading.value = false
+        })
+    } else {
+        staffNameOptions.value = []
+    }
+}
+
+//选择框的值改变时
+const selectMan = (value) => {
+    let values = value.split(' || ')
+    editForm.value.staffId = values[0]
+    editForm.value.staffName = values[1]
+}
 
 //主题类型
 const themeType = computed(() => {
@@ -177,6 +254,8 @@ const {
 
 // login仓库的state数据
 const {
+    //员工号
+    staffId,
     //权限
     authorityList
 } = storeToRefs(loginStore)
@@ -230,10 +309,7 @@ const {
 } = userStore
 
 //修改密码
-const editForm = reactive({
-    staffId: "",
-    password: "",
-    repassword: ""
+const editForm = ref({
 })
 
 //修改密码对话框
@@ -243,7 +319,7 @@ let editRef = ref(null)
 let validateEditPass = (rule, value, callback) => {
     if (value === '') {
         callback(new Error('请再次输入密码'))
-    } else if (value !== editForm.password) {
+    } else if (value !== editForm.value.password) {
         callback(new Error('两次输入密码不一致!'))
     } else {
         callback()
@@ -300,6 +376,37 @@ const handleCurrentChange = async (pageNo) => {
 
 //执行操作
 const handleCommit = async () => {
+    // 添加用户
+    if (type.value == 1) {
+        let obj = {
+            staffId: editForm.value.staffId,
+            password: editForm.value.password,
+            requireUserPassword: requireUserPassword.value,
+        }
+        //动画开始
+        loadingInstance.value = ElLoading.service({ fullscreen: true })
+        await user.reqAddUser(obj).then(async (resolve) => {
+            //提示信息
+            $ElMessage.success(resolve.message)
+            //密码对话框
+            PassWordDialog.value.dialogStatus = false
+            //添加用户对话框
+            addUserDialog.value.dialogStatus = false
+            //重置数据
+            editForm.value = {}
+            //重新获取数据
+            await getData().then((resolve) => {
+                //动画结束
+                loadingInstance.value.close()
+            }).catch(() => {
+                //动画结束
+                loadingInstance.value.close()
+            })
+        }).catch(() => {
+            //动画结束
+            loadingInstance.value.close()
+        })
+    }
     // 查看密码
     if (type.value == 2) {
         let obj = {
@@ -323,8 +430,8 @@ const handleCommit = async () => {
     // 修改密码
     if (type.value == 3) {
         let obj = {
-            staffId: editForm.staffId,
-            password: editForm.password,
+            staffId: editForm.value.staffId,
+            password: editForm.value.password,
             requireUserPassword: requireUserPassword.value,
         }
         // 动画开始
@@ -337,9 +444,7 @@ const handleCommit = async () => {
             //修改密码对话框
             editDialog.value.dialogStatus = false
             //重置数据
-            editForm.staffId = ""
-            editForm.password = ""
-            editForm.repassword = ""
+            editForm.value = {}
             requireUserPassword.value = ""
             //动画开始
             loadingInstance.value = ElLoading.service({ fullscreen: true })
@@ -420,9 +525,12 @@ const showPassword = (row) => {
 //修改密码对话框
 let editDialog = ref(null)
 
+//添加用户对话框
+let addUserDialog = ref(null)
+
 //打开修改密码对话框
 const editPassword = (row) => {
-    editForm.staffId = row.staffId
+    editForm.value.staffId = row.staffId
     editDialog.value.dialogStatus = true
 }
 
@@ -433,6 +541,19 @@ const editPasswordSubmit = (el) => {
         if (valid) {
             PassWordDialog.value.dialogStatus = true
             type.value = 3
+        } else {
+            $ElMessage.error("请输入正确的内容")
+        }
+    })
+}
+
+//提交添加员工
+const AddUserSubmit = (el) => {
+    if (!el) return
+    el.validate((valid, fields) => {
+        if (valid) {
+            PassWordDialog.value.dialogStatus = true
+            type.value = 1
         } else {
             $ElMessage.error("请输入正确的内容")
         }
@@ -545,9 +666,18 @@ const confirmClick = () => {
             return
         }
     }
-
-
-
+    if (hasUpdateOpReviewStatus != -1) {
+        let index1 = list.findIndex(item => {
+            return item.right_name === "hasAdminAddStaff"
+        })
+        let index2 = list.findIndex(item => {
+            return item.right_name === "hasAdminUpdateStaff"
+        })
+        if (hasAdminAddStaff == -1 && hasAdminUpdateStaff == -1) {
+            $ElMessage.error("审核的操作包括所有无需审核的操作")
+            return
+        }
+    }
 
     //更改离职申请状态
     let hasUpdateResignReviewStatus = list.findIndex(item => {
@@ -586,26 +716,39 @@ const confirmClick = () => {
             authorityString.value += element.right_name
         }
     });
-
     //输入密码
     type.value = 4
     PassWordDialog.value.dialogStatus = true
 }
 
-//删除用户前
+//打开添加用户对话框
+const handleAddUser = () => {
+    addUserDialog.value.dialogStatus = true
+    type.value = 1
+}
+
+//删除用户并输入密码
 const handleDelUser = (row) => {
     updateStaffId.value = row.staffId
     PassWordDialog.value.dialogStatus = true
     type.value = 5
 }
 
-//打开修改密码窗口前
-const handleEditOpen = () => {
-    editForm.password = ""
-    editForm.repassword = ""
+//打开添加用户窗口前
+const handleAddOpen = () => {
+    editForm.value.staffName = ""
+    editForm.value.staffId = ""
+    editForm.value.password = ""
+    editForm.value.repassword = ""
 }
 
 //打开修改密码窗口前
+const handleEditOpen = () => {
+    editForm.value.password = ""
+    editForm.value.repassword = ""
+}
+
+//打开输入密码窗口前
 const handlePassWordOpen = () => {
     requireUserPassword.value = ""
 }
@@ -827,7 +970,8 @@ onMounted(async () => {
 </style>
 
 <style scoped lang="less">
-.editDialog {
+.editDialog,
+.addUserDialog {
     .feedback_main_light {
         width: 100%;
 

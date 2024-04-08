@@ -278,7 +278,7 @@ def filterAll():
 @staff.route('/staff/addStaff',methods=['POST'])
 @jwt_required()
 def addStaff():
-    try:
+    # try:
         userid = get_jwt_identity()
         # 是否登录了
         if userid == None:
@@ -440,16 +440,16 @@ def addStaff():
                 #返回值
                 "data": {}
             })
-    except:
-        # 返回体
-        return jsonify({
-            #返回状态码
-            "code": 500,
-            #返回信息描述
-            "message": "内部服务器错误",
-            #返回值
-            "data": {}
-        })
+    # except:
+    #     # 返回体
+    #     return jsonify({
+    #         #返回状态码
+    #         "code": 500,
+    #         #返回信息描述
+    #         "message": "内部服务器错误",
+    #         #返回值
+    #         "data": {}
+    #     })
     
 
 # 修改员工数据
@@ -711,7 +711,7 @@ def updateStaff():
             # 返回体
             return jsonify({
                 #返回状态码
-                "code": 401,
+                "code": 403,
                 #返回信息描述
                 "message": "你没有权限",
                 #返回值
@@ -727,7 +727,6 @@ def updateStaff():
             #返回值
             "data": {}
         })
-
 
 # 所有员工职位类型
 # GET
@@ -771,6 +770,92 @@ def jobType():
             #返回值
             "data": dataList
         })
+    except:
+        # 返回体
+        return jsonify({
+            #返回状态码
+            "code": 500,
+            #返回信息描述
+            "message": "内部服务器错误",
+            #返回值
+            "data": {}
+        })
+
+# 搜索员工
+# GET
+# 接收的GET格式
+"""
+    # 状态
+    keyValue
+"""
+@staff.route('/staff/search',methods=['GET'])
+@jwt_required()
+def search():
+    dataList = []
+    try:
+        userid = get_jwt_identity()
+        # 操作内容请求状态
+        keyValue = request.args.get("keyValue")
+        # 是否登录了
+        if userid == None:
+            return jsonify({           
+                #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "请登录",
+                #返回值
+                "data": {}
+            })
+        # 获取header的token
+        headerToken = request.headers['Authorization'].split('Bearer ')[1]
+        # 获取redis的token
+        token = redis_client.get(userid)
+        # 判断token是否存在并且和头部的token是否一致
+        if not token or token.decode() != headerToken:
+            # 返回体
+            return jsonify({
+            #返回状态码
+                "code": 401,
+                #返回信息描述
+                "message": "身份已过期，请重新登录",
+                #返回值
+                "data": {}
+            })
+        # 查找权限
+        userData = Admin_user.query.filter(Admin_user.staffId == userid).first()
+        addAdminUser = userData.schema()["authority"].find("addAdminUser")
+        # 有查看所有员工信息的权限
+        if addAdminUser != -1:
+            # 根据输入内容搜索
+            if keyValue != None and keyValue != "":
+                queryData = Staff.query.filter(Staff.staffName.like("%" + keyValue + "%")).all()
+            else:
+                queryData = Staff.query.filter_by()
+            # 添加到dataList
+            for item in queryData:
+                dataList.append({
+                    "staffId":item.schema()["staffId"],
+                    "staffName":item.schema()["staffName"],
+                })
+            # 返回体
+            return jsonify({
+                #返回状态码
+                "code": 200,
+                #返回信息描述
+                "message": "成功",
+                #返回值
+                "data": dataList
+            })
+        else:
+            # 返回体
+            return jsonify({
+                #返回状态码
+                "code": 403,
+                #返回信息描述
+                "message": "你没有权限",
+                #返回值
+                "data": []
+            })
     except:
         # 返回体
         return jsonify({

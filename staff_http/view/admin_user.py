@@ -18,40 +18,6 @@ def timerLogin(i):
         db.session.commit()
         scheduler.remove_job("timerLogin")
 
-
-# 重置数据
-@admin_user.route('/admin_user/resetData',methods=['GET'])
-def resetData():
-    # 默认数据
-    user1 = Admin_user(staffId = "012301",departId = "01", staffName = "达达利亚",password = "admin",status = "在线", authority = "home,staff,staffMsg,checkingIn,userAddStaff,userUpdateStaff,settingDimission,allStaffMsgView,adminAddStaff,adminUpdateStaff,updateCheckingIn,allStaffCheckingInView,user,operatingRequestAudit,updateOpReviewStatus,showUserPassWord,allotAuthority,updateUserPassWord,deleteUser,operatingData,feedback,dimission,dimissionData,addAdminUser,returnStaffTable,dimissionAudit,updateResignReviewStatus")
-    try:
-        #清空原来表的数据
-        Admin_user.clearData()
-        #重新添加数据
-        db.session.add_all([
-            user1,
-        ])
-        db.session.commit()
-        # 返回体
-        return jsonify({
-            #返回状态码
-            "code": 200,
-            #返回信息描述
-            "message": "成功",
-            #返回值
-            "data": "ok"
-        })
-    except:
-        # 返回体
-        return jsonify({
-            #返回状态码
-            "code": 500,
-            #返回信息描述
-            "message": "内部服务器错误",
-            #返回值
-            "data": {}
-        })
-
 # 登录
 # POST
 # 接收的Post格式
@@ -530,7 +496,7 @@ def deleteUser():
                 # 无法删除最后一个拥有分配权限的人
                 if  beDeleteUserAuthority != -1:
                     islast = Admin_user.query.filter(Admin_user.authority.like("%allotAuthority%")).all()
-                    if len(islast) <= 1 :
+                    if len(islast) <= 1 and islast[0].schema()["staffId"] == staffId:
                         return jsonify({           
                             #返回状态码
                             "code": 400,
@@ -641,9 +607,9 @@ def addAdmin():
             if addAdminUser != -1:
                 # 记下操作记录
                 record = f'<div class="shortMsg">{userid}添加了{staffId}用户</div>'
-                 # 查找是否有该用户
+                # 查找是否有该员工
                 staff = Staff.query.filter(Staff.staffId == staffId).first(),
-                # 密码错误
+                # 判断
                 if staff[0] == None:
                     # 用户不存在
                     return jsonify({           
@@ -651,6 +617,19 @@ def addAdmin():
                         "code": 400,
                         #返回信息描述
                         "message": "请添加本公司的员工",
+                        #返回值
+                        "data": {}
+                    })
+                # 查找是否有该用户
+                hasAdminUser = Admin_user.query.filter(Admin_user.staffId == staffId).first(),
+                # 判断
+                if hasAdminUser[0] != None:
+                    # 用户不存在
+                    return jsonify({           
+                        #返回状态码
+                        "code": 400,
+                        #返回信息描述
+                        "message": "已有该用户，不可再次添加",
                         #返回值
                         "data": {}
                     })
