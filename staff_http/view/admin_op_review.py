@@ -58,14 +58,14 @@ def queryAll():
         userData = Admin_user.query.filter(Admin_user.staffId == userid).first()
         operatingRequestAudit = userData.schema()["authority"].find("operatingRequestAudit")
         if operatingRequestAudit != -1:
-            
+            print(status)
             # 查询操作内容审核表所有数据
             if status == "全部" or status == "" or status == None:
+                print(123)
                 queryData = Admin_op_review.query.filter_by()
             else:
                 queryData = Admin_op_review.query.filter(Admin_op_review.status == status)
-
-            queryData = Admin_op_review.query.order_by(Admin_op_review.datetime.desc())
+            queryData = queryData.order_by(Admin_op_review.datetime.desc())
             # 分页
             pn = queryData.paginate(page=int(pageNo), per_page=8, error_out=False)
             # 添加到dataList
@@ -75,7 +75,7 @@ def queryAll():
                     "data":item.schema()["data"],
                     "description":item.schema()["description"],
                     "staffId":item.schema()["staffId"],
-                    "staffName": Admin_user.query.filter(Admin_user.staffId == item.schema()["staffId"]).first().schema()["staffName"],
+                    "staffName": item.schema()["staffName"],
                     "datetime":item.schema()["datetime"],
                     "status":item.schema()["status"],
                 })

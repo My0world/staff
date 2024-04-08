@@ -4,7 +4,7 @@
             <el-form :model="form" label-width="27%">
                 <el-row :gutter="15">
                     <el-col :span="6">
-                        <el-form-item label="进入公司时间:">
+                        <el-form-item label="操作时间:">
                             <el-date-picker v-model="form.time" type="daterange" range-separator="——"
                                 start-placeholder="开始时间" end-placeholder="结束时间" value-format="YYYY-MM-DD"
                                 :unlink-panels="true" size="large" />
@@ -12,7 +12,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="关键字:">
-                            <el-input style="width: 90%;" v-model="form.searchText" size="large" placeholder="请输入搜索的姓名"
+                            <el-input style="width: 90%;" v-model="form.searchText" size="large" placeholder="请输入内容"
                                 class="input" :suffix-icon="Search" clearable />
                         </el-form-item>
                     </el-col>

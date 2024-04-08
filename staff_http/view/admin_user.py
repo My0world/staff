@@ -75,7 +75,7 @@ def login():
             # 用户不存在
             return jsonify({           
                 #返回状态码
-                "code": 401,
+                "code": 402,
                 #返回信息描述
                 "message": "用户名或密码错误",
                 #返回值
@@ -320,7 +320,7 @@ def showPassWord():
             # 用户不存在
             return jsonify({           
                 #返回状态码
-                "code": 401,
+                "code": 402,
                 #返回信息描述
                 "message": "密码错误",
                 #返回值
@@ -418,7 +418,7 @@ def updatePassWord():
             # 用户不存在
             return jsonify({           
                 #返回状态码
-                "code": 401,
+                "code": 402,
                 #返回信息描述
                 "message": "密码错误",
                 #返回值
@@ -434,6 +434,11 @@ def updatePassWord():
                 Admin_user.query.filter(Admin_user.staffId == staffId).update({'password': password})
                 # 向操作记录表添加信息
                 msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
+                # 获取redis的token
+                resetToken = redis_client.get(staffId)
+                if resetToken:
+                     # 删除redis的token
+                    redis_client.delete(staffId)
                 db.session.add_all([msg])
                 db.session.commit()
                 # 返回体
@@ -510,7 +515,7 @@ def deleteUser():
             # 用户不存在
             return jsonify({           
                 #返回状态码
-                "code": 401,
+                "code": 402,
                 #返回信息描述
                 "message": "密码错误",
                 #返回值
@@ -528,7 +533,7 @@ def deleteUser():
                     if len(islast) <= 1 :
                         return jsonify({           
                             #返回状态码
-                            "code": 401,
+                            "code": 400,
                             #返回信息描述
                             "message": "无法删除最后一个拥有分配权限的人",
                             #返回值
@@ -540,6 +545,11 @@ def deleteUser():
                 Admin_user.query.filter(Admin_user.staffId == staffId).delete()
                 # 向操作记录表添加信息
                 msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
+                # 获取redis的token
+                resetToken = redis_client.get(staffId)
+                if resetToken:
+                     # 删除redis的token
+                    redis_client.delete(staffId)
                 db.session.add_all([msg])
                 db.session.commit()
                 # 返回体
@@ -619,7 +629,7 @@ def addAdmin():
             # 用户不存在
             return jsonify({           
                 #返回状态码
-                "code": 401,
+                "code": 402,
                 #返回信息描述
                 "message": "密码错误",
                 #返回值
@@ -638,7 +648,7 @@ def addAdmin():
                     # 用户不存在
                     return jsonify({           
                         #返回状态码
-                        "code": 401,
+                        "code": 400,
                         #返回信息描述
                         "message": "请添加本公司的员工",
                         #返回值
@@ -721,13 +731,13 @@ def allotAuth():
         authorityString = request.json.get('authorityString')
         requireUserPassword = request.json.get('requireUserPassword')
         # 查找是否有该用户
-        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requireUserPassword)).first(),
+        adminUser = Admin_user.query.filter(and_(Admin_user.staffId == userid,Admin_user.password == requireUserPassword)).first()
         # 密码错误
         if adminUser == None:
             # 用户不存在
             return jsonify({           
                 #返回状态码
-                "code": 401,
+                "code": 402,
                 #返回信息描述
                 "message": "密码错误",
                 #返回值
@@ -735,7 +745,7 @@ def allotAuth():
             })
         else:
             # 查找权限
-            allotAuthority = adminUser[0].schema()["authority"].find("allotAuthority")
+            allotAuthority = adminUser.schema()["authority"].find("allotAuthority")
             if allotAuthority != -1:
                 # 查找分配的权限中是否拥有分配权限的能力
                 isHasAuth = authorityString.find("allotAuthority")
@@ -743,7 +753,7 @@ def allotAuth():
                 if isHasAuth == -1:
                     # 查找是否当前有分配权限的人
                     islast = Admin_user.query.filter(Admin_user.authority.like("%allotAuthority%")).all()
-                    if len(islast) <= 1 :
+                    if len(islast) <= 1 and islast[0].schema()["staffId"] == staffId:
                         return jsonify({           
                             #返回状态码
                             "code": 400,
@@ -766,10 +776,14 @@ def allotAuth():
                         
                         <div>
                 """ + string + "</div></div>"
-                # 修改密码
+                # 修改权限
                 Admin_user.query.filter(Admin_user.staffId == staffId).update({'authority': authorityString})
                 # 向操作记录表添加信息
                 msg = Admin_op_record(staffId = userid, content = record, datetime = getDate())
+                resetToken = redis_client.get(staffId)
+                if resetToken:
+                     # 删除redis的token
+                    redis_client.delete(staffId)
                 db.session.add_all([msg])
                 db.session.commit()
                 # 返回体

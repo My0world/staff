@@ -95,8 +95,8 @@ const form = reactive({
 
 // 清除搜索
 const handleClearCard = async () => {
-    form.time = ""
-    form.searchText = ""
+    form.status = ""
+    form.departId = ""
     userForm.value = {
         ...userForm.value, ...{
             status: "",

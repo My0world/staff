@@ -416,7 +416,7 @@ def addStaff():
             </div>
             """ + addRecord+"</div>"
             # 向操作内容审核表添加信息
-            staff = Admin_op_review(staffId = userid, data = data, description = "addRequest", datetime = getDate(), status = "待审核")
+            staff = Admin_op_review(staffId = userid, staffName = user[0].schema()["staffName"], data = data, description = "addRequest", datetime = getDate(), status = "待审核")
             # 向操作记录表添加信息
             msg = Admin_op_record(staffId = userid, content = record,  datetime = getDate())
             db.session.add_all([staff,msg])
@@ -693,7 +693,7 @@ def updateStaff():
                 </div>
             """+ oldDataRecord + newDataRecord + "</div>"
             # 向操作内容审核表添加信息
-            opReview = Admin_op_review(staffId = userid, data = data, description = "updateRequest", datetime = getDate(), status = "待审核")
+            opReview = Admin_op_review(staffId = userid, staffName = user[0].schema()["staffName"], data = data, description = "updateRequest", datetime = getDate(), status = "待审核")
             # 向操作记录表添加信息
             opRecord = Admin_op_record(staffId = userid, content = record,  datetime = getDate())
             db.session.add_all([opReview,opRecord])

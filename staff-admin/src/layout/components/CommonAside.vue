@@ -79,30 +79,30 @@
             </el-menu-item>
 
 
-            <!-- 操作请求审核 -->
-            <el-menu-item @click="clickMenu('/operatingRequestAudit', '操作请求审核')" index="/operatingRequestAudit" v-if="authorityList.indexOf('operatingRequestAudit') != -1">
+            <!-- 操作请求审核管理 -->
+            <el-menu-item @click="clickMenu('/operatingRequestAudit', '操作请求审核管理')" index="/operatingRequestAudit" v-if="authorityList.indexOf('operatingRequestAudit') != -1">
                 <el-icon>
                     <component :is="icons[5]"></component>
                 </el-icon>
                 <template #title>
-                    <span class="fontSize17">操作请求审核</span>
+                    <span class="fontSize17">操作请求审核管理</span>
                 </template>
             </el-menu-item>
 
 
-            <!-- 离职审核 -->
-            <el-sub-menu index="离职审核" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'" v-if="authorityList.indexOf('dimission') != -1">
+            <!-- 离职员工管理 -->
+            <el-sub-menu index="离职员工管理" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'" v-if="authorityList.indexOf('dimission') != -1">
                 <template #title>
                     <el-icon>
                         <component :is="icons[6]"></component>
                     </el-icon>
-                    <span class="fontSize17">离职审核</span>
+                    <span class="fontSize17">离职员工管理</span>
                 </template>
-                <el-menu-item @click="clickMenu('/dimissionAudit', '离职审核|审核')" index="/dimissionAudit" v-if="authorityList.indexOf('dimissionAudit') != -1">
-                    <span class="fontSize17">审核</span>
+                <el-menu-item @click="clickMenu('/dimissionAudit', '离职员工管理|离职审核')" index="/dimissionAudit" v-if="authorityList.indexOf('dimissionAudit') != -1">
+                    <span class="fontSize17">离职审核</span>
                 </el-menu-item>
-                <el-menu-item @click="clickMenu('/dimissionData', '离职审核|离职员工表')" index="/dimissionData" v-if="authorityList.indexOf('dimissionData') != -1">
-                    <span class="fontSize17">离职员工表</span>
+                <el-menu-item @click="clickMenu('/dimissionData', '离职员工管理|离职员工信息')" index="/dimissionData" v-if="authorityList.indexOf('dimissionData') != -1">
+                    <span class="fontSize17">离职员工信息</span>
                 </el-menu-item>
             </el-sub-menu>
 

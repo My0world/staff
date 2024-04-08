@@ -1,5 +1,5 @@
 from flask import Blueprint
-from models import Admin_op_record,Admin_user
+from models import Admin_op_record,Admin_user,Staff
 from flask import jsonify
 from flask import request
 from flask_jwt_extended import jwt_required,get_jwt_identity
@@ -79,7 +79,7 @@ def queryAll():
                 dataList.append({
                     "id":item.schema()["id"],
                     "content":item.schema()["content"],
-                    "staffName": Admin_user.query.filter(Admin_user.staffId == item.schema()["staffId"]).first().schema()["staffName"],
+                    "staffName": Staff.query.filter(Staff.staffId == item.schema()["staffId"]).first().schema()["staffName"],
                     "staffId":item.schema()["staffId"],
                     "datetime":item.schema()["datetime"],
                 })

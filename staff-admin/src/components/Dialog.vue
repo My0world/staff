@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :class="themeType ? 'light_dialog' : 'night_dialog'" v-model="dialogStatus" :modal="false" :width="width"
+    <el-dialog :class="themeType ? 'light_dialog' : 'night_dialog'" v-model="dialogStatus" :modal="modal" :width="width"
         @closed="closed" @open="open">
         <template #header>
             <slot name="header"></slot>
@@ -43,6 +43,10 @@ const props = defineProps({
         type: String,
         default: "50%"
     },
+    modal:{
+        type: Boolean,
+        default: false
+    }
 })
 
 //对话框关闭时

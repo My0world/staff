@@ -75,6 +75,8 @@ class Admin_op_review(db.Model):
     description = db.Column(db.Text(),nullable = False)
     # 员工ID
     staffId = db.Column(db.String(7),nullable = False)
+    # 员工姓名
+    staffName = db.Column(db.String(255),nullable = False)
     # 申请时间
     datetime = db.Column(db.DateTime(),nullable = False)
     # 状态
@@ -88,6 +90,7 @@ class Admin_op_review(db.Model):
             'data': self.data,
             'description':self.description,
             'staffId': self.staffId,
+            'staffName': self.staffName,
             'datetime': self.datetime,
             'status': self.status,
         }

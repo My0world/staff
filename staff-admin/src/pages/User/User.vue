@@ -46,7 +46,7 @@ onMounted(() => {
 </script>
 
 
-<style>
+<style lang="less" scoped>
 .User {
     margin-top: 17px;
     height: calc(100% - 17px);

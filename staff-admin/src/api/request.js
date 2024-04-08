@@ -47,7 +47,7 @@ requests.interceptors.request.use((config) => {
 //响应拦截器
 requests.interceptors.response.use(config => {
     const { code, message } = config.data
-    if (code == 422) {
+    if (code == 401) {
         ElMessage.error("身份已过期，请重新登录")
         useLoginStore().$reset()//清空仓库
         router.push({ path: "/login" })//跳转到登录
