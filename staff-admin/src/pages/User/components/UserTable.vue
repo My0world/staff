@@ -5,7 +5,7 @@
                 <div class="operation">
                     <el-button type="primary" size="large" @click="handleAddUser"
                         :disabled="!hasAddAdminUser">添加用户</el-button>
-                    <el-button link type="primary" size="large">您有新的内容可刷新</el-button>
+                    <el-button link type="primary" size="large" @click="getData();reload=false" v-if="reload">您有新的内容可刷新</el-button>
                 </div>
                 <el-table :data="userList" style="width: 100%;margin: 10px 0px; height:calc(100% - 100px) ;" border>
                     <el-table-column :resizable="false" prop="departName" label="部门名称" min-width="50" />
@@ -20,7 +20,8 @@
                         </template>
                     </el-table-column>
                     <el-table-column :resizable="false" prop="staffName" label="姓名" min-width="50" />
-                    <el-table-column :resizable="false" prop="password" label="密码" min-width="50">
+                    <el-table-column :resizable="false" prop="password" label="密码" min-width="50"
+                        v-if="hasShowUserPassWord">
                         <template #default="scope">
                             <span v-if="scope.row.password === 'none' && hasShowUserPassWord">
                                 <el-button type="primary" @click="showPassword(scope.row)" link>查看密码</el-button>
@@ -33,7 +34,8 @@
                         </template>
                     </el-table-column>
                     <el-table-column :resizable="false" prop="status" label="用户状态" min-width="50" />
-                    <el-table-column :resizable="false" fixed="right" label="操作栏">
+                    <el-table-column :resizable="false" fixed="right" label="操作栏"
+                        v-if="hasAllotAuthority || hasDeleteUser">
                         <template #default="scope">
                             <el-button size="small" type="warning" v-if="hasAllotAuthority"
                                 @click="handleAllot(scope.row)">分配权限</el-button>
@@ -152,6 +154,7 @@ import { ref, computed, onMounted, getCurrentInstance, reactive } from 'vue';
 import AuthDrawer from './AuthDrawer.vue'
 //API
 import user from '../../../api'
+import socket from "../../../util/socket"
 // 格式化时间
 import { GMTToStr } from "../../../util/GMTToStr.js"
 // 引入pinia响应式
@@ -183,6 +186,9 @@ let loginStore = useLoginStore()
 
 // 使用layout仓库
 let layoutStore = useLayoutStore()
+
+//重载
+let reload = ref(false)
 
 // 输入密码执行后的操作（1：添加，2：查看密码：3：修改密码，4：分配权限，5：删除用户）
 let type = ref("")
@@ -394,6 +400,7 @@ const handleCommit = async () => {
             addUserDialog.value.dialogStatus = false
             //重置数据
             editForm.value = {}
+            socket.emit("user","")
             //重新获取数据
             await getData().then((resolve) => {
                 //动画结束
@@ -446,6 +453,7 @@ const handleCommit = async () => {
             //重置数据
             editForm.value = {}
             requireUserPassword.value = ""
+            socket.emit("user","")
             //动画开始
             loadingInstance.value = ElLoading.service({ fullscreen: true })
             await getData().then((resolve) => {
@@ -475,6 +483,7 @@ const handleCommit = async () => {
             requireUserPassword.value = ""
             updateStaffId.value = ""
             drawer.value = false
+            socket.emit("user","")
             //动画开始
             loadingInstance.value = ElLoading.service({ fullscreen: true })
             await getData().then((resolve) => {
@@ -501,6 +510,7 @@ const handleCommit = async () => {
             //重置数据
             requireUserPassword.value = ""
             updateStaffId.value = ""
+            socket.emit("user","")
             //动画开始
             loadingInstance.value = ElLoading.service({ fullscreen: true })
             await getData().then((resolve) => {
@@ -608,8 +618,38 @@ const confirmClick = () => {
         return item.right_name === "departmentStaffMsg"
     })
     if (hasAllStaffMsgView != -1 && hasDepartmentStaffMsg != -1) {
-        $ElMessage.error("所有员工信息和只可以查看自己部门的员工信息不可同时拥有")
+        $ElMessage.error("所有员工信息和部门员工信息不可同时拥有")
         return
+    }
+
+
+    //考勤记录
+    let hasAllCheckingIn = list.findIndex(item => {
+        return item.right_name === "allCheckingIn"
+    })
+    let hasDepartmentCheckingIn = list.findIndex(item => {
+        return item.right_name === "departmentCheckingIn"
+    })
+    if (hasAllCheckingIn != -1 && hasDepartmentCheckingIn != -1) {
+        $ElMessage.error("所有员工考勤和部门员工考勤不可同时拥有")
+        return
+    }
+    // 审核员工请假
+    let hasCheckVacate = list.findIndex(item => {
+        return item.right_name === "checkVacate"
+    })
+    // 修改员工考勤记录
+    let hasEditCheckingIn = list.findIndex(item => {
+        return item.right_name === "editCheckingIn"
+    })
+    if (hasCheckVacate != -1 || hasEditCheckingIn != -1) {
+        let index = list.findIndex(item => {
+            return item.right_name === "allCheckingIn" || item.right_name === "departmentCheckingIn"
+        })
+        if (index === -1) {
+            $ElMessage.error("审核员工请假和修改员工考勤记录前必须要查看员工考勤信息")
+            return
+        }
     }
 
     //用户
@@ -707,6 +747,18 @@ const confirmClick = () => {
         }
     }
 
+    //通知
+    let hasNoticeForAll = list.findIndex(item => {
+        return item.right_name === "noticeForAll"
+    })
+    let hasNoticeForDepart = list.findIndex(item => {
+        return item.right_name === "noticeForDepart"
+    })
+    if (hasNoticeForAll != -1 && hasNoticeForDepart != -1) {
+        $ElMessage.error("向所有部门发送通知和向自己部门发送通知不可同时拥有")
+        return
+    }
+
     //权限字符串
     authorityString.value = ""
     list.forEach((element, index) => {
@@ -763,6 +815,9 @@ onMounted(async () => {
     }).catch(() => {
         //动画结束
         loadingInstance.value.close()
+    })
+    socket.on("userUpdate", function (data) {
+        reload.value = true
     })
 })
 </script>

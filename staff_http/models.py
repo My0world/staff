@@ -236,10 +236,12 @@ class Notice(db.Model):
     __tablename__ = "notice"
     # ID
     id = db.Column(db.Integer(),primary_key = True,autoincrement = True)
+    # 标题
+    title = db.Column(db.String(255),nullable = False)
     # 发送方员工ID
     send_staffId = db.Column(db.String(7),nullable = False)
-    # 接受方员工ID
-    receiver_staffId = db.Column(db.String(7),nullable = False)
+    # 接收方部门ID
+    receiver_departIds = db.Column(db.String(255),nullable = False)
     # 内容
     content = db.Column(db.Text(),nullable = False)
     # 发送时间
@@ -250,8 +252,9 @@ class Notice(db.Model):
     def schema(self):
         return {
             'id': self.id,
+            'title':self.title,
             'send_staffId': self.send_staffId,
-            'receiver_staffId': self.receiver_staffId,
+            'receiver_departIds': self.receiver_departIds,
             'content': self.content,
             'datetime': self.datetime,
         }
@@ -397,11 +400,11 @@ class Workattendance(db.Model):
     # 员工姓名
     staffName = db.Column(db.String(255),nullable = False)
     # 日期
-    date = db.Column(db.Date(),nullable = False)
+    date = db.Column(db.DateTime(),nullable = False)
     # 开始时间
-    startTime = db.Column(db.DateTime(),nullable = False)
+    startTime = db.Column(db.Time(),nullable = False)
     # 结束时间
-    endTime = db.Column(db.DateTime(),nullable = False)
+    endTime = db.Column(db.Time(),nullable = False)
 
     # 模型的资源序列化函数（方法）
     def schema(self):

@@ -36,39 +36,14 @@ export default [
 
             //通知管理
             {
-                name: 'noticeRelease',//名字
-                path: '/noticeRelease',//路径
-                component: () => import('../pages/Notifications/NoticeRelease.vue'),//组件名称
+                name: 'notice',//名字
+                path: '/notice',//路径
+                component: () => import('../pages/Notifications/index.vue'),//组件名称
                 meta: {
-                    title:"发布通知"
-                },//路由元信息
-            }, {
-                name: 'noticeHistory',//名字
-                path: '/noticeHistory',//路径
-                component: () => import('../pages/Notifications/NoticeHistory.vue'),//组件名称
-                meta: {
-                    title:"历史记录"
+                    title:"通知管理"
                 },//路由元信息
             }, 
-
-
-            //请假审核
-            {
-                name: 'leaveAudit',//名字
-                path: '/leaveAudit',//路径
-                component: () => import('../pages/Leave/LeaveAudit.vue'),//组件名称
-                meta: {
-                    title:"审核"
-                },//路由元信息
-            }, {
-                name: 'leaveHistory',//名字
-                path: '/leaveHistory',//路径
-                component: () => import('../pages/Leave/LeaveHistory.vue'),//组件名称
-                meta: {
-                    title:"历史记录"
-                },//路由元信息
-            },
-
+            
 
             //用户管理
             {

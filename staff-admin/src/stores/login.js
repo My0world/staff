@@ -51,7 +51,7 @@ export const useLoginStore = defineStore("login", {
                 "password": data.password
             }).then(reslove => {
                 //发送socket（已登陆）
-                socket.emit("userLogin","")
+                socket.emit("user","")
                 return reslove
             })
             // 存储数据
@@ -64,14 +64,6 @@ export const useLoginStore = defineStore("login", {
             let index = this.authorityList.findIndex(item => {
                 return item === "allAdminUserView"
             })
-            if(index !== -1){
-                socket.on("userLoginEvent",function(data){
-                    console.log(data);
-                })
-                socket.on("userLogoutEvent",function(data){
-                    console.log(data);
-                })
-            }
 
 
             //保存token
@@ -83,7 +75,7 @@ export const useLoginStore = defineStore("login", {
             // 发送请求
             let res = await login.reqLogout().then(reslove => {
                 //发送socket（退出登陆）
-                socket.emit("userLogout")
+                socket.emit("user","")
                 return reslove
             })
             // 清除保存的信息

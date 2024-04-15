@@ -52,6 +52,11 @@ def login():
             # 修改登录用户的状态
             Admin_user.query.filter(Admin_user.staffId == adminUser[0].schema()["staffId"]).update({'status': "在线"})
             db.session.commit()
+            # 获取redis的token
+            resetToken = redis_client.get(staffId)
+            if resetToken:
+                    # 删除redis的token
+                redis_client.delete(staffId)
             # 生成token
             token = create_access_token( identity = adminUser[0].schema()["staffId"] )
             # 添加token到redis
@@ -64,6 +69,7 @@ def login():
                 scheduler.remove_job("timerLogin")
                 # 重新添加定时任务
                 scheduler.add_job(func=timerLogin, id="timerLogin", args=(adminUser[0].schema()["staffId"],), trigger='interval', seconds= 900 )
+            print(123)
             # 设置过期时间
             redis_client.expireat(adminUser[0].schema()["staffId"], int (time.time()) + 900)
             # 返回体

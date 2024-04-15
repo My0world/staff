@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : MySQL
  Source Server Type    : MySQL
  Source Server Version : 50726
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 08/04/2024 15:00:27
+ Date: 15/04/2024 09:46:38
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,7 @@ CREATE TABLE `admin_authority`  (
   `right_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`, `right_name`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin_authority
@@ -58,9 +58,17 @@ INSERT INTO `admin_authority` VALUES (24, 'user', 'addAdminUser', NULL, 'addAdmi
 INSERT INTO `admin_authority` VALUES (25, 'dimission', 'returnStaffTable', NULL, 'returnStaffTable', '从离职员工表移回员工表');
 INSERT INTO `admin_authority` VALUES (26, 'dimission', 'dimissionAudit', NULL, 'dimissionAudit', '查看离职申请数据');
 INSERT INTO `admin_authority` VALUES (27, 'dimission', 'updateResignReviewStatus', NULL, 'updateResignReviewStatus', '审核离职申请');
-INSERT INTO `admin_authority` VALUES (31, 'staff', 'staffMsg', 'departmentStaffMsg', 'departmentStaffMsg', '只可以查看自己部门的员工信息');
+INSERT INTO `admin_authority` VALUES (31, 'staff', 'staffMsg', 'departmentStaffMsg', 'departmentStaffMsg', '部门员工信息');
 INSERT INTO `admin_authority` VALUES (32, 'user', 'userData', '', 'userData', '所有用户数据');
 INSERT INTO `admin_authority` VALUES (33, 'operatingRequestAudit', 'operatingRequestAuditData', NULL, 'operatingRequestAuditData', '所有操作请求的数据');
+INSERT INTO `admin_authority` VALUES (34, 'staff', 'checkingIn', '', 'checkingIn', '考勤管理');
+INSERT INTO `admin_authority` VALUES (35, 'staff', 'checkingIn', 'allCheckingIn', 'allCheckingIn', '所有员工考勤');
+INSERT INTO `admin_authority` VALUES (36, 'staff', 'checkingIn', 'departmentCheckingIn', 'departmentCheckingIn', '部门员工考勤');
+INSERT INTO `admin_authority` VALUES (37, 'staff', 'checkingIn', 'editCheckingIn', 'editCheckingIn', '修改员工考勤记录');
+INSERT INTO `admin_authority` VALUES (42, 'notice', 'noticeForAll', NULL, 'noticeForAll', '向所有部门发送通知');
+INSERT INTO `admin_authority` VALUES (41, 'notice', NULL, NULL, 'notice', '通知管理');
+INSERT INTO `admin_authority` VALUES (40, 'staff', 'checkingIn', 'checkVacate', 'checkVacate', '审核员工请假');
+INSERT INTO `admin_authority` VALUES (43, 'notice', 'noticeForDepart', NULL, 'noticeForDepart', '向自己部门发送通知');
 
 -- ----------------------------
 -- Table structure for admin_op_record
@@ -70,9 +78,9 @@ CREATE TABLE `admin_op_record`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
+  `datetime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 326 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 340 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin_op_record
@@ -221,6 +229,20 @@ INSERT INTO `admin_op_record` VALUES (322, '\n                    <div class=\"a
 INSERT INTO `admin_op_record` VALUES (323, '\n            <div class=\'update\'>\n                <div>\n                    <p>修改信息请求</p>\n                    <p>022406用户想要修改员工号为022405员工的信息</p>\n                </div>\n            \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>022405</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>星</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19273322110</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>女</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>5</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>5000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-03-13</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>022405</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>星</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19000000000</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>女</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>5</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>5000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-03-13</span>\n            </p>\n        </div>\n        </div>', '022406', '2024-04-08 14:53:26');
 INSERT INTO `admin_op_record` VALUES (324, '<div class=\"shortMsg\">022406用户的修改信息请求编号为53已被032404用户审核并通过</div>', '032404', '2024-04-08 14:54:25');
 INSERT INTO `admin_op_record` VALUES (325, '<div class=\"shortMsg\">022406用户的修改信息请求编号为53已被022407用户审核并通过</div>', '022407', '2024-04-08 14:54:27');
+INSERT INTO `admin_op_record` VALUES (326, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了032404</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>首页</span><span>所有员工信息</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>所有员工考勤</span><span>用户管理</span><span>查看某位用户的密码</span><span>分配权限</span><span>修改某位用户的密码</span><span>删除某位用户</span><span>添加用户</span><span>所有用户数据</span><span>操作请求审核</span><span>审核操作的内容</span><span>所有操作请求的数据</span><span>操作记录</span><span>反馈消息</span><span>离职员工管理</span><span>设置为离职</span><span>所有离职员工</span><span>从离职员工表移回员工表</span><span>查看离职申请数据</span><span>审核离职申请</span></div></div>', '032404', '2024-04-08 22:24:12');
+INSERT INTO `admin_op_record` VALUES (327, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了032404</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>首页</span><span>所有员工信息</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>所有员工考勤</span><span>修改员工考勤记录</span><span>审核员工请假</span><span>用户管理</span><span>查看某位用户的密码</span><span>分配权限</span><span>修改某位用户的密码</span><span>删除某位用户</span><span>添加用户</span><span>所有用户数据</span><span>操作请求审核</span><span>审核操作的内容</span><span>所有操作请求的数据</span><span>操作记录</span><span>反馈消息</span><span>离职员工管理</span><span>设置为离职</span><span>所有离职员工</span><span>从离职员工表移回员工表</span><span>查看离职申请数据</span><span>审核离职申请</span></div></div>', '032404', '2024-04-08 22:24:27');
+INSERT INTO `admin_op_record` VALUES (328, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022406</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>首页</span><span>添加员工(需审核)</span><span>修改员工(需审核)</span><span>部门员工信息</span><span>部门员工考勤</span><span>修改员工考勤记录</span><span>审核员工请假</span></div></div>', '032404', '2024-04-08 22:24:43');
+INSERT INTO `admin_op_record` VALUES (329, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022407</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>首页</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工信息</span><span>操作请求审核</span><span>审核操作的内容</span><span>所有操作请求的数据</span><span>操作记录</span><span>反馈消息</span><span>离职员工管理</span><span>设置为离职</span><span>所有离职员工</span><span>从离职员工表移回员工表</span><span>查看离职申请数据</span><span>审核离职申请</span></div></div>', '032404', '2024-04-08 22:25:18');
+INSERT INTO `admin_op_record` VALUES (330, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022407</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>首页</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工信息</span><span>用户管理</span><span>查看某位用户的密码</span><span>分配权限</span><span>修改某位用户的密码</span><span>删除某位用户</span><span>添加用户</span><span>所有用户数据</span><span>操作请求审核</span><span>审核操作的内容</span><span>所有操作请求的数据</span><span>操作记录</span><span>反馈消息</span><span>离职员工管理</span><span>设置为离职</span><span>所有离职员工</span><span>从离职员工表移回员工表</span><span>查看离职申请数据</span><span>审核离职申请</span></div></div>', '032404', '2024-04-08 22:26:20');
+INSERT INTO `admin_op_record` VALUES (331, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022407</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>首页</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工信息</span><span>操作请求审核</span><span>审核操作的内容</span><span>所有操作请求的数据</span><span>操作记录</span><span>反馈消息</span><span>离职员工管理</span><span>设置为离职</span><span>所有离职员工</span><span>从离职员工表移回员工表</span><span>查看离职申请数据</span><span>审核离职申请</span></div></div>', '032404', '2024-04-08 22:26:34');
+INSERT INTO `admin_op_record` VALUES (332, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022407</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>首页</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工信息</span><span>部门员工考勤</span></div></div>', '032404', '2024-04-12 15:42:21');
+INSERT INTO `admin_op_record` VALUES (333, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了032404</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>通知管理</span><span>首页</span><span>所有员工信息</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>所有员工考勤</span><span>修改员工考勤记录</span><span>审核员工请假</span><span>用户管理</span><span>查看某位用户的密码</span><span>分配权限</span><span>修改某位用户的密码</span><span>删除某位用户</span><span>添加用户</span><span>所有用户数据</span><span>操作请求审核</span><span>审核操作的内容</span><span>所有操作请求的数据</span><span>操作记录</span><span>反馈消息</span><span>离职员工管理</span><span>设置为离职</span><span>所有离职员工</span><span>从离职员工表移回员工表</span><span>查看离职申请数据</span><span>审核离职申请</span><span>向所有部门发送通知</span></div></div>', '032404', '2024-04-12 16:19:50');
+INSERT INTO `admin_op_record` VALUES (334, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022407</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>通知管理</span><span>首页</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工信息</span><span>部门员工考勤</span><span>向自己部门发送通知</span></div></div>', '032404', '2024-04-12 16:20:20');
+INSERT INTO `admin_op_record` VALUES (335, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022407</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>通知管理</span><span>首页</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工信息</span><span>部门员工考勤</span><span>用户管理</span><span>查看某位用户的密码</span><span>分配权限</span><span>修改某位用户的密码</span><span>删除某位用户</span><span>添加用户</span><span>所有用户数据</span><span>向自己部门发送通知</span></div></div>', '032404', '2024-04-12 16:20:49');
+INSERT INTO `admin_op_record` VALUES (336, '\n                    <div class=\"authority\">\n                        <p>022407分配权限给了022407</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>用户管理</span><span>通知管理</span><span>首页</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工信息</span><span>部门员工考勤</span><span>查看某位用户的密码</span><span>修改某位用户的密码</span><span>删除某位用户</span><span>添加用户</span><span>所有用户数据</span><span>向自己部门发送通知</span></div></div>', '022407', '2024-04-12 16:21:24');
+INSERT INTO `admin_op_record` VALUES (337, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022407</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>用户管理</span><span>通知管理</span><span>首页</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工信息</span><span>部门员工考勤</span><span>添加用户</span><span>所有用户数据</span><span>向自己部门发送通知</span></div></div>', '032404', '2024-04-12 16:22:15');
+INSERT INTO `admin_op_record` VALUES (338, '<div class=\"shortMsg\">032404查看了032404的密码</div>', '032404', '2024-04-12 16:26:31');
+INSERT INTO `admin_op_record` VALUES (339, '\n                <div class=\"add\">\n                <div>\n                    <p>添加信息</p>\n                    <p>032404用户添加了一位员工</p>\n                </div>\n                \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>测试部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>帕姆</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13100090114</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>100</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-22</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-14 14:08:35');
 
 -- ----------------------------
 -- Table structure for admin_op_review
@@ -232,7 +254,7 @@ CREATE TABLE `admin_op_review`  (
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `staffName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
+  `datetime` datetime(0) NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -244,23 +266,6 @@ INSERT INTO `admin_op_review` VALUES (47, '{\"oldData\": {\"staffId\": \"022301\
 INSERT INTO `admin_op_review` VALUES (48, '{\"oldData\": {\"staffId\": \"022301\", \"departId\": \"02\", \"phoneNum\": 13376629080, \"job\": \"\\u7ecf\\u7406\", \"staffName\": \"\\u73ed\\u5c3c\\u7279\\u00b7\\u5361\\u5854\\u5e93\\u6817\", \"sex\": \"\\u7537\", \"age\": 21, \"salary\": 7000, \"entryTime\": \"2023-09-15\"}, \"newData\": {\"staffId\": \"022301\", \"departId\": \"02\", \"phoneNum\": \"19111199997\", \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u5e15\\u59c6\", \"sex\": \"\\u7537\", \"age\": 5, \"salary\": 7000, \"entryTime\": \"2024-04-18\"}}', 'updateRequest', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-02 22:39:43', '审核驳回');
 INSERT INTO `admin_op_review` VALUES (52, '{\"oldData\": {\"staffId\": \"012404\", \"departId\": \"01\", \"phoneNum\": 12171190114, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u96f7\\u7535\\u00b7\\u5f71\", \"sex\": \"\\u5973\", \"age\": 300, \"salary\": 7700, \"entryTime\": \"2024-03-01\"}, \"newData\": {\"staffId\": \"012404\", \"departId\": \"01\", \"phoneNum\": 12171190114, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u96f7\\u7535\\u00b7\\u5f71\", \"sex\": \"\\u5973\", \"age\": 500, \"salary\": 7700, \"entryTime\": \"2024-03-01\"}}', 'updateRequest', '012301', '达达利亚', '2024-04-07 23:04:49', '审核通过');
 INSERT INTO `admin_op_review` VALUES (53, '{\"oldData\": {\"staffId\": \"022405\", \"departId\": \"02\", \"phoneNum\": 19273322110, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u661f\", \"sex\": \"\\u5973\", \"age\": 5, \"salary\": 5000, \"entryTime\": \"2024-03-13\"}, \"newData\": {\"staffId\": \"022405\", \"departId\": \"02\", \"phoneNum\": \"19000000000\", \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u661f\", \"sex\": \"\\u5973\", \"age\": 5, \"salary\": 5000, \"entryTime\": \"2024-03-13\"}}', 'updateRequest', '022406', '迈凯伦塞纳', '2024-04-08 14:53:26', '审核通过');
-
--- ----------------------------
--- Table structure for admin_send_notice
--- ----------------------------
-DROP TABLE IF EXISTS `admin_send_notice`;
-CREATE TABLE `admin_send_notice`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of admin_send_notice
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for admin_user
@@ -279,9 +284,9 @@ CREATE TABLE `admin_user`  (
 -- ----------------------------
 -- Records of admin_user
 -- ----------------------------
-INSERT INTO `admin_user` VALUES ('032404', '03', '艾吉奥·奥迪托雷·达·佛罗伦萨', 'admin', '在线', 'staff,staffMsg,home,allStaffMsgView,adminAddStaff,adminUpdateStaff,user,showUserPassWord,allotAuthority,updateUserPassWord,deleteUser,addAdminUser,userData,operatingRequestAudit,updateOpReviewStatus,operatingRequestAuditData,operatingData,feedback,dimission,settingDimission,dimissionData,returnStaffTable,dimissionAudit,updateResignReviewStatus');
-INSERT INTO `admin_user` VALUES ('022407', '02', 'Intensa Emozione', 'admin', '在线', 'staff,staffMsg,home,adminAddStaff,adminUpdateStaff,departmentStaffMsg,user,showUserPassWord,allotAuthority,updateUserPassWord,deleteUser,addAdminUser,userData,operatingRequestAudit,updateOpReviewStatus,operatingRequestAuditData');
-INSERT INTO `admin_user` VALUES ('022406', '02', '迈凯伦塞纳', 'admin', '在线', 'staff,staffMsg,home,userAddStaff,userUpdateStaff,departmentStaffMsg');
+INSERT INTO `admin_user` VALUES ('032404', '03', '艾吉奥·奥迪托雷·达·佛罗伦萨', 'admin', '下线', 'staff,staffMsg,checkingIn,notice,home,allStaffMsgView,adminAddStaff,adminUpdateStaff,allCheckingIn,editCheckingIn,checkVacate,user,showUserPassWord,allotAuthority,updateUserPassWord,deleteUser,addAdminUser,userData,operatingRequestAudit,updateOpReviewStatus,operatingRequestAuditData,operatingData,feedback,dimission,settingDimission,dimissionData,returnStaffTable,dimissionAudit,updateResignReviewStatus,noticeForAll');
+INSERT INTO `admin_user` VALUES ('022407', '02', 'Intensa Emozione', 'admin', '在线', 'staff,staffMsg,checkingIn,user,notice,home,adminAddStaff,adminUpdateStaff,departmentStaffMsg,departmentCheckingIn,addAdminUser,userData,noticeForDepart');
+INSERT INTO `admin_user` VALUES ('022406', '02', '迈凯伦塞纳', 'admin', '下线', 'staff,staffMsg,checkingIn,home,userAddStaff,userUpdateStaff,departmentStaffMsg,departmentCheckingIn,editCheckingIn,checkVacate');
 
 -- ----------------------------
 -- Table structure for askforleave
@@ -290,11 +295,11 @@ DROP TABLE IF EXISTS `askforleave`;
 CREATE TABLE `askforleave`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `departId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `startTime` datetime NOT NULL,
-  `endTime` datetime NOT NULL,
-  `dateTime` datetime NOT NULL,
+  `startTime` datetime(0) NOT NULL,
+  `endTime` datetime(0) NOT NULL,
+  `dateTime` datetime(0) NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -332,15 +337,16 @@ CREATE TABLE `feedback`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `dateTime` datetime NOT NULL,
+  `dateTime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of feedback
 -- ----------------------------
 INSERT INTO `feedback` VALUES (17, '忘记密码了', '012302', '2024-03-17 14:55:25');
 INSERT INTO `feedback` VALUES (18, '报服务器异常的错误\n', '012303', '2024-03-17 14:55:42');
+INSERT INTO `feedback` VALUES (19, '123SADASD', '032404', '2024-04-14 13:56:44');
 
 -- ----------------------------
 -- Table structure for notice
@@ -348,32 +354,16 @@ INSERT INTO `feedback` VALUES (18, '报服务器异常的错误\n', '012303', '2
 DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `receiver_departIds` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
+  `datetime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of notice
--- ----------------------------
-
--- ----------------------------
--- Table structure for receivernotice
--- ----------------------------
-DROP TABLE IF EXISTS `receivernotice`;
-CREATE TABLE `receivernotice`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `receiver_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `datetime` datetime NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of receivernotice
 -- ----------------------------
 
 -- ----------------------------
@@ -410,7 +400,7 @@ CREATE TABLE `resignreview`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `dateTime` datetime NOT NULL,
+  `dateTime` datetime(0) NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `staffName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`, `staffId`) USING BTREE
@@ -463,6 +453,7 @@ INSERT INTO `staff` VALUES ('012408', '01', 19231000000, '穹', '男', 9, 10000,
 INSERT INTO `staff` VALUES ('032404', '03', 12689931884, '艾吉奥·奥迪托雷·达·佛罗伦萨', '男', 35, 10000, '普通员工', '2024-03-14');
 INSERT INTO `staff` VALUES ('022406', '02', 17124287216, '迈凯伦塞纳', '男', 20, 99000, '普通员工', '2024-04-01');
 INSERT INTO `staff` VALUES ('022407', '02', 14294374825, 'Intensa Emozione', '男', 5, 10000, '普通员工', '2024-04-01');
+INSERT INTO `staff` VALUES ('032305', '03', 13100090114, '帕姆', '男', 100, 10000, '普通员工', '2023-07-22');
 
 -- ----------------------------
 -- Table structure for workattendance
@@ -472,10 +463,10 @@ CREATE TABLE `workattendance`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `date` date NOT NULL,
-  `startTime` datetime NOT NULL,
-  `endTime` datetime NOT NULL,
   `staffName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `date` datetime(0) NOT NULL,
+  `startTime` time(0) NOT NULL,
+  `endTime` time(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 

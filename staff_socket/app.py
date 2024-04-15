@@ -17,18 +17,13 @@ def test_connect():
     print("用户已连接")
 
 
-# 用户登录
-@socketio.on('userLogin')
-def userLogin(data):
-    emit('userLoginEvent', {'code':'userUpdate','msg': '有用户登录了'},broadcast=True)
-    print("用户登录")
+# 用户表更改
+@socketio.on('user')
+def userUpdate(data):
+    emit('userUpdate', {'code':'userUpdate','msg': '用户表更新'},broadcast=True)
 
 
-# 用户退出登录
-@socketio.on('userLogout')
-def userLogout():
-    emit('userLogoutEvent', {'code':'userUpdate','msg': '有用户退出登录了'},broadcast=True)
-    print("用户退出登录")
+
 
 
 # 用户取消连接

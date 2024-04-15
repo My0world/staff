@@ -35,38 +35,14 @@
 
 
             <!-- 通知管理 -->
-            <el-sub-menu index="通知管理" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'" v-if="authorityList.indexOf('notice') != -1">
+            <el-menu-item @click="clickMenu('/notice', '通知管理')" index="/notice" v-if="authorityList.indexOf('notice') != -1">
+                <el-icon>
+                    <component :is="icons[2]"></component>
+                </el-icon>
                 <template #title>
-                    <el-icon>
-                        <component :is="icons[2]"></component>
-                    </el-icon>
                     <span class="fontSize17">通知管理</span>
                 </template>
-                <el-menu-item @click="clickMenu('/noticeRelease', '通知管理|发布通知')" index="/release" v-if="authorityList.indexOf('noticeRelease') != -1">
-                    <span class="fontSize17">发布通知</span>
-                </el-menu-item>
-                <el-menu-item @click="clickMenu('/noticeHistory', '通知管理|历史记录')" index="/noticeHistory" v-if="authorityList.indexOf('noticeHistory') != -1">
-                    <span class="fontSize17">历史记录</span>
-                </el-menu-item>
-            </el-sub-menu>
-
-            
-            <!-- 请假审核 -->
-            <el-sub-menu index="请假审核" :popper-class="themeType ?'bglightBlur':'bgdarkBlur'" v-if="authorityList.indexOf('leave') != -1">
-                <template #title>
-                    <el-icon>
-                        <component :is="icons[3]"></component>
-                    </el-icon>
-                    <span class="fontSize17">请假审核</span>
-                </template>
-                <el-menu-item @click="clickMenu('/leaveAudit', '请假审核|审核')" index="/leaveAudit" v-if="authorityList.indexOf('leaveAudit') != -1">
-                    <span class="fontSize17"> 审核</span>
-                </el-menu-item>
-                <el-menu-item @click="clickMenu('/leaveHistory', '请假审核|历史记录')" index="/leaveHistory" v-if="authorityList.indexOf('leaveHistory') != -1">
-                    <span class="fontSize17"> 历史记录</span>
-                </el-menu-item>
-            </el-sub-menu>
-
+            </el-menu-item>
 
             <!-- 用户管理 -->
             <el-menu-item @click="clickMenu('/user', '用户管理')" index="/user" v-if="authorityList.indexOf('user') != -1">

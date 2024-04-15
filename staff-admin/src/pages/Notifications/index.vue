@@ -1,46 +1,34 @@
 <template>
-    <div class="CheckingIn">
+    <div class="Notice">
         <el-tabs v-model="activeName" type="card" :class="[theme === 'light' ? 'light' : 'dark']">
-            <el-tab-pane label="考勤表" name="考勤表">
+            <el-tab-pane label="写通知" name="写通知">
                 <div class="block">
-                    <el-row :gutter="20" class="container">
-                        <el-col :span="24" style="height: 100%;">
-                            <CheckingInSearch></CheckingInSearch>
-                        </el-col>
-                    </el-row>
-                    <el-row :gutter="20" class="container">
-                        <el-col :span="24" style="height: 100%;">
-                            <CheckingInTable></CheckingInTable>
-                        </el-col>
-                    </el-row>
+                    <noticeForm></noticeForm>
                 </div>
             </el-tab-pane>
-            <el-tab-pane v-if="hasCheckVacate" label="请假审核" name="请假审核">
+            <el-tab-pane label="已发送" name="已发送">
                 <div class="block">
-                    <el-row :gutter="20" class="container">
-                        <el-col :span="24" style="height: 100%;">
-                            <VacationSearch></VacationSearch>
-                        </el-col>
-                    </el-row>
-                    <el-row :gutter="20" class="container">
-                        <el-col :span="24" style="height: 100%;">
-                            <VactionTable></VactionTable>
-                        </el-col>
-                    </el-row>
+                    <send></send>
                 </div>
             </el-tab-pane>
+            <el-tab-pane label="收件箱" name="收件箱">
+                <div class="block">
+                    <receive></receive>
+                </div>
+            </el-tab-pane>
+
         </el-tabs>
     </div>
 </template>
 
 
-<script setup>
-import { ref,provide,onMounted, computed } from 'vue';
-import CheckingInSearch from './components/CheckingInSearch.vue';
-import CheckingInTable from './components/CheckingInTable.vue';
-import VacationSearch from './components/VacationSearch.vue';
-import VactionTable from './components/VactionTable.vue';
 
+<script setup>
+import noticeForm from './components/noticeForm.vue';
+import send from './components/send.vue';
+import receive from './components/receive.vue';
+
+import { onMounted, provide, ref } from 'vue';
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
 // 引入login仓库
@@ -50,13 +38,8 @@ import { useLayoutStore } from '../../stores/layout'
 // 路由
 import { useRouter } from 'vue-router'
 
-
 //使用路由
 let router = useRouter()
-
-//标签页点击的值
-let activeName = ref('考勤表')
-provide("activeName",activeName)
 
 // 获取login仓库
 let loginStore = useLoginStore()
@@ -70,24 +53,23 @@ const {
     theme,
 } = storeToRefs(layoutStore)
 
+//标签页点击的值
+let activeName = ref('写通知')
+provide("activeName", activeName)
+
 // login仓库的state数据
 const {
     //权限列表
     authorityList,
 } = storeToRefs(loginStore)
 
-//审核请假
-const hasCheckVacate = computed(()=>{
-    return authorityList.value.indexOf("checkVacate") !== -1
-})
-
 onMounted(() => {
-    if (authorityList.value.indexOf("checkingIn") === -1) {
+    if (authorityList.value.indexOf("notice") === -1) {
         router.push({ name: '403' })
     }
 })
-
 </script>
+
 
 <!-- elementUI -->
 <style lang="less" scoped>
@@ -148,16 +130,16 @@ onMounted(() => {
 </style>
 
 <style lang="less" scoped>
-.CheckingIn {
+.Notice {
     margin-top: 17px;
-    height: calc(100% - 17px) ;
-    
+    height: calc(100% - 17px);
+
 
     :deep(.el-tabs) {
         height: 100%;
 
         .el-tabs__content {
-            height: calc( 100% - 52.5px);
+            height: calc(100% - 52.5px);
 
             .el-tab-pane {
                 height: 100%;
@@ -165,6 +147,7 @@ onMounted(() => {
         }
     }
 }
+
 .block {
     margin-top: 17px;
     height: calc(100% - 17px);
@@ -177,7 +160,7 @@ onMounted(() => {
 
         &:nth-last-of-type(1) {
             padding-top: 10px;
-            height: calc(100% - 185px);
+            height: calc(100% - 140px);
             padding-bottom: 10px;
         }
     }
