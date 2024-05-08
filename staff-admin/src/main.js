@@ -24,6 +24,9 @@ import * as API from './api'
 import "./util/socket"
 // 去除默认样式
 import "./assets/reset.css"
+//echarts
+import * as echarts from "echarts";
+
 
 
 
@@ -35,6 +38,8 @@ const app = createApp(App)
 app.config.globalProperties.$ElMessage = ElMessage
 // 全局挂载API
 app.config.globalProperties.$API = API
+// 全局挂载 echarts
+app.config.globalProperties.$echarts = echarts;
 
 //使用全局组件
 app.component("ThemeSwitch", ThemeSwitch)

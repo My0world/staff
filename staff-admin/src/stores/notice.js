@@ -1,6 +1,7 @@
 import {
     defineStore
 } from "pinia"
+import notice from "../api/index"
 export const useNoticeStore = defineStore("noticeData", {
     state: () => ({
         // 已发送通知信息搜索信息表单
@@ -9,15 +10,7 @@ export const useNoticeStore = defineStore("noticeData", {
             pageNo: 1
         },
         //已发送通知信息
-        sendList: [
-            {
-                departName: "管理层,开发部,测试部,人力资源,运维部",
-                title: "重要通知：4月13日8点到4月15日18点后台系统关闭",
-                datetime: "2024-4-10",
-                content: "后台系统需要对通知管理，首页，请假管理3个功能模块就行升级和优化。",
-                send_staffName: "艾吉奥·奥迪托雷·达·佛罗伦萨"
-            },
-        ],
+        sendList: [],
         //已发送通知总数
         sendTotal: 0,
         // 已接收通知信息搜索信息表单
@@ -26,15 +19,7 @@ export const useNoticeStore = defineStore("noticeData", {
             pageNo: 1
         },
         //已接收通知信息
-        receiveList: [
-            {
-                departName: "管理层,开发部,测试部,人力资源,运维部",
-                title: "重要通知：4月13日8点到4月15日18点后台系统关闭",
-                datetime: "2024-4-10",
-                content: "后台系统需要对通知管理，首页，请假管理3个功能模块就行升级和优化。",
-                send_staffName: "艾吉奥·奥迪托雷·达·佛罗伦萨"
-            },
-        ],
+        receiveList: [],
         //已接收通知总数
         receiveTotal: 0,
     }),
@@ -44,9 +29,16 @@ export const useNoticeStore = defineStore("noticeData", {
     actions: {
         //筛选已发送通知信息
         async filterSendData(item) {
+            let res = await notice.reqSendData(item)
+            this.sendList = res.data.data
+            this.total = res.data.total
         },
         //筛选已接收通知信息
         async filterReceiveData(item) {
+            console.log(123);
+            let res = await notice.reqReceiverData(item)
+            this.receiveList = res.data.data
+            this.total = res.data.total
         }
     }
 })

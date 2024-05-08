@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 15/04/2024 09:46:38
+ Date: 08/05/2024 14:56:48
 */
 
 SET NAMES utf8mb4;
@@ -80,7 +80,7 @@ CREATE TABLE `admin_op_record`  (
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `datetime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 340 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 381 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin_op_record
@@ -243,6 +243,47 @@ INSERT INTO `admin_op_record` VALUES (336, '\n                    <div class=\"a
 INSERT INTO `admin_op_record` VALUES (337, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022407</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>用户管理</span><span>通知管理</span><span>首页</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工信息</span><span>部门员工考勤</span><span>添加用户</span><span>所有用户数据</span><span>向自己部门发送通知</span></div></div>', '032404', '2024-04-12 16:22:15');
 INSERT INTO `admin_op_record` VALUES (338, '<div class=\"shortMsg\">032404查看了032404的密码</div>', '032404', '2024-04-12 16:26:31');
 INSERT INTO `admin_op_record` VALUES (339, '\n                <div class=\"add\">\n                <div>\n                    <p>添加信息</p>\n                    <p>032404用户添加了一位员工</p>\n                </div>\n                \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>测试部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>帕姆</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13100090114</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>100</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-22</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-14 14:08:35');
+INSERT INTO `admin_op_record` VALUES (340, '\n                <div class=\'update\'>\n                    <div>\n                        <p>修改信息请求</p>\n                        <p>032404用户修改员工号为032305员工的信息</p>\n                    </div>\n                \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>032305</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>测试部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>帕姆</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13100090114</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>100</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-22</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>032305</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>测试部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>帕姆</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13100090000</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>100</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-22</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-15 22:15:22');
+INSERT INTO `admin_op_record` VALUES (341, '\n                <div class=\'update\'>\n                    <div>\n                        <p>修改信息请求</p>\n                        <p>032404用户修改员工号为032305员工的信息</p>\n                    </div>\n                \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>032305</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>测试部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>帕姆</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13100090000</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>100</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-22</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>032305</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>测试部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>帕姆</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13100000000</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>100</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-22</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-15 22:17:02');
+INSERT INTO `admin_op_record` VALUES (342, '\n                <div class=\'update\'>\n                    <div>\n                        <p>修改信息请求</p>\n                        <p>032404用户修改员工号为012408员工的信息</p>\n                    </div>\n                \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19231000000</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19231000001</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-15 22:17:49');
+INSERT INTO `admin_op_record` VALUES (343, '\n                <div class=\'update\'>\n                    <div>\n                        <p>修改信息请求</p>\n                        <p>032404用户修改员工号为012408员工的信息</p>\n                    </div>\n                \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19231000001</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19231000201</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-15 22:19:12');
+INSERT INTO `admin_op_record` VALUES (344, '\n                <div class=\'update\'>\n                    <div>\n                        <p>修改信息请求</p>\n                        <p>032404用户修改员工号为012408员工的信息</p>\n                    </div>\n                \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19231000201</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19231000211</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-15 22:19:52');
+INSERT INTO `admin_op_record` VALUES (345, '\n                <div class=\'update\'>\n                    <div>\n                        <p>修改信息请求</p>\n                        <p>032404用户修改员工号为012408员工的信息</p>\n                    </div>\n                \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19231000211</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012408</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>穹</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>19201000211</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2023-07-20</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-15 22:22:45');
+INSERT INTO `admin_op_record` VALUES (346, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022407</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>用户管理</span><span>离职员工管理</span><span>通知管理</span><span>首页</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工信息</span><span>部门员工考勤</span><span>添加用户</span><span>所有用户数据</span><span>设置为离职</span><span>向自己部门发送通知</span></div></div>', '032404', '2024-04-15 22:33:09');
+INSERT INTO `admin_op_record` VALUES (347, '<div class=\"shortMsg\">022407将胡桃设置为离职</div>', '022407', '2024-04-15 22:33:47');
+INSERT INTO `admin_op_record` VALUES (348, '<div class=\"shortMsg\">032404将022302从离职员工移到了正式员工中</div>', '032404', '2024-04-15 22:33:55');
+INSERT INTO `admin_op_record` VALUES (349, '\n            <div class=\"add\">\n            <div>\n                <p>添加信息</p>\n                <p>022406用户需要添加一位员工</p>\n            </div>\n            \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>飞升自由</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13100061846</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>9</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>4000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-03</span>\n            </p>\n        </div>\n        </div>', '022406', '2024-04-15 22:49:33');
+INSERT INTO `admin_op_record` VALUES (350, '<div class=\"shortMsg\">022406用户的添加信息请求编号为54已被032404用户审核并通过</div>', '032404', '2024-04-15 22:50:01');
+INSERT INTO `admin_op_record` VALUES (351, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022406</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>通知管理</span><span>首页</span><span>添加员工(需审核)</span><span>修改员工(需审核)</span><span>部门员工信息</span><span>部门员工考勤</span><span>修改员工考勤记录</span><span>审核员工请假</span><span>向自己部门发送通知</span></div></div>', '032404', '2024-04-21 00:56:22');
+INSERT INTO `admin_op_record` VALUES (352, '\n                <div class=\'update\'>\n                    <div>\n                        <p>修改信息请求</p>\n                        <p>032404用户修改员工号为022407员工的信息</p>\n                    </div>\n                \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>022407</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>Intensa Emozione</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>14294374825</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>5</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-01</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>022407</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>阿波罗IE</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>14294374825</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>5</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-01</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-28 15:39:52');
+INSERT INTO `admin_op_record` VALUES (353, '\n                <div class=\"add\">\n                <div>\n                    <p>添加信息</p>\n                    <p>032404用户添加了一位员工</p>\n                </div>\n                \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>梁庚大</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13184495447</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>13</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>6000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-30</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-30 22:30:50');
+INSERT INTO `admin_op_record` VALUES (354, '\n                <div class=\"add\">\n                <div>\n                    <p>添加信息</p>\n                    <p>032404用户添加了一位员工</p>\n                </div>\n                \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>梁庚大</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13184495447</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>13</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>6000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-30</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-30 22:30:53');
+INSERT INTO `admin_op_record` VALUES (355, '\n                <div class=\"add\">\n                <div>\n                    <p>添加信息</p>\n                    <p>032404用户添加了一位员工</p>\n                </div>\n                \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>梁庚大</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13184495447</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>13</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>6000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-30</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-30 22:31:01');
+INSERT INTO `admin_op_record` VALUES (356, '\n                <div class=\"add\">\n                <div>\n                    <p>添加信息</p>\n                    <p>032404用户添加了一位员工</p>\n                </div>\n                \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>梁庚大</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>13172289122</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>23</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>8000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-25</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-30 22:40:31');
+INSERT INTO `admin_op_record` VALUES (357, '\n                <div class=\"add\">\n                <div>\n                    <p>添加信息</p>\n                    <p>032404用户添加了一位员工</p>\n                </div>\n                \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>宫龙寻</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>18595532114</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>6</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>5000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-29</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-30 22:45:14');
+INSERT INTO `admin_op_record` VALUES (358, '\n                <div class=\'update\'>\n                    <div>\n                        <p>修改信息请求</p>\n                        <p>032404用户修改员工号为012409员工的信息</p>\n                    </div>\n                \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012409</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>宫龙寻</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>18595532114</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>6</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>5000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-29</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>012409</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>管理层</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>宫龙寻</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>18595500000</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>6</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>5000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-29</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-30 22:45:36');
+INSERT INTO `admin_op_record` VALUES (359, '<div class=\"shortMsg\">032404查看了022407的密码</div>', '032404', '2024-04-30 22:49:28');
+INSERT INTO `admin_op_record` VALUES (360, '<div class=\"shortMsg\">032404修改了022407的密码</div>', '032404', '2024-04-30 22:49:51');
+INSERT INTO `admin_op_record` VALUES (361, '<div class=\"shortMsg\">032404添加了022409用户</div>', '032404', '2024-04-30 22:50:29');
+INSERT INTO `admin_op_record` VALUES (362, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022409</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>首页</span><span>所有员工信息</span><span>添加员工(无需审核)</span><span>修改员工(无需审核)</span><span>部门员工考勤</span><span>修改员工考勤记录</span><span>审核员工请假</span><span>用户管理</span><span>查看某位用户的密码</span><span>分配权限</span><span>修改某位用户的密码</span><span>删除某位用户</span><span>添加用户</span><span>所有用户数据</span><span>操作请求审核</span><span>审核操作的内容</span><span>所有操作请求的数据</span></div></div>', '032404', '2024-04-30 22:52:29');
+INSERT INTO `admin_op_record` VALUES (363, '<div class=\"shortMsg\">032404删除了022409用户</div>', '032404', '2024-04-30 22:52:41');
+INSERT INTO `admin_op_record` VALUES (364, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022406</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>通知管理</span><span>首页</span><span>添加员工(需审核)</span><span>修改员工(需审核)</span><span>部门员工信息</span><span>部门员工考勤</span><span>修改员工考勤记录</span><span>审核员工请假</span><span>离职员工管理</span><span>设置为离职</span><span>所有离职员工</span><span>从离职员工表移回员工表</span><span>查看离职申请数据</span><span>审核离职申请</span><span>向自己部门发送通知</span></div></div>', '032404', '2024-04-30 22:53:01');
+INSERT INTO `admin_op_record` VALUES (365, '\n            <div class=\'update\'>\n                <div>\n                    <p>修改信息请求</p>\n                    <p>022406用户想要修改员工号为022404员工的信息</p>\n                </div>\n            \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>022404</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>菲谢尔·冯·露弗施洛斯·那菲多特</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>实习生</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>17432397554</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>女</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>23</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>6000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-03-12</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>022404</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>菲谢尔·冯·露弗施洛斯·那菲多特</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>实习生</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>17432300000</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>女</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>23</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>6000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-03-12</span>\n            </p>\n        </div>\n        </div>', '022406', '2024-04-30 22:54:18');
+INSERT INTO `admin_op_record` VALUES (366, '<div class=\"shortMsg\">022406用户的修改信息请求编号为55已被032404用户审核并通过</div>', '032404', '2024-04-30 22:54:48');
+INSERT INTO `admin_op_record` VALUES (367, '<div class=\"shortMsg\">052301员工的离职申请已被032404用户驳回</div>', '032404', '2024-04-30 22:55:04');
+INSERT INTO `admin_op_record` VALUES (368, '<div class=\"shortMsg\">052303员工的离职申请已被032404用户驳回</div>', '032404', '2024-04-30 22:55:05');
+INSERT INTO `admin_op_record` VALUES (369, '<div class=\"shortMsg\">032404将012301从离职员工移到了正式员工中</div>', '032404', '2024-04-30 22:55:53');
+INSERT INTO `admin_op_record` VALUES (370, '\n                <div class=\"add\">\n                <div>\n                    <p>添加信息</p>\n                    <p>032404用户添加了一位员工</p>\n                </div>\n                \n        <div>\n            <p>数据信息：</p>\n            <p>\n                <span>部门名称：</span>\n                <span>测试部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>test</span>\n            </p>\n            <p>\n                <span>工种：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>12385565554</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>5</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>3000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-29</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-30 23:10:35');
+INSERT INTO `admin_op_record` VALUES (371, '\n                <div class=\'update\'>\n                    <div>\n                        <p>修改信息请求</p>\n                        <p>032404用户修改员工号为032406员工的信息</p>\n                    </div>\n                \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>032406</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>测试部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>test</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>12385565554</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>男</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>5</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>3000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-29</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>032406</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>测试部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>test</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>经理</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>12385565000</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>女</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>5</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>3000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-04-29</span>\n            </p>\n        </div>\n        </div>', '032404', '2024-04-30 23:11:38');
+INSERT INTO `admin_op_record` VALUES (372, '\n            <div class=\'update\'>\n                <div>\n                    <p>修改信息请求</p>\n                    <p>022406用户想要修改员工号为022403员工的信息</p>\n                </div>\n            \n        <div>\n            <p>修改前的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>022403</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>荧</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>12132290117</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>女</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>600</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>8000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-03-06</span>\n            </p>\n        </div>\n        \n        <div>\n            <p>修改后的数据：</p>\n            <p>\n                <span>员工号：</span>\n                <span>022403</span>\n            </p>\n            <p>\n                <span>部门名称：</span>\n                <span>开发部</span>\n            </p>\n            <p>\n                <span>员工姓名：</span>\n                <span>荧</span>\n            </p>\n            <p>\n                <span>职位：</span>\n                <span>普通员工</span>\n            </p>\n            <p>\n                <span>电话号码：</span>\n                <span>12132290117</span>\n            </p>\n            <p>\n                <span>性别：</span>\n                <span>女</span>\n            </p>\n            <p>\n                <span>年龄：</span>\n                <span>10000</span>\n            </p>\n            <p>\n                <span>薪资：</span>\n                <span>8000</span>\n            </p>\n            <p>\n                <span>入职时间：</span>\n                <span>2024-03-06</span>\n            </p>\n        </div>\n        </div>', '022406', '2024-04-30 23:12:55');
+INSERT INTO `admin_op_record` VALUES (373, '<div class=\"shortMsg\">022406用户的修改信息请求编号为56已被032404用户审核并通过</div>', '032404', '2024-04-30 23:13:35');
+INSERT INTO `admin_op_record` VALUES (374, '<div class=\"shortMsg\">032404将test设置为离职</div>', '032404', '2024-04-30 23:13:56');
+INSERT INTO `admin_op_record` VALUES (375, '<div class=\"shortMsg\">032404将032406从离职员工移到了正式员工中</div>', '032404', '2024-04-30 23:14:13');
+INSERT INTO `admin_op_record` VALUES (376, '<div class=\"shortMsg\">032404添加了022409用户</div>', '032404', '2024-04-30 23:16:48');
+INSERT INTO `admin_op_record` VALUES (377, '<div class=\"shortMsg\">032404查看了022409的密码</div>', '032404', '2024-04-30 23:17:00');
+INSERT INTO `admin_op_record` VALUES (378, '<div class=\"shortMsg\">032404修改了022409的密码</div>', '032404', '2024-04-30 23:17:15');
+INSERT INTO `admin_op_record` VALUES (379, '\n                    <div class=\"authority\">\n                        <p>032404分配权限给了022409</p>\n                        \n                        <div>\n                <span>员工管理</span><span>员工信息</span><span>考勤管理</span><span>首页</span><span>添加员工(需审核)</span><span>修改员工(需审核)</span><span>部门员工信息</span><span>所有员工考勤</span><span>修改员工考勤记录</span><span>审核员工请假</span></div></div>', '032404', '2024-04-30 23:18:10');
+INSERT INTO `admin_op_record` VALUES (380, '<div class=\"shortMsg\">032404删除了022409用户</div>', '032404', '2024-04-30 23:18:20');
 
 -- ----------------------------
 -- Table structure for admin_op_review
@@ -257,7 +298,7 @@ CREATE TABLE `admin_op_review`  (
   `datetime` datetime(0) NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 57 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin_op_review
@@ -266,6 +307,9 @@ INSERT INTO `admin_op_review` VALUES (47, '{\"oldData\": {\"staffId\": \"022301\
 INSERT INTO `admin_op_review` VALUES (48, '{\"oldData\": {\"staffId\": \"022301\", \"departId\": \"02\", \"phoneNum\": 13376629080, \"job\": \"\\u7ecf\\u7406\", \"staffName\": \"\\u73ed\\u5c3c\\u7279\\u00b7\\u5361\\u5854\\u5e93\\u6817\", \"sex\": \"\\u7537\", \"age\": 21, \"salary\": 7000, \"entryTime\": \"2023-09-15\"}, \"newData\": {\"staffId\": \"022301\", \"departId\": \"02\", \"phoneNum\": \"19111199997\", \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u5e15\\u59c6\", \"sex\": \"\\u7537\", \"age\": 5, \"salary\": 7000, \"entryTime\": \"2024-04-18\"}}', 'updateRequest', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-02 22:39:43', '审核驳回');
 INSERT INTO `admin_op_review` VALUES (52, '{\"oldData\": {\"staffId\": \"012404\", \"departId\": \"01\", \"phoneNum\": 12171190114, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u96f7\\u7535\\u00b7\\u5f71\", \"sex\": \"\\u5973\", \"age\": 300, \"salary\": 7700, \"entryTime\": \"2024-03-01\"}, \"newData\": {\"staffId\": \"012404\", \"departId\": \"01\", \"phoneNum\": 12171190114, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u96f7\\u7535\\u00b7\\u5f71\", \"sex\": \"\\u5973\", \"age\": 500, \"salary\": 7700, \"entryTime\": \"2024-03-01\"}}', 'updateRequest', '012301', '达达利亚', '2024-04-07 23:04:49', '审核通过');
 INSERT INTO `admin_op_review` VALUES (53, '{\"oldData\": {\"staffId\": \"022405\", \"departId\": \"02\", \"phoneNum\": 19273322110, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u661f\", \"sex\": \"\\u5973\", \"age\": 5, \"salary\": 5000, \"entryTime\": \"2024-03-13\"}, \"newData\": {\"staffId\": \"022405\", \"departId\": \"02\", \"phoneNum\": \"19000000000\", \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u661f\", \"sex\": \"\\u5973\", \"age\": 5, \"salary\": 5000, \"entryTime\": \"2024-03-13\"}}', 'updateRequest', '022406', '迈凯伦塞纳', '2024-04-08 14:53:26', '审核通过');
+INSERT INTO `admin_op_review` VALUES (54, '{\"departId\": \"02\", \"phoneNum\": \"13100061846\", \"staffName\": \"\\u98de\\u5347\\u81ea\\u7531\", \"sex\": \"\\u7537\", \"age\": 9, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"salary\": 4000, \"entryTime\": \"2024-04-03\"}', 'addRequest', '022406', '迈凯伦塞纳', '2024-04-15 22:49:33', '审核通过');
+INSERT INTO `admin_op_review` VALUES (55, '{\"oldData\": {\"staffId\": \"022404\", \"departId\": \"02\", \"phoneNum\": 17432397554, \"job\": \"\\u5b9e\\u4e60\\u751f\", \"staffName\": \"\\u83f2\\u8c22\\u5c14\\u00b7\\u51af\\u00b7\\u9732\\u5f17\\u65bd\\u6d1b\\u65af\\u00b7\\u90a3\\u83f2\\u591a\\u7279\", \"sex\": \"\\u5973\", \"age\": 23, \"salary\": 6000, \"entryTime\": \"2024-03-12\"}, \"newData\": {\"staffId\": \"022404\", \"departId\": \"02\", \"phoneNum\": \"17432300000\", \"job\": \"\\u5b9e\\u4e60\\u751f\", \"staffName\": \"\\u83f2\\u8c22\\u5c14\\u00b7\\u51af\\u00b7\\u9732\\u5f17\\u65bd\\u6d1b\\u65af\\u00b7\\u90a3\\u83f2\\u591a\\u7279\", \"sex\": \"\\u5973\", \"age\": 23, \"salary\": 6000, \"entryTime\": \"2024-03-12\"}}', 'updateRequest', '022406', '迈凯伦塞纳', '2024-04-30 22:54:18', '审核通过');
+INSERT INTO `admin_op_review` VALUES (56, '{\"oldData\": {\"staffId\": \"022403\", \"departId\": \"02\", \"phoneNum\": 12132290117, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u8367\", \"sex\": \"\\u5973\", \"age\": 600, \"salary\": 8000, \"entryTime\": \"2024-03-06\"}, \"newData\": {\"staffId\": \"022403\", \"departId\": \"02\", \"phoneNum\": 12132290117, \"job\": \"\\u666e\\u901a\\u5458\\u5de5\", \"staffName\": \"\\u8367\", \"sex\": \"\\u5973\", \"age\": 10000, \"salary\": 8000, \"entryTime\": \"2024-03-06\"}}', 'updateRequest', '022406', '迈凯伦塞纳', '2024-04-30 23:12:55', '审核通过');
 
 -- ----------------------------
 -- Table structure for admin_user
@@ -284,9 +328,9 @@ CREATE TABLE `admin_user`  (
 -- ----------------------------
 -- Records of admin_user
 -- ----------------------------
-INSERT INTO `admin_user` VALUES ('032404', '03', '艾吉奥·奥迪托雷·达·佛罗伦萨', 'admin', '下线', 'staff,staffMsg,checkingIn,notice,home,allStaffMsgView,adminAddStaff,adminUpdateStaff,allCheckingIn,editCheckingIn,checkVacate,user,showUserPassWord,allotAuthority,updateUserPassWord,deleteUser,addAdminUser,userData,operatingRequestAudit,updateOpReviewStatus,operatingRequestAuditData,operatingData,feedback,dimission,settingDimission,dimissionData,returnStaffTable,dimissionAudit,updateResignReviewStatus,noticeForAll');
-INSERT INTO `admin_user` VALUES ('022407', '02', 'Intensa Emozione', 'admin', '在线', 'staff,staffMsg,checkingIn,user,notice,home,adminAddStaff,adminUpdateStaff,departmentStaffMsg,departmentCheckingIn,addAdminUser,userData,noticeForDepart');
-INSERT INTO `admin_user` VALUES ('022406', '02', '迈凯伦塞纳', 'admin', '下线', 'staff,staffMsg,checkingIn,home,userAddStaff,userUpdateStaff,departmentStaffMsg,departmentCheckingIn,editCheckingIn,checkVacate');
+INSERT INTO `admin_user` VALUES ('032404', '03', '艾吉奥·奥迪托雷·达·佛罗伦萨', 'admin', '在线', 'staff,staffMsg,checkingIn,notice,home,allStaffMsgView,adminAddStaff,adminUpdateStaff,allCheckingIn,editCheckingIn,checkVacate,user,showUserPassWord,allotAuthority,updateUserPassWord,deleteUser,addAdminUser,userData,operatingRequestAudit,updateOpReviewStatus,operatingRequestAuditData,operatingData,feedback,dimission,settingDimission,dimissionData,returnStaffTable,dimissionAudit,updateResignReviewStatus,noticeForAll');
+INSERT INTO `admin_user` VALUES ('022407', '02', 'Intensa Emozione', '123', '下线', 'staff,staffMsg,checkingIn,user,dimission,notice,home,adminAddStaff,adminUpdateStaff,departmentStaffMsg,departmentCheckingIn,addAdminUser,userData,settingDimission,noticeForDepart');
+INSERT INTO `admin_user` VALUES ('022406', '02', '迈凯伦塞纳', 'admin', '下线', 'staff,staffMsg,checkingIn,notice,home,userAddStaff,userUpdateStaff,departmentStaffMsg,departmentCheckingIn,editCheckingIn,checkVacate,dimission,settingDimission,dimissionData,returnStaffTable,dimissionAudit,updateResignReviewStatus,noticeForDepart');
 
 -- ----------------------------
 -- Table structure for askforleave
@@ -295,18 +339,25 @@ DROP TABLE IF EXISTS `askforleave`;
 CREATE TABLE `askforleave`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `staffName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `departId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `startTime` datetime(0) NOT NULL,
-  `endTime` datetime(0) NOT NULL,
+  `startTime` date NOT NULL,
+  `endTime` date NOT NULL,
   `dateTime` datetime(0) NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of askforleave
 -- ----------------------------
+INSERT INTO `askforleave` VALUES (1, '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '02', '加班太累了，休息', '2024-04-21', '2024-04-21', '2024-04-21 21:35:56', '审核通过');
+INSERT INTO `askforleave` VALUES (2, '032301', '行秋', '03', '回家睡觉', '2024-04-30', '2024-04-30', '2024-04-21 21:37:29', '审核通过');
+INSERT INTO `askforleave` VALUES (3, '032305', '帕姆', '03', '放长假旅游', '2024-05-02', '2024-05-04', '2024-04-21 21:38:33', '审核通过');
+INSERT INTO `askforleave` VALUES (4, '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '03', '休息', '2024-05-07', '2024-05-07', '2024-04-21 21:40:47', '审核通过');
+INSERT INTO `askforleave` VALUES (5, '022403', '荧', '02', '累了', '2024-04-23', '2024-04-26', '2024-04-24 23:01:21', '审核通过');
+INSERT INTO `askforleave` VALUES (6, '022302', '胡桃', '02', '累了', '2024-04-24', '2024-04-30', '2024-04-24 23:18:39', '审核通过');
 
 -- ----------------------------
 -- Table structure for department
@@ -339,7 +390,7 @@ CREATE TABLE `feedback`  (
   `send_staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `dateTime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of feedback
@@ -347,6 +398,8 @@ CREATE TABLE `feedback`  (
 INSERT INTO `feedback` VALUES (17, '忘记密码了', '012302', '2024-03-17 14:55:25');
 INSERT INTO `feedback` VALUES (18, '报服务器异常的错误\n', '012303', '2024-03-17 14:55:42');
 INSERT INTO `feedback` VALUES (19, '123SADASD', '032404', '2024-04-14 13:56:44');
+INSERT INTO `feedback` VALUES (20, 'asdwdadw', '012301', '2024-04-30 22:57:40');
+INSERT INTO `feedback` VALUES (21, '156155', '012302', '2024-04-30 23:19:54');
 
 -- ----------------------------
 -- Table structure for notice
@@ -360,11 +413,19 @@ CREATE TABLE `notice`  (
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `datetime` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of notice
 -- ----------------------------
+INSERT INTO `notice` VALUES (1, 'admin', '032404', '01,02,03,04,05', 'test', '2024-04-21 00:08:01');
+INSERT INTO `notice` VALUES (2, 'testtesttest', '022406', '02', 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest', '2024-04-21 00:57:20');
+INSERT INTO `notice` VALUES (3, 'adwdawdwd', '032404', '02', 'test', '2024-04-21 00:59:58');
+INSERT INTO `notice` VALUES (4, 'asfasf', '032404', '02', 'fasfasfasdasfgfw', '2024-04-21 01:02:01');
+INSERT INTO `notice` VALUES (5, 'asfasfdsa', '032404', '02', 'asdasdasdwdawdawfwaawd', '2024-04-21 01:02:34');
+INSERT INTO `notice` VALUES (6, 'asdddddddddddddddddd', '022407', '02', '2wwwwwwwwwwwwwwwwwwwwwwwwwww', '2024-04-21 01:05:14');
+INSERT INTO `notice` VALUES (7, 'test', '032404', '01,02,03,04,05', 'testtest', '2024-04-30 22:48:39');
+INSERT INTO `notice` VALUES (8, 'test', '032404', '01,02,03,04,05', '123152', '2024-04-30 23:15:58');
 
 -- ----------------------------
 -- Table structure for resign
@@ -390,7 +451,6 @@ CREATE TABLE `resign`  (
 INSERT INTO `resign` VALUES ('052302', '05', 11371238224, '纳西妲', '女', 500, 4000, '普通员工', '2023-09-15', '2024-04-01');
 INSERT INTO `resign` VALUES ('032403', '03', 18173209421, '丹恒•饮月', '男', 600, 7000, '普通员工', '2024-03-13', '2024-04-01');
 INSERT INTO `resign` VALUES ('042403', '04', 18293321991, '三月七', '女', 22, 9000, '普通员工', '2024-03-07', '2024-04-01');
-INSERT INTO `resign` VALUES ('012301', '01', 13172290114, '达达利亚', '男', 22, 10000, '普通员工', '2024-04-01', '2024-04-08');
 
 -- ----------------------------
 -- Table structure for resignreview
@@ -409,8 +469,8 @@ CREATE TABLE `resignreview`  (
 -- ----------------------------
 -- Records of resignreview
 -- ----------------------------
-INSERT INTO `resignreview` VALUES (10, '052303', '找到更好的工作，准备转行。', '2024-03-31 09:50:44', '待审核', '阿斯托洛吉斯·莫娜·梅姬斯图斯');
-INSERT INTO `resignreview` VALUES (9, '052301', '需要出国留学。', '2024-04-01 09:49:50', '待审核', '夜阑');
+INSERT INTO `resignreview` VALUES (10, '052303', '找到更好的工作，准备转行。', '2024-03-31 09:50:44', '审核驳回', '阿斯托洛吉斯·莫娜·梅姬斯图斯');
+INSERT INTO `resignreview` VALUES (9, '052301', '需要出国留学。', '2024-04-01 09:49:50', '审核驳回', '夜阑');
 
 -- ----------------------------
 -- Table structure for staff
@@ -432,8 +492,8 @@ CREATE TABLE `staff`  (
 -- ----------------------------
 -- Records of staff
 -- ----------------------------
-INSERT INTO `staff` VALUES ('022404', '02', 17432397554, '菲谢尔·冯·露弗施洛斯·那菲多特', '女', 23, 6000, '实习生', '2024-03-12');
-INSERT INTO `staff` VALUES ('022403', '02', 12132290117, '荧', '女', 600, 8000, '普通员工', '2024-03-06');
+INSERT INTO `staff` VALUES ('022404', '02', 17432300000, '菲谢尔·冯·露弗施洛斯·那菲多特', '女', 23, 6000, '实习生', '2024-03-12');
+INSERT INTO `staff` VALUES ('022403', '02', 12132290117, '荧', '女', 10000, 8000, '普通员工', '2024-03-06');
 INSERT INTO `staff` VALUES ('042301', '04', 15238199014, '钟离', '男', 1000, 7000, '普通员工', '2023-09-15');
 INSERT INTO `staff` VALUES ('052301', '05', 11371238904, '夜阑', '女', 24, 8000, '普通员工', '2023-09-15');
 INSERT INTO `staff` VALUES ('052303', '05', 12134444042, '阿斯托洛吉斯·莫娜·梅姬斯图斯', '女', 23, 100000, '普通员工', '2023-09-15');
@@ -449,11 +509,18 @@ INSERT INTO `staff` VALUES ('032402', '03', 12322253454, '派蒙', '女', 6, 700
 INSERT INTO `staff` VALUES ('022405', '02', 19000000000, '星', '女', 5, 5000, '普通员工', '2024-03-13');
 INSERT INTO `staff` VALUES ('042404', '04', 18293318992, '姬子', '女', 32, 13000, '普通员工', '2024-03-06');
 INSERT INTO `staff` VALUES ('012407', '01', 19191923128, '瓦尔特·杨', '男', 500, 10000, '普通员工', '2024-03-14');
-INSERT INTO `staff` VALUES ('012408', '01', 19231000000, '穹', '男', 9, 10000, '经理', '2023-07-20');
+INSERT INTO `staff` VALUES ('012408', '01', 19201000211, '穹', '男', 9, 10000, '经理', '2023-07-20');
 INSERT INTO `staff` VALUES ('032404', '03', 12689931884, '艾吉奥·奥迪托雷·达·佛罗伦萨', '男', 35, 10000, '普通员工', '2024-03-14');
 INSERT INTO `staff` VALUES ('022406', '02', 17124287216, '迈凯伦塞纳', '男', 20, 99000, '普通员工', '2024-04-01');
-INSERT INTO `staff` VALUES ('022407', '02', 14294374825, 'Intensa Emozione', '男', 5, 10000, '普通员工', '2024-04-01');
-INSERT INTO `staff` VALUES ('032305', '03', 13100090114, '帕姆', '男', 100, 10000, '普通员工', '2023-07-22');
+INSERT INTO `staff` VALUES ('022407', '02', 14294374825, '阿波罗IE', '男', 5, 10000, '普通员工', '2024-04-01');
+INSERT INTO `staff` VALUES ('032305', '03', 13100000000, '帕姆', '男', 100, 10000, '普通员工', '2023-07-22');
+INSERT INTO `staff` VALUES ('022408', '02', 13100061846, '飞升自由', '男', 9, 4000, '普通员工', '2024-04-03');
+INSERT INTO `staff` VALUES ('012405', '01', 12171190000, '零式飞翼', '男', 500, 7700, '普通员工', '2024-03-01');
+INSERT INTO `staff` VALUES ('012406', '01', 13171190000, '地狱死神', '男', 500, 7700, '普通员工', '2024-03-01');
+INSERT INTO `staff` VALUES ('022409', '02', 13172289122, '梁庚大', '男', 23, 8000, '经理', '2024-04-25');
+INSERT INTO `staff` VALUES ('012409', '01', 18595500000, '宫龙寻', '男', 6, 5000, '经理', '2024-04-29');
+INSERT INTO `staff` VALUES ('012301', '01', 13172290114, '达达利亚', '男', 22, 10000, '普通员工', '2024-04-01');
+INSERT INTO `staff` VALUES ('032406', '03', 12385565000, 'test', '女', 5, 3000, '经理', '2024-04-29');
 
 -- ----------------------------
 -- Table structure for workattendance
@@ -464,14 +531,228 @@ CREATE TABLE `workattendance`  (
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `staffId` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `staffName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `date` datetime(0) NOT NULL,
-  `startTime` time(0) NOT NULL,
-  `endTime` time(0) NOT NULL,
+  `date` date NOT NULL,
+  `startTime` time(0) NULL DEFAULT NULL,
+  `endTime` time(0) NULL DEFAULT NULL,
+  `departId` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 308 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of workattendance
 -- ----------------------------
+INSERT INTO `workattendance` VALUES (1, '请假', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-21', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (2, '请假', '032301', '行秋', '2024-04-30', '00:00:00', '00:00:00', '03');
+INSERT INTO `workattendance` VALUES (3, '请假', '032305', '帕姆', '2024-05-02', '00:00:00', '00:00:00', '03');
+INSERT INTO `workattendance` VALUES (4, '请假', '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '2024-05-07', '00:00:00', '00:00:00', '03');
+INSERT INTO `workattendance` VALUES (5, '请假', '032305', '帕姆', '2024-05-03', '00:00:00', '00:00:00', '03');
+INSERT INTO `workattendance` VALUES (6, '请假', '032305', '帕姆', '2024-05-04', '00:00:00', '00:00:00', '03');
+INSERT INTO `workattendance` VALUES (39, '迟到', '032301', '行秋', '2024-04-21', '09:01:37', '19:18:33', '03');
+INSERT INTO `workattendance` VALUES (38, '迟到', '022302', '胡桃', '2024-04-21', '09:06:34', '18:49:22', '02');
+INSERT INTO `workattendance` VALUES (37, '迟到', '022301', '班尼特·卡塔库栗', '2024-04-21', '09:28:33', '18:59:10', '02');
+INSERT INTO `workattendance` VALUES (36, '迟到', '012302', '枫原万叶', '2024-04-21', '09:12:32', '19:53:38', '01');
+INSERT INTO `workattendance` VALUES (35, '正常', '052304', '久岐忍', '2024-04-21', '08:27:20', '18:21:37', '05');
+INSERT INTO `workattendance` VALUES (34, '正常', '052303', '阿斯托洛吉斯·莫娜·梅姬斯图斯', '2024-04-21', '08:13:36', '18:24:21', '05');
+INSERT INTO `workattendance` VALUES (33, '迟到', '052301', '夜阑', '2024-04-21', '09:19:22', '19:30:17', '05');
+INSERT INTO `workattendance` VALUES (32, '正常', '042301', '钟离', '2024-04-21', '08:16:59', '18:19:14', '04');
+INSERT INTO `workattendance` VALUES (31, '正常', '012303', '卯香菱', '2024-04-21', '08:29:51', '19:21:07', '01');
+INSERT INTO `workattendance` VALUES (30, '迟到', '032305', '帕姆', '2024-04-21', '09:24:32', '18:52:20', '03');
+INSERT INTO `workattendance` VALUES (29, '迟到', '012408', '穹', '2024-04-21', '09:00:36', '17:55:48', '01');
+INSERT INTO `workattendance` VALUES (40, '迟到', '012404', '雷电·影', '2024-04-21', '09:15:58', '18:04:29', '01');
+INSERT INTO `workattendance` VALUES (41, '正常', '022403', '荧', '2024-04-21', '08:22:08', '18:44:18', '02');
+INSERT INTO `workattendance` VALUES (42, '迟到', '042404', '姬子', '2024-04-21', '09:21:12', '19:18:31', '04');
+INSERT INTO `workattendance` VALUES (43, '正常', '022405', '星', '2024-04-21', '08:18:41', '19:45:06', '02');
+INSERT INTO `workattendance` VALUES (44, '迟到', '012407', '瓦尔特·杨', '2024-04-21', '09:27:50', '19:31:41', '01');
+INSERT INTO `workattendance` VALUES (45, '迟到', '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '2024-04-21', '09:10:05', '18:24:36', '03');
+INSERT INTO `workattendance` VALUES (46, '正常', '032402', '派蒙', '2024-04-21', '09:29:34', '19:57:44', '03');
+INSERT INTO `workattendance` VALUES (47, '迟到', '042402', '空', '2024-04-21', '09:24:15', '19:26:07', '04');
+INSERT INTO `workattendance` VALUES (48, '迟到', '022406', '迈凯伦塞纳', '2024-04-21', '09:07:15', '19:38:39', '02');
+INSERT INTO `workattendance` VALUES (49, '正常', '022407', 'Intensa Emozione', '2024-04-21', '08:13:47', '18:46:30', '02');
+INSERT INTO `workattendance` VALUES (50, '正常', '022408', '飞升自由', '2024-04-21', '08:14:39', '18:12:11', '02');
+INSERT INTO `workattendance` VALUES (51, '正常', '012408', '穹', '2024-04-22', '08:26:37', '19:52:37', '01');
+INSERT INTO `workattendance` VALUES (52, '迟到', '032305', '帕姆', '2024-04-22', '09:17:36', '19:54:27', '03');
+INSERT INTO `workattendance` VALUES (53, '迟到', '012303', '卯香菱', '2024-04-22', '09:18:36', '18:09:42', '01');
+INSERT INTO `workattendance` VALUES (54, '正常', '042301', '钟离', '2024-04-22', '08:05:28', '19:35:29', '04');
+INSERT INTO `workattendance` VALUES (55, '迟到', '052301', '夜阑', '2024-04-22', '09:05:34', '18:06:24', '05');
+INSERT INTO `workattendance` VALUES (56, '正常', '052303', '阿斯托洛吉斯·莫娜·梅姬斯图斯', '2024-04-22', '08:23:48', '19:21:12', '05');
+INSERT INTO `workattendance` VALUES (57, '迟到', '052304', '久岐忍', '2024-04-22', '09:30:07', '19:54:36', '05');
+INSERT INTO `workattendance` VALUES (58, '正常', '012302', '枫原万叶', '2024-04-22', '08:20:58', '18:26:38', '01');
+INSERT INTO `workattendance` VALUES (59, '正常', '022301', '班尼特·卡塔库栗', '2024-04-22', '08:11:49', '18:17:39', '02');
+INSERT INTO `workattendance` VALUES (60, '迟到', '022302', '胡桃', '2024-04-22', '09:16:57', '18:43:59', '02');
+INSERT INTO `workattendance` VALUES (61, '正常', '032301', '行秋', '2024-04-22', '08:30:02', '18:51:19', '03');
+INSERT INTO `workattendance` VALUES (62, '正常', '012404', '雷电·影', '2024-04-22', '08:22:53', '18:13:24', '01');
+INSERT INTO `workattendance` VALUES (63, '迟到', '022403', '荧', '2024-04-22', '09:21:23', '18:36:35', '02');
+INSERT INTO `workattendance` VALUES (64, '正常', '042404', '姬子', '2024-04-22', '08:15:32', '19:02:52', '04');
+INSERT INTO `workattendance` VALUES (65, '迟到', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-22', '09:08:09', '18:16:51', '02');
+INSERT INTO `workattendance` VALUES (66, '正常', '022405', '星', '2024-04-22', '08:11:18', '19:48:38', '02');
+INSERT INTO `workattendance` VALUES (67, '正常', '012407', '瓦尔特·杨', '2024-04-22', '08:20:42', '18:40:00', '01');
+INSERT INTO `workattendance` VALUES (68, '正常', '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '2024-04-22', '08:04:40', '18:06:17', '03');
+INSERT INTO `workattendance` VALUES (69, '迟到', '032402', '派蒙', '2024-04-22', '09:01:03', '19:35:56', '03');
+INSERT INTO `workattendance` VALUES (70, '迟到', '042402', '空', '2024-04-22', '09:06:06', '19:54:56', '04');
+INSERT INTO `workattendance` VALUES (71, '正常', '022406', '迈凯伦塞纳', '2024-04-22', '08:01:25', '19:42:59', '02');
+INSERT INTO `workattendance` VALUES (72, '迟到', '022407', 'Intensa Emozione', '2024-04-22', '09:04:10', '19:39:08', '02');
+INSERT INTO `workattendance` VALUES (73, '迟到', '022408', '飞升自由', '2024-04-22', '09:12:42', '19:38:21', '02');
+INSERT INTO `workattendance` VALUES (74, '迟到', '012408', '穹', '2024-04-23', '09:10:06', '19:45:49', '01');
+INSERT INTO `workattendance` VALUES (75, '正常', '032305', '帕姆', '2024-04-23', '08:21:46', '19:38:35', '03');
+INSERT INTO `workattendance` VALUES (76, '正常', '012303', '卯香菱', '2024-04-23', '08:29:41', '19:44:37', '01');
+INSERT INTO `workattendance` VALUES (77, '正常', '042301', '钟离', '2024-04-23', '08:02:36', '19:01:53', '04');
+INSERT INTO `workattendance` VALUES (78, '正常', '052301', '夜阑', '2024-04-23', '08:07:16', '18:31:11', '05');
+INSERT INTO `workattendance` VALUES (79, '正常', '052303', '阿斯托洛吉斯·莫娜·梅姬斯图斯', '2024-04-23', '08:29:14', '18:48:02', '05');
+INSERT INTO `workattendance` VALUES (80, '正常', '052304', '久岐忍', '2024-04-23', '08:28:02', '18:14:56', '05');
+INSERT INTO `workattendance` VALUES (81, '迟到', '012302', '枫原万叶', '2024-04-23', '09:00:39', '18:44:07', '01');
+INSERT INTO `workattendance` VALUES (82, '正常', '022301', '班尼特·卡塔库栗', '2024-04-23', '08:20:21', '18:29:42', '02');
+INSERT INTO `workattendance` VALUES (83, '正常', '022302', '胡桃', '2024-04-23', '08:02:56', '19:53:42', '02');
+INSERT INTO `workattendance` VALUES (84, '迟到', '032301', '行秋', '2024-04-23', '09:03:14', '19:10:04', '03');
+INSERT INTO `workattendance` VALUES (85, '正常', '012404', '雷电·影', '2024-04-23', '08:18:47', '18:30:22', '01');
+INSERT INTO `workattendance` VALUES (86, '请假', '022403', '荧', '2024-04-23', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (87, '迟到', '042404', '姬子', '2024-04-23', '09:25:52', '19:01:01', '04');
+INSERT INTO `workattendance` VALUES (88, '迟到', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-23', '09:05:55', '19:48:49', '02');
+INSERT INTO `workattendance` VALUES (89, '迟到', '022405', '星', '2024-04-23', '09:19:15', '19:26:31', '02');
+INSERT INTO `workattendance` VALUES (90, '迟到', '012407', '瓦尔特·杨', '2024-04-23', '09:06:12', '18:47:50', '01');
+INSERT INTO `workattendance` VALUES (91, '正常', '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '2024-04-23', '08:26:45', '19:12:32', '03');
+INSERT INTO `workattendance` VALUES (92, '正常', '032402', '派蒙', '2024-04-23', '08:10:39', '18:17:09', '03');
+INSERT INTO `workattendance` VALUES (93, '迟到', '042402', '空', '2024-04-23', '09:22:27', '18:19:44', '04');
+INSERT INTO `workattendance` VALUES (94, '正常', '022406', '迈凯伦塞纳', '2024-04-23', '08:24:37', '18:45:42', '02');
+INSERT INTO `workattendance` VALUES (95, '迟到', '022407', 'Intensa Emozione', '2024-04-23', '09:03:09', '18:45:50', '02');
+INSERT INTO `workattendance` VALUES (96, '正常', '022408', '飞升自由', '2024-04-23', '08:24:45', '19:01:33', '02');
+INSERT INTO `workattendance` VALUES (97, '迟到', '012408', '穹', '2024-04-24', '09:10:24', '19:59:29', '01');
+INSERT INTO `workattendance` VALUES (98, '迟到', '032305', '帕姆', '2024-04-24', '09:16:25', '18:09:34', '03');
+INSERT INTO `workattendance` VALUES (99, '正常', '012303', '卯香菱', '2024-04-24', '08:19:39', '18:44:51', '01');
+INSERT INTO `workattendance` VALUES (100, '正常', '042301', '钟离', '2024-04-24', '08:28:23', '19:02:45', '04');
+INSERT INTO `workattendance` VALUES (101, '正常', '052301', '夜阑', '2024-04-24', '08:09:49', '18:38:44', '05');
+INSERT INTO `workattendance` VALUES (102, '正常', '052303', '阿斯托洛吉斯·莫娜·梅姬斯图斯', '2024-04-24', '08:24:24', '19:07:42', '05');
+INSERT INTO `workattendance` VALUES (103, '正常', '052304', '久岐忍', '2024-04-24', '08:29:13', '18:49:57', '05');
+INSERT INTO `workattendance` VALUES (104, '迟到', '012302', '枫原万叶', '2024-04-24', '09:19:11', '19:50:18', '01');
+INSERT INTO `workattendance` VALUES (105, '正常', '022301', '班尼特·卡塔库栗', '2024-04-24', '08:02:20', '19:02:12', '02');
+INSERT INTO `workattendance` VALUES (106, '请假', '022302', '胡桃', '2024-04-24', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (107, '正常', '032301', '行秋', '2024-04-24', '08:23:40', '19:49:10', '03');
+INSERT INTO `workattendance` VALUES (108, '正常', '012404', '雷电·影', '2024-04-24', '08:27:29', '18:21:53', '01');
+INSERT INTO `workattendance` VALUES (109, '请假', '022403', '荧', '2024-04-24', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (110, '正常', '042404', '姬子', '2024-04-24', '08:12:08', '18:33:01', '04');
+INSERT INTO `workattendance` VALUES (111, '正常', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-24', '08:09:52', '18:28:25', '02');
+INSERT INTO `workattendance` VALUES (112, '迟到', '022405', '星', '2024-04-24', '09:26:30', '19:56:22', '02');
+INSERT INTO `workattendance` VALUES (113, '正常', '012407', '瓦尔特·杨', '2024-04-24', '08:30:17', '18:38:34', '01');
+INSERT INTO `workattendance` VALUES (114, '迟到', '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '2024-04-24', '09:21:52', '19:25:05', '03');
+INSERT INTO `workattendance` VALUES (115, '迟到', '032402', '派蒙', '2024-04-24', '09:18:44', '19:01:57', '03');
+INSERT INTO `workattendance` VALUES (116, '迟到', '042402', '空', '2024-04-24', '09:05:57', '18:40:19', '04');
+INSERT INTO `workattendance` VALUES (117, '迟到', '022406', '迈凯伦塞纳', '2024-04-24', '09:20:17', '19:17:22', '02');
+INSERT INTO `workattendance` VALUES (118, '迟到', '022407', 'Intensa Emozione', '2024-04-24', '09:19:20', '18:30:35', '02');
+INSERT INTO `workattendance` VALUES (119, '迟到', '022408', '飞升自由', '2024-04-24', '09:26:09', '19:26:34', '02');
+INSERT INTO `workattendance` VALUES (123, '请假', '022403', '荧', '2024-04-26', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (122, '请假', '022403', '荧', '2024-04-25', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (135, '请假', '022302', '胡桃', '2024-04-30', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (134, '请假', '022302', '胡桃', '2024-04-29', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (133, '请假', '022302', '胡桃', '2024-04-28', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (132, '请假', '022302', '胡桃', '2024-04-27', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (131, '请假', '022302', '胡桃', '2024-04-26', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (130, '请假', '022302', '胡桃', '2024-04-25', '00:00:00', '00:00:00', '02');
+INSERT INTO `workattendance` VALUES (246, '迟到', '052301', '夜阑', '2024-04-27', '09:24:02', '18:01:48', '05');
+INSERT INTO `workattendance` VALUES (245, '正常', '042301', '钟离', '2024-04-27', '08:23:01', '18:04:00', '04');
+INSERT INTO `workattendance` VALUES (244, '正常', '012303', '卯香菱', '2024-04-27', '08:13:14', '18:05:44', '01');
+INSERT INTO `workattendance` VALUES (243, '正常', '032305', '帕姆', '2024-04-27', '08:25:46', '18:02:15', '03');
+INSERT INTO `workattendance` VALUES (242, '正常', '012408', '穹', '2024-04-27', '08:18:19', '18:05:40', '01');
+INSERT INTO `workattendance` VALUES (241, '正常', '022408', '飞升自由', '2024-04-26', '08:30:31', '18:10:07', '02');
+INSERT INTO `workattendance` VALUES (240, '正常', '022407', 'Intensa Emozione', '2024-04-26', '08:25:39', '18:03:51', '02');
+INSERT INTO `workattendance` VALUES (239, '正常', '022406', '迈凯伦塞纳', '2024-04-26', '08:30:56', '18:09:30', '02');
+INSERT INTO `workattendance` VALUES (238, '迟到', '042402', '空', '2024-04-26', '09:05:37', '18:04:10', '04');
+INSERT INTO `workattendance` VALUES (237, '迟到', '032402', '派蒙', '2024-04-26', '09:15:25', '18:03:46', '03');
+INSERT INTO `workattendance` VALUES (236, '正常', '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '2024-04-26', '08:11:11', '18:07:23', '03');
+INSERT INTO `workattendance` VALUES (235, '迟到', '012407', '瓦尔特·杨', '2024-04-26', '09:11:08', '18:05:04', '01');
+INSERT INTO `workattendance` VALUES (234, '正常', '022405', '星', '2024-04-26', '08:10:17', '18:03:33', '02');
+INSERT INTO `workattendance` VALUES (233, '迟到', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-26', '09:08:18', '18:01:00', '02');
+INSERT INTO `workattendance` VALUES (232, '正常', '042404', '姬子', '2024-04-26', '08:30:51', '18:09:49', '04');
+INSERT INTO `workattendance` VALUES (231, '迟到', '012404', '雷电·影', '2024-04-26', '09:19:35', '18:04:54', '01');
+INSERT INTO `workattendance` VALUES (230, '迟到', '032301', '行秋', '2024-04-26', '09:10:59', '18:02:34', '03');
+INSERT INTO `workattendance` VALUES (229, '正常', '022301', '班尼特·卡塔库栗', '2024-04-26', '08:14:13', '18:06:22', '02');
+INSERT INTO `workattendance` VALUES (228, '迟到', '012302', '枫原万叶', '2024-04-26', '09:09:29', '18:04:47', '01');
+INSERT INTO `workattendance` VALUES (227, '正常', '052304', '久岐忍', '2024-04-26', '08:11:01', '18:02:54', '05');
+INSERT INTO `workattendance` VALUES (226, '迟到', '052303', '阿斯托洛吉斯·莫娜·梅姬斯图斯', '2024-04-26', '09:29:18', '18:01:12', '05');
+INSERT INTO `workattendance` VALUES (225, '迟到', '052301', '夜阑', '2024-04-26', '09:02:28', '18:08:00', '05');
+INSERT INTO `workattendance` VALUES (224, '正常', '042301', '钟离', '2024-04-26', '08:06:57', '18:07:30', '04');
+INSERT INTO `workattendance` VALUES (223, '迟到', '012303', '卯香菱', '2024-04-26', '09:27:06', '18:09:57', '01');
+INSERT INTO `workattendance` VALUES (222, '迟到', '032305', '帕姆', '2024-04-26', '09:17:24', '18:08:38', '03');
+INSERT INTO `workattendance` VALUES (221, '正常', '012408', '穹', '2024-04-26', '08:17:18', '18:10:25', '01');
+INSERT INTO `workattendance` VALUES (220, '正常', '022408', '飞升自由', '2024-04-25', '08:50:49', '18:08:12', '02');
+INSERT INTO `workattendance` VALUES (219, '正常', '022407', 'Intensa Emozione', '2024-04-25', '08:50:11', '18:03:57', '02');
+INSERT INTO `workattendance` VALUES (218, '正常', '022406', '迈凯伦塞纳', '2024-04-25', '08:50:33', '18:03:51', '02');
+INSERT INTO `workattendance` VALUES (217, '正常', '042402', '空', '2024-04-25', '08:49:39', '18:10:10', '04');
+INSERT INTO `workattendance` VALUES (216, '正常', '032402', '派蒙', '2024-04-25', '08:48:22', '18:09:24', '03');
+INSERT INTO `workattendance` VALUES (215, '正常', '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '2024-04-25', '08:47:59', '18:06:46', '03');
+INSERT INTO `workattendance` VALUES (214, '正常', '012407', '瓦尔特·杨', '2024-04-25', '08:45:22', '18:00:54', '01');
+INSERT INTO `workattendance` VALUES (213, '正常', '022405', '星', '2024-04-25', '08:47:40', '18:02:36', '02');
+INSERT INTO `workattendance` VALUES (212, '正常', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-25', '08:48:40', '18:01:57', '02');
+INSERT INTO `workattendance` VALUES (211, '正常', '042404', '姬子', '2024-04-25', '08:47:07', '18:09:29', '04');
+INSERT INTO `workattendance` VALUES (210, '正常', '012404', '雷电·影', '2024-04-25', '08:46:10', '18:00:31', '01');
+INSERT INTO `workattendance` VALUES (209, '正常', '032301', '行秋', '2024-04-25', '08:45:29', '18:02:45', '03');
+INSERT INTO `workattendance` VALUES (208, '正常', '022301', '班尼特·卡塔库栗', '2024-04-25', '08:46:29', '18:07:30', '02');
+INSERT INTO `workattendance` VALUES (207, '正常', '012302', '枫原万叶', '2024-04-25', '08:48:39', '18:04:55', '01');
+INSERT INTO `workattendance` VALUES (206, '正常', '052304', '久岐忍', '2024-04-25', '08:47:23', '18:07:46', '05');
+INSERT INTO `workattendance` VALUES (205, '正常', '052303', '阿斯托洛吉斯·莫娜·梅姬斯图斯', '2024-04-25', '08:50:58', '18:03:32', '05');
+INSERT INTO `workattendance` VALUES (204, '正常', '052301', '夜阑', '2024-04-25', '08:46:38', '18:00:27', '05');
+INSERT INTO `workattendance` VALUES (203, '正常', '042301', '钟离', '2024-04-25', '08:50:12', '18:01:50', '04');
+INSERT INTO `workattendance` VALUES (202, '正常', '012303', '卯香菱', '2024-04-25', '08:50:44', '18:00:15', '01');
+INSERT INTO `workattendance` VALUES (201, '正常', '032305', '帕姆', '2024-04-25', '08:49:36', '18:07:06', '03');
+INSERT INTO `workattendance` VALUES (200, '正常', '012408', '穹', '2024-04-25', '08:46:59', '18:03:47', '01');
+INSERT INTO `workattendance` VALUES (247, '正常', '052303', '阿斯托洛吉斯·莫娜·梅姬斯图斯', '2024-04-27', '08:01:32', '18:04:04', '05');
+INSERT INTO `workattendance` VALUES (248, '迟到', '052304', '久岐忍', '2024-04-27', '09:01:59', '18:05:10', '05');
+INSERT INTO `workattendance` VALUES (249, '正常', '012302', '枫原万叶', '2024-04-27', '08:02:36', '18:08:25', '01');
+INSERT INTO `workattendance` VALUES (250, '迟到', '022301', '班尼特·卡塔库栗', '2024-04-27', '09:23:18', '18:05:17', '02');
+INSERT INTO `workattendance` VALUES (251, '正常', '032301', '行秋', '2024-04-27', '08:16:50', '18:10:23', '03');
+INSERT INTO `workattendance` VALUES (252, '正常', '012404', '雷电·影', '2024-04-27', '08:07:44', '18:06:20', '01');
+INSERT INTO `workattendance` VALUES (253, '正常', '022403', '荧', '2024-04-27', '08:08:11', '18:09:51', '02');
+INSERT INTO `workattendance` VALUES (254, '迟到', '042404', '姬子', '2024-04-27', '09:28:59', '18:07:10', '04');
+INSERT INTO `workattendance` VALUES (255, '迟到', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-27', '09:27:42', '18:04:47', '02');
+INSERT INTO `workattendance` VALUES (256, '正常', '022405', '星', '2024-04-27', '08:02:44', '18:08:21', '02');
+INSERT INTO `workattendance` VALUES (257, '正常', '012407', '瓦尔特·杨', '2024-04-27', '08:22:46', '18:03:22', '01');
+INSERT INTO `workattendance` VALUES (258, '正常', '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '2024-04-27', '09:07:37', '18:07:05', '03');
+INSERT INTO `workattendance` VALUES (259, '正常', '032402', '派蒙', '2024-04-27', '08:29:10', '18:06:16', '03');
+INSERT INTO `workattendance` VALUES (260, '迟到', '042402', '空', '2024-04-27', '09:02:48', '18:00:16', '04');
+INSERT INTO `workattendance` VALUES (261, '迟到', '022406', '迈凯伦塞纳', '2024-04-27', '09:11:38', '18:04:36', '02');
+INSERT INTO `workattendance` VALUES (262, '迟到', '022407', 'Intensa Emozione', '2024-04-27', '09:29:41', '18:05:15', '02');
+INSERT INTO `workattendance` VALUES (263, '迟到', '022408', '飞升自由', '2024-04-27', '09:02:48', '18:08:07', '02');
+INSERT INTO `workattendance` VALUES (264, '正常', '012408', '穹', '2024-04-28', '08:14:19', '18:09:04', '01');
+INSERT INTO `workattendance` VALUES (265, '正常', '032305', '帕姆', '2024-04-28', '09:13:49', '18:08:52', '03');
+INSERT INTO `workattendance` VALUES (266, '迟到', '012303', '卯香菱', '2024-04-28', '09:18:39', '18:03:51', '01');
+INSERT INTO `workattendance` VALUES (267, '迟到', '042301', '钟离', '2024-04-28', '09:07:41', '18:03:12', '04');
+INSERT INTO `workattendance` VALUES (268, '迟到', '052301', '夜阑', '2024-04-28', '09:06:11', '18:04:44', '05');
+INSERT INTO `workattendance` VALUES (269, '正常', '052303', '阿斯托洛吉斯·莫娜·梅姬斯图斯', '2024-04-28', '08:30:53', '18:04:11', '05');
+INSERT INTO `workattendance` VALUES (270, '迟到', '052304', '久岐忍', '2024-04-28', '09:28:19', '18:09:15', '05');
+INSERT INTO `workattendance` VALUES (271, '迟到', '012302', '枫原万叶', '2024-04-28', '09:13:55', '18:06:23', '01');
+INSERT INTO `workattendance` VALUES (272, '迟到', '022301', '班尼特·卡塔库栗', '2024-04-28', '09:03:15', '18:02:30', '02');
+INSERT INTO `workattendance` VALUES (273, '正常', '032301', '行秋', '2024-04-28', '08:03:58', '18:06:37', '03');
+INSERT INTO `workattendance` VALUES (274, '正常', '012404', '雷电·影', '2024-04-28', '08:24:08', '18:07:10', '01');
+INSERT INTO `workattendance` VALUES (275, '正常', '022403', '荧', '2024-04-28', '08:19:29', '18:10:23', '02');
+INSERT INTO `workattendance` VALUES (276, '正常', '042404', '姬子', '2024-04-28', '08:21:50', '18:09:40', '04');
+INSERT INTO `workattendance` VALUES (277, '迟到', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-28', '09:29:47', '18:02:36', '02');
+INSERT INTO `workattendance` VALUES (278, '迟到', '022405', '星', '2024-04-28', '09:20:33', '18:06:46', '02');
+INSERT INTO `workattendance` VALUES (279, '迟到', '012407', '瓦尔特·杨', '2024-04-28', '09:19:14', '18:08:43', '01');
+INSERT INTO `workattendance` VALUES (280, '正常', '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '2024-04-28', '08:10:24', '18:03:48', '03');
+INSERT INTO `workattendance` VALUES (281, '正常', '032402', '派蒙', '2024-04-28', '08:21:52', '18:07:39', '03');
+INSERT INTO `workattendance` VALUES (282, '正常', '042402', '空', '2024-04-28', '08:21:37', '18:02:42', '04');
+INSERT INTO `workattendance` VALUES (283, '迟到', '022406', '迈凯伦塞纳', '2024-04-28', '09:09:36', '18:03:19', '02');
+INSERT INTO `workattendance` VALUES (284, '正常', '022407', '阿波罗IE', '2024-04-28', '08:19:29', '18:10:22', '02');
+INSERT INTO `workattendance` VALUES (285, '迟到', '022408', '飞升自由', '2024-04-28', '09:15:31', '18:01:54', '02');
+INSERT INTO `workattendance` VALUES (286, '正常', '012408', '穹', '2024-04-29', '08:12:58', '18:10:48', '01');
+INSERT INTO `workattendance` VALUES (287, '正常', '032305', '帕姆', '2024-04-29', '08:27:54', '18:09:48', '03');
+INSERT INTO `workattendance` VALUES (288, '迟到', '012303', '卯香菱', '2024-04-29', '09:04:48', '18:00:26', '01');
+INSERT INTO `workattendance` VALUES (289, '迟到', '042301', '钟离', '2024-04-29', '09:08:28', '18:06:30', '04');
+INSERT INTO `workattendance` VALUES (290, '正常', '052301', '夜阑', '2024-04-29', '08:23:14', '18:09:33', '05');
+INSERT INTO `workattendance` VALUES (291, '正常', '052303', '阿斯托洛吉斯·莫娜·梅姬斯图斯', '2024-04-29', '08:08:07', '18:07:28', '05');
+INSERT INTO `workattendance` VALUES (292, '正常', '052304', '久岐忍', '2024-04-29', '08:26:35', '18:06:55', '05');
+INSERT INTO `workattendance` VALUES (293, '正常', '012302', '枫原万叶', '2024-04-29', '08:12:07', '18:03:03', '01');
+INSERT INTO `workattendance` VALUES (294, '正常', '022301', '班尼特·卡塔库栗', '2024-04-29', '09:00:00', '18:08:20', '02');
+INSERT INTO `workattendance` VALUES (295, '正常', '032301', '行秋', '2024-04-29', '08:30:08', '18:00:19', '03');
+INSERT INTO `workattendance` VALUES (296, '正常', '012404', '雷电·影', '2024-04-29', '08:05:39', '18:02:25', '01');
+INSERT INTO `workattendance` VALUES (297, '迟到', '022403', '荧', '2024-04-29', '09:20:41', '18:04:12', '02');
+INSERT INTO `workattendance` VALUES (298, '正常', '042404', '姬子', '2024-04-29', '08:28:17', '18:00:20', '04');
+INSERT INTO `workattendance` VALUES (299, '迟到', '022404', '菲谢尔·冯·露弗施洛斯·那菲多特', '2024-04-29', '09:21:01', '18:05:23', '02');
+INSERT INTO `workattendance` VALUES (300, '正常', '022405', '星', '2024-04-29', '08:11:35', '18:09:29', '02');
+INSERT INTO `workattendance` VALUES (301, '正常', '012407', '瓦尔特·杨', '2024-04-29', '08:29:58', '18:07:11', '01');
+INSERT INTO `workattendance` VALUES (302, '正常', '032404', '艾吉奥·奥迪托雷·达·佛罗伦萨', '2024-04-29', '08:07:01', '18:04:52', '03');
+INSERT INTO `workattendance` VALUES (303, '迟到', '032402', '派蒙', '2024-04-29', '09:20:25', '18:10:04', '03');
+INSERT INTO `workattendance` VALUES (304, '正常', '042402', '空', '2024-04-29', '08:10:02', '18:07:19', '04');
+INSERT INTO `workattendance` VALUES (305, '迟到', '022406', '迈凯伦塞纳', '2024-04-29', '09:15:58', '18:06:29', '02');
+INSERT INTO `workattendance` VALUES (306, '迟到', '022407', '阿波罗IE', '2024-04-29', '09:24:37', '18:09:08', '02');
+INSERT INTO `workattendance` VALUES (307, '迟到', '022408', '飞升自由', '2024-04-29', '09:26:58', '18:01:20', '02');
 
 SET FOREIGN_KEY_CHECKS = 1;

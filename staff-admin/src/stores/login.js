@@ -51,7 +51,7 @@ export const useLoginStore = defineStore("login", {
                 "password": data.password
             }).then(reslove => {
                 //发送socket（已登陆）
-                socket.emit("user","")
+                socket.emit("admin_user","")
                 return reslove
             })
             // 存储数据
@@ -75,7 +75,7 @@ export const useLoginStore = defineStore("login", {
             // 发送请求
             let res = await login.reqLogout().then(reslove => {
                 //发送socket（退出登陆）
-                socket.emit("user","")
+                socket.emit("admin_user","")
                 return reslove
             })
             // 清除保存的信息

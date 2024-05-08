@@ -199,10 +199,10 @@ def queryAll():
             queryData = Admin_user.query.filter_by()
             # 状态查找
             if status != None and status != "":
-                queryData = Admin_user.query.filter(Admin_user.status == status)
+                queryData = queryData.filter(Admin_user.status == status)
             # 关键字查找
             if departId != None and departId != "":
-                queryData = Admin_user.query.filter(Admin_user.departId == departId)
+                queryData = queryData.filter(Admin_user.departId == departId)
              # 分页
             pn = queryData.paginate(page=int(pageNo), per_page=15, error_out=False)
             # 添加到dataList

@@ -26,7 +26,7 @@
         </el-row>
         <el-row :gutter="20" class="container">
             <el-col :span="24" style="height: 100%;">
-                <Card class="table" title="操作记录" :theme="theme">
+                <Card class="table" title="已发送" :theme="theme">
                     <template v-slot:body>
                         <div class="OperatingList" :class="[theme === 'light' ? 'light' : 'dark']">
                             <el-table :data="sendList" style="width: 100%;margin: 10px 0px; height:calc(100% - 60px) ;"
@@ -80,14 +80,16 @@
                 <el-row>
                     <el-col :span="24">
                         <el-form-item label="内容：">
-                            {{ detailRow.content }}
+                            <div style="word-break: break-all;">
+                                {{ detailRow.content }}
+                            </div>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="日期：">
-                            {{ detailRow.datetime }}
+                            {{ GMTToStr(detailRow.datetime) }}
                         </el-form-item>
                     </el-col>
                 </el-row>

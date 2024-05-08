@@ -1,6 +1,10 @@
 <template>
-    <Card class="table" title="人员信息表" :theme="theme">
+    <Card class="table" :theme="theme">
+        <template v-slot:title>
+            人员信息表<el-button  style="margin-left:15px;  height: auto;line-height: unset" link type="primary" size="large" @click="getData();reload=false" v-if="reload">您有新的内容可刷新</el-button>
+        </template>
         <template v-slot:body>
+            
             <div class="StaffMsgTable" :class="[theme === 'light' ? 'light' : 'dark']">
                 <el-table :data="dimissionList" style="width: 100%;margin: 10px 0px; height:calc(100% - 100px) ;" border>
                     <el-table-column :resizable="false" prop="staffId" label="员工ID" min-width="35" />
@@ -66,6 +70,7 @@ import { ref, computed, onMounted, getCurrentInstance } from 'vue';
 // 格式化时间
 //API
 import dimission from '../../../api'
+import socket from "../../../util/socket"
 //格式化时间
 import { GMTToStr } from "../../../util/GMTToStr.js"
 // 引入pinia响应式
@@ -91,6 +96,9 @@ let layoutStore = useLayoutStore()
 
 // 使用dimission仓库
 let dimissionStore = useDimissionStore()
+
+//重载
+let reload = ref(false)
 
 //等待动画
 let loadingInstance = ref(null)
@@ -158,6 +166,8 @@ const handleReturnResign = async () => {
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
     await dimission.reqReturnStaff(resignStaff.value.staffId).then(async resolve => {
+        socket.emit("staff","")
+        socket.emit("resign","")
         if (dimissionList.value.length === 1) {
             dimissionSearchForm.value.pageNo = dimissionSearchForm.value.pageNo - 1
             if (dimissionSearchForm.value.pageNo === 0) {
@@ -172,6 +182,7 @@ const handleReturnResign = async () => {
             message: resolve.message,
             type: "success"
         })
+        reload.value = false
     }, reject => {
         //动画结束
         loadingInstance.value.close()
@@ -233,6 +244,9 @@ onMounted(async () => {
     }).catch(() => {
         //动画结束
         loadingInstance.value.close()
+    })
+    socket.on("resignUpdate", function (data) {
+        reload.value = true
     })
 })
 

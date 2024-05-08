@@ -15,6 +15,9 @@ from view.admin_op_review import admin_op_review
 from view.admin_op_record import admin_op_record
 from view.resign import resign
 from view.resignreview import resignreview
+from view.notice import notice
+from view.workattendance import workattendance
+from view.askforleave import askforleave
 
 
 # token
@@ -35,6 +38,11 @@ app.register_blueprint(admin_op_review)
 app.register_blueprint(admin_op_record)
 app.register_blueprint(resign)
 app.register_blueprint(resignreview)
+app.register_blueprint(notice)
+app.register_blueprint(workattendance)
+app.register_blueprint(askforleave)
+
+
 
 
 

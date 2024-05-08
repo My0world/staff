@@ -7,6 +7,7 @@ import operatingData from './model/operatingData'
 import feedback from './model/feedback'
 import dimission from './model/dimission'
 import user from './model/user'
+import notice from './model/notice'
 
 
 export default {
@@ -16,5 +17,6 @@ export default {
     ...operatingData,
     ...feedback,
     ...dimission,
-    ...user
+    ...user,
+    ...notice
 }

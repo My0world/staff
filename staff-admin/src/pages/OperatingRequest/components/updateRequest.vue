@@ -146,7 +146,7 @@ import { useOperatingRequestStore } from '../../../stores/operatingRequest'
 //API
 import employees from '../../../api'
 import operatingRequest from '../../../api'
-
+import socket from "../../../util/socket"
 
 // 使用operatingRequest仓库
 let operatingRequestStore = useOperatingRequestStore()
@@ -201,6 +201,7 @@ const handleAllow = async () => {
     await employees.reqUpdateStaff(
         { ...prop.data.data.newData, requestUserid: prop.data.staffId, opid: prop.data.id }
     ).then(async resolve => {
+        socket.emit("staff","")
         if (prop.length === 1) {
             pageNo.value = pageNo.value - 1
             if (pageNo.value === 0) {

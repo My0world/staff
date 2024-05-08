@@ -18,9 +18,33 @@ def test_connect():
 
 
 # 用户表更改
-@socketio.on('user')
-def userUpdate(data):
-    emit('userUpdate', {'code':'userUpdate','msg': '用户表更新'},broadcast=True)
+@socketio.on('admin_user')
+def admin_userUpdate(data):
+    emit('admin_userUpdate', {'code':'admin_userUpdate','msg': '用户表更新'},broadcast=True)
+
+
+# 员工表更改
+@socketio.on('staff')
+def staffUpdate(data):
+    emit('staffUpdate', {'code':'staffUpdate','msg': '员工表更新'},broadcast=True)
+
+
+# 离职员工表更改
+@socketio.on('resign')
+def resignUpdate(data):
+    emit('resignUpdate', {'code':'resignUpdate','msg': '员工表更新'},broadcast=True)
+
+    
+# 通知表更改
+@socketio.on('notice')
+def noticeUpdate(data):
+    emit('noticeUpdate', {'code':'noticeUpdate','msg': '员工表更新'},broadcast=True)
+
+
+    
+    
+
+
 
 
 

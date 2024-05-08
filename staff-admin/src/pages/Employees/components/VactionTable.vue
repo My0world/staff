@@ -6,7 +6,7 @@
                     border>
                     <el-table-column :resizable="false" prop="staffName" label="部门" min-width="20">
                         <template #default="scope">
-                            开发部
+                            {{ scope.row.departName }}
                         </template>
                     </el-table-column>
                     <el-table-column :resizable="false" prop="staffId" label="员工ID" min-width="20" />
@@ -15,31 +15,30 @@
                     <el-table-column :resizable="false" prop="startTime" label="假期开始时间" min-width="25">
                         <template #default="scope">
                             <span>
-                                {{ scope.row.startTime }}
-                                <!-- {{ GMTToStr(scope.row.startTime) }} -->
+                                {{ GMTToStr(scope.row.startTime) }}
                             </span>
                         </template>
                     </el-table-column>
                     <el-table-column :resizable="false" prop="endTime" label="假期结束时间" min-width="25">
                         <template #default="scope">
                             <span>
-                                {{ scope.row.endTime }}
-                                <!-- {{ GMTToStr(scope.row.endTime) }} -->
+                                {{ GMTToStr(scope.row.endTime) }}
                             </span>
                         </template>
                     </el-table-column>
                     <el-table-column :resizable="false" prop="dateTime" label="发送日期" min-width="25">
                         <template #default="scope">
                             <span>
-                                {{ scope.row.dateTime }}
-                                <!-- {{ GMTToStr(scope.row.date) }} -->
+                                {{ GMTToStr(scope.row.dateTime) }}
                             </span>
                         </template>
                     </el-table-column>
-                    <el-table-column :resizable="false" fixed="right" label="操作栏"  min-width="25">
+                    <el-table-column :resizable="false" fixed="right" label="操作栏" min-width="25">
                         <template #default="scope">
-                            <el-button size="small" @click="handleExamine(scope.row)" v-if="scope.row.status === '待审核'" type="warning">待审核</el-button>
-                            <span size="small" :style="{ color: scope.row.status === '审核通过' ? '#67C23A' : '#F56C6C' }" v-else type="warning">{{ scope.row.status }}</span>
+                            <el-button size="small" @click="handleExamine(scope.row)" v-if="scope.row.status === '待审核' && hasCheckVacate"
+                                type="warning">待审核</el-button>
+                            <span size="small" :style="{ color: scope.row.status === '审核通过' ? '#67C23A' : '#F56C6C' }"
+                                v-else type="warning">{{ scope.row.status }}</span>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -52,33 +51,33 @@
         </template>
     </Card>
     <Dialog class="confirmDialog" ref="examineDialog" width="15%" top="15%">
-                <template v-slot:header>
-                    <span :style="{ color: themeType ? '#333' : '#ebeaea' }">审核</span>
-                </template>
-                <template v-slot:body>
-                    <div :class="themeType ? 'lightFont' : 'darkFont'">
+        <template v-slot:header>
+            <span :style="{ color: themeType ? '#333' : '#ebeaea' }">审核</span>
+        </template>
+        <template v-slot:body>
+            <div :class="themeType ? 'lightFont' : 'darkFont'">
 
-                        是否通过{{ upStaffName }}员工的请假?
+                是否通过{{ updateRow.staffName }}员工的请假?
 
-                    </div>
+            </div>
 
-                </template>
+        </template>
 
-                <template v-slot:footer>
-                    <el-button @click="handleReject">
-                        <el-icon class="el-icon--right">
-                            <CloseBold />
-                        </el-icon>
-                        否决
-                    </el-button>
-                    <el-button type="primary" @click="handleAllow">
-                        <el-icon class="el-icon--right">
-                            <Select />
-                        </el-icon>
-                        允许
-                    </el-button>
-                </template>
-            </Dialog>
+        <template v-slot:footer>
+            <el-button @click="handleReject">
+                <el-icon class="el-icon--right">
+                    <CloseBold />
+                </el-icon>
+                否决
+            </el-button>
+            <el-button type="primary" @click="handleAllow">
+                <el-icon class="el-icon--right">
+                    <Select />
+                </el-icon>
+                允许
+            </el-button>
+        </template>
+    </Dialog>
 </template>
 
 
@@ -103,7 +102,7 @@ let internalInstance = getCurrentInstance();
 //获取全局Element消息提示框
 let $ElMessage = internalInstance.appContext.config.globalProperties.$ElMessage;
 
-let upStaffName = ref("")
+let updateRow = ref("")
 
 // 使用login仓库
 let loginStore = useLoginStore()
@@ -116,14 +115,6 @@ let employeesStore = useEmployeesStore()
 
 //等待动画
 let loadingInstance = ref(null)
-
-//所有员工考勤
-const hasAllCheckingIn = computed(() => {
-    let index = authorityList.value.findIndex((item) => {
-        return item === "allCheckingIn"
-    })
-    return index !== -1
-})
 
 // layout仓库的state数据
 const {
@@ -152,6 +143,11 @@ const {
     departId
 } = storeToRefs(loginStore)
 
+//审核请假
+const hasCheckVacate = computed(()=>{
+    return authorityList.value.indexOf("checkVacate") !== -1
+})
+
 // employees仓库的action方法
 const {
     //筛选请假记录
@@ -165,13 +161,13 @@ const themeType = computed(() => {
 
 //确认框
 const handleExamine = (row) => {
-    upStaffName.value = row.staffName
+    updateRow.value = row
     examineDialog.value.dialogStatus = true
 }
 
 // 获取数据
 const getData = async () => {
-    vacationSearchForm.value.departId = departId.value
+    
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
     await filterAskforleaveData(vacationSearchForm.value).then((resolve) => {
@@ -211,63 +207,52 @@ const handleSizeChange = async (pageSize) => {
     })
 }
 
-//允许添加
+//允许
 const handleAllow = async () => {
-    //动画开始
-    // loadingInstance.value = ElLoading.service({ fullscreen: true })
-    // await employees.reqAddStaff(
-    //     { ...prop.data.data, requestUserid: prop.data.staffId, opid: prop.data.id }
-    // ).then(async resolve => {
-    //     if (prop.length === 1) {
-    //         pageNo.value = pageNo.value - 1
-    //         if (pageNo.value === 0) {
-    //             pageNo.value = 1
-    //         }
-    //     }
-    //     await getOpReviewData(prop.status, pageNo.value)
-    //     loadingInstance.value.close()
-    //     $ElMessage({
-    //         message: "审核成功,允许添加",
-    //         type: "success"
-    //     })
-    // }, reject => {
-    //     loadingInstance.value.close()
-    //     $ElMessage({
-    //         message: "审核失败，请联系管理员",
-    //         type: "error"
-    //     })
-    // })
+    // 动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await employees.reqEditAskforleave(updateRow.value.id,'审核通过').then(async resolve => {
+        await getData()
+        loadingInstance.value.close()
+        examineDialog.value.dialogStatus = false
+        $ElMessage({
+            message: "审核通过",
+            type: "success"
+        })
+    }, reject => {
+        loadingInstance.value.close()
+        $ElMessage({
+            message: "审核失败，请联系管理员",
+            type: "error"
+        })
+    })
 }
 
-//拒绝添加
+//拒绝
 const handleReject = async () => {
-    //动画开始
-    // loadingInstance.value = ElLoading.service({ fullscreen: true })
-    // await operatingRequest.reqCheckReject(prop.data.id).then(async resolve => {
-    //     if (prop.length === 1) {
-    //         pageNo.value = pageNo.value - 1
-    //         if (pageNo.value === 0) {
-    //             pageNo.value = 1
-    //         }
-    //     }
-    //     await getOpReviewData(prop.status, pageNo.value)
-    //     loadingInstance.value.close()
-    //     $ElMessage({
-    //         message: "审核成功,不允许添加",
-    //         type: "success"
-    //     })
-    // }, reject => {
-    //     loadingInstance.value.close()
-    //     $ElMessage({
-    //         message: "审核失败，请联系管理员",
-    //         type: "error"
-    //     })
-    // })
+    // 动画开始
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await employees.reqEditAskforleave(updateRow.value.id,'审核驳回').then(async resolve => {
+        await getData()
+        loadingInstance.value.close()
+        examineDialog.value.dialogStatus = false
+        $ElMessage({
+            message: "审核驳回",
+            type: "success"
+        })
+    }, reject => {
+        loadingInstance.value.close()
+        $ElMessage({
+            message: "审核失败，请联系管理员",
+            type: "error"
+        })
+    })
 }
 
 onMounted(async () => {
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
+    vacationSearchForm.value.departId = departId.value
     await getData().then((resolve) => {
         //动画结束
         loadingInstance.value.close()

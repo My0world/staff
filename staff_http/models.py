@@ -144,29 +144,32 @@ class Askforleave(db.Model):
     id = db.Column(db.Integer(),primary_key = True,autoincrement = True)
     # 员工ID
     staffId = db.Column(db.String(7),nullable = False)
-    # 接受方员工ID
-    receiver_staffId = db.Column(db.String(7),nullable = False)
+    # 员工姓名
+    staffName = db.Column(db.String(255),nullable = False)
+    # 部门ID
+    departId = db.Column(db.String(7),nullable = False)
     # 内容
     content = db.Column(db.Text(),nullable = False)
     # 开始时间
-    startTime = db.Column(db.DateTime(),nullable = False)
+    startTime = db.Column(db.Date(),nullable = False)
     # 结束时间
-    endTime = db.Column(db.DateTime(),nullable = False)
+    endTime = db.Column(db.Date(),nullable = False)
     # 申请时间
     dateTime = db.Column(db.DateTime(),nullable = False)
     # 状态
     status = db.Column(db.String(255),nullable = False)
-
 
     # 模型的资源序列化函数（方法）
     def schema(self):
         return {
             'id': self.id,
             'staffId': self.staffId,
-            'receiver_staffId': self.receiver_staffId,
+            'staffName': self.staffName,
+            'departId':self.departId,
             'content': self.content,
             'startTime': self.startTime,
             'endTime': self.endTime,
+            'dateTime':self.dateTime,
             'status': self.status,
         }
     
@@ -400,11 +403,13 @@ class Workattendance(db.Model):
     # 员工姓名
     staffName = db.Column(db.String(255),nullable = False)
     # 日期
-    date = db.Column(db.DateTime(),nullable = False)
+    date = db.Column(db.Date(),nullable = False)
     # 开始时间
-    startTime = db.Column(db.Time(),nullable = False)
+    startTime = db.Column(db.Time())
     # 结束时间
-    endTime = db.Column(db.Time(),nullable = False)
+    endTime = db.Column(db.Time())
+    # 部门ID
+    departId = db.Column(db.String(7),nullable = False)
 
     # 模型的资源序列化函数（方法）
     def schema(self):
@@ -416,6 +421,8 @@ class Workattendance(db.Model):
             'date': self.date,
             'startTime':self.startTime,
             'endTime':self.endTime,
+            'endTime':self.endTime,
+            'departId':self.departId,
         }
     
     #清空数据

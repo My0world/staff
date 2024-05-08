@@ -2,17 +2,17 @@
     <div class="Notice">
         <el-tabs v-model="activeName" type="card" :class="[theme === 'light' ? 'light' : 'dark']">
             <el-tab-pane label="写通知" name="写通知">
-                <div class="block">
+                <div class="block" v-if="activeName === '写通知'">
                     <noticeForm></noticeForm>
                 </div>
             </el-tab-pane>
             <el-tab-pane label="已发送" name="已发送">
-                <div class="block">
+                <div class="block" v-if="activeName === '已发送'">
                     <send></send>
                 </div>
             </el-tab-pane>
             <el-tab-pane label="收件箱" name="收件箱">
-                <div class="block">
+                <div class="block" v-if="activeName === '收件箱'">
                     <receive></receive>
                 </div>
             </el-tab-pane>

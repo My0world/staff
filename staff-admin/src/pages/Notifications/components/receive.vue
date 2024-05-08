@@ -26,11 +26,15 @@
         </el-row>
         <el-row :gutter="20" class="container">
             <el-col :span="24" style="height: 100%;">
-                <Card class="table" title="操作记录" :theme="theme">
+                <Card class="table" :theme="theme">
+                    <template v-slot:title>
+                        收件箱<el-button style="margin-left:15px;  height: auto;line-height: unset" link type="primary"
+                            size="large" @click="getData(); reload = false" v-if="reload">您有新的内容可刷新</el-button>
+                    </template>
                     <template v-slot:body>
                         <div class="OperatingList" :class="[theme === 'light' ? 'light' : 'dark']">
-                            <el-table :data="receiveList" style="width: 100%;margin: 10px 0px; height:calc(100% - 60px) ;"
-                                border>
+                            <el-table :data="receiveList"
+                                style="width: 100%;margin: 10px 0px; height:calc(100% - 60px) ;" border>
                                 <el-table-column :resizable="false" prop="send_staffName" label="发送人" min-width="100" />
                                 <el-table-column :resizable="false" prop="departName" label="接收部门" min-width="135" />
                                 <el-table-column :resizable="false" prop="title" label="标题" min-width="450" />
@@ -81,14 +85,17 @@
                 <el-row>
                     <el-col :span="24">
                         <el-form-item label="内容：">
-                            {{ detailRow.content }}
+                            <div style="word-break: break-all;">
+                                {{ detailRow.content }}
+                            </div>
+                            
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="日期：">
-                            {{ detailRow.datetime }}
+                            {{ GMTToStr(detailRow.datetime) }}
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -103,6 +110,7 @@
 
 <script setup>
 import { onMounted, computed, reactive, onBeforeUnmount, ref } from "vue"
+import socket from "../../../util/socket"
 // 格式化时间
 import { GMTToStr } from "../../../util/GMTToStr.js"
 // 引入pinia响应式
@@ -122,6 +130,9 @@ let layoutStore = useLayoutStore()
 
 //详情
 let detailRow = ref({})
+
+//重载
+let reload = ref(false)
 
 
 // 使用notice仓库
@@ -240,6 +251,9 @@ onMounted(async () => {
     }).catch(() => {
         //动画结束
         loadingInstance.value.close()
+    })
+    socket.on("noticeUpdate", function (data) {
+        reload.value = true
     })
 })
 
@@ -430,8 +444,8 @@ onBeforeUnmount(() => {
 
         .el-drawer__header {
             margin-bottom: 10px !important;
-            
-            .el-drawer__title{
+
+            .el-drawer__title {
                 font-size: 16px;
             }
         }

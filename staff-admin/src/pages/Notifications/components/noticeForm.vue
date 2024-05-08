@@ -17,7 +17,7 @@
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="标题:" prop="title">
-                        <el-input v-model="FormData.title" maxlength="12" size="large" placeholder="请输入标题"
+                        <el-input v-model="FormData.title" maxlength="20" size="large" placeholder="请输入标题"
                             show-word-limit type="text" />
                     </el-form-item>
                 </el-col>
@@ -46,6 +46,9 @@
 
 <script setup>
 import { onMounted, reactive, ref, getCurrentInstance, computed } from "vue"
+//API
+import notice from '../../../api'
+import socket from "../../../util/socket"
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
 // 引入employees仓库
@@ -82,8 +85,6 @@ const {
     authorityList,
     // 部门号
     departId,
-    //用户号
-    staffId,
 } = storeToRefs(loginStore)
 
 // layout仓库的state数据
@@ -140,18 +141,39 @@ const {
 
 const submitForm = async (formEl) => {
     if (!formEl) return
-    await formEl.validate((valid, fields) => {
+    await formEl.validate(async (valid, fields) => {
         if (valid) {
             if (hasNoticeForAll.value) {
                 let departIdStr = FormData.value.departId.join(",")
                 let form = {
-                    departId:departIdStr,
-                    title:FormData.value.title,
-                    content:FormData.value.content,
-                    staffId:staffId.value
+                    departId: departIdStr,
+                    title: FormData.value.title,
+                    content: FormData.value.content,
                 }
-                
+                //动画开始
+                loadingInstance.value = ElLoading.service({ fullscreen: true })
+                await notice.reqIssueNotice(form).then((resolve) => {
+                    socket.emit("notice", "")
+                    //提示信息
+                    $ElMessage.success(resolve.message)
+                    //动画结束
+                    loadingInstance.value.close()
+                })
             } else {
+                let form = {
+                    departId: FormData.value.departId,
+                    title: FormData.value.title,
+                    content: FormData.value.content,
+                }
+                //动画开始
+                loadingInstance.value = ElLoading.service({ fullscreen: true })
+                await notice.reqIssueNotice(form).then((resolve) => {
+                    socket.emit("notice", "")
+                    //提示信息
+                    $ElMessage.success(resolve.message)
+                    //动画结束
+                    loadingInstance.value.close()
+                })
             }
             resetForm()
         } else {

@@ -6,7 +6,7 @@
 
                     <el-col :span="6">
                         <el-form-item label="部门:">
-                            <el-select :disabled="!hasAllCheckingIn" clearable v-model="form.departId" placeholder="请选择部门" size="large">
+                            <el-select :disabled="!hasAllCheckingIn" v-model="form.departId" placeholder="请选择部门" size="large">
                                 <el-option v-for="i in departmentList" :key="i.departId" :label="i.department_Name"
                                     :value="i.departId" />
                             </el-select>
@@ -23,7 +23,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="请假开始日期:">
-                            <el-date-picker clearable v-model="form.dateTime" type="date" placeholder="选择请假开始日期"
+                            <el-date-picker clearable v-model="form.dateTime" value-format="YYYY-MM-DD" type="date" placeholder="选择请假开始日期"
                                 style="width: 100%;" size="large" />
                         </el-form-item>
                     </el-col>
@@ -114,19 +114,16 @@ const hasAllCheckingIn = computed(() => {
     let index = authorityList.value.findIndex((item) => {
         return item === "allCheckingIn"
     })
-    form.departId = departId.value
     return index !== -1
 })
 
 // 清除搜索
 const handleClearCard = async () => {
     form.status = ""
-    form.departId = ""
     form.searchValue = ""
     form.dateTime = ""
     vacationSearchForm.value = {
         ...vacationSearchForm.value, ...{
-            departId: "",
             status: "",
             searchValue: "",
             dateTime: "",
@@ -182,6 +179,8 @@ const getData = async () => {
 
 onMounted(async () => {
     getData()
+    form.departId = departId.value
+    vacationSearchForm.value.departId = departId.value
 })
 
 onBeforeUnmount(() => {

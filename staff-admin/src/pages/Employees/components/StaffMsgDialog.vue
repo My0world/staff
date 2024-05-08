@@ -93,7 +93,7 @@
 // 引入pinia响应式
 import { storeToRefs } from 'pinia'
 //Vue
-import { reactive, computed, ref, getCurrentInstance } from 'vue';
+import { reactive, computed, ref, getCurrentInstance,inject } from 'vue';
 //防抖
 import { debounce } from "lodash"
 // 引入layout仓库
@@ -104,6 +104,7 @@ import { useEmployeesStore } from '../../../stores/employees'
 import { useLoginStore } from '../../../stores/login'
 //API
 import employees from '../../../api'
+import socket from "../../../util/socket"
 //格式化时间
 import { GMTToStr } from "../../../util/GMTToStr.js"
 //获取全局挂载
@@ -138,6 +139,10 @@ let loadingInstance = ref(null)
 
 //提示信息
 let message = ref(null)
+
+//重载
+let reload = inject("reload")
+
 
 //数值不能小于0
 const noZore = (rule, value, callback) => {
@@ -256,6 +261,8 @@ const handleSubmit = debounce(async (el) => {
             if (staffId.value !== null) {
                 let salary = FormData.salary * 1000
                 await employees.reqUpdateStaff({ ...FormData, staffId: staffId.value, salary }).then(async reslove => {
+                    socket.emit("staff","")
+                    
                     await filterStaffData(employeesSearchForm.value)
                     loadingInstance.value.close()
                     if (message.value) {
@@ -269,7 +276,7 @@ const handleSubmit = debounce(async (el) => {
                             type: "success"
                         })
                     }
-
+                    reload.value = false
                 }, reject => {
                     loadingInstance.value.close()
                     $ElMessage({
@@ -282,6 +289,8 @@ const handleSubmit = debounce(async (el) => {
                 await employees.reqAddStaff(
                     { ...FormData, salary }
                 ).then(async resolve => {
+                    socket.emit("staff","")
+                    reload.value = false
                     await filterStaffData(employeesSearchForm.value)
                     FormData.departId = ""
                     FormData.staffName = ""
@@ -303,6 +312,7 @@ const handleSubmit = debounce(async (el) => {
                             type: "success"
                         })
                     }
+                    reload.value = false
                 }, reject => {
                     loadingInstance.value.close()
                     $ElMessage({

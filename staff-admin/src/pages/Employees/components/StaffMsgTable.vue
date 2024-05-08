@@ -9,7 +9,7 @@
                         v-if="hasAdminAddStaff">添加</el-button>
                     <el-button type="primary" size="large" disabled
                         v-if="!hasAdminAddStaff && !hasUserAddStaff">添加</el-button>
-                    <el-button link type="primary" size="large">您有新的内容可刷新</el-button>
+                    <el-button link type="primary" size="large" @click="getData();reload=false" v-if="reload">您有新的内容可刷新</el-button>
                 </div>
                 <el-table :data="staffList" style="width: 100%;margin: 10px 0px; height:calc(100% - 100px) ;" border>
                     <el-table-column :resizable="false" prop="staffId" label="员工ID" min-width="35" />
@@ -71,11 +71,12 @@
 
 
 <script setup>
-import { ref, computed, onMounted, getCurrentInstance } from 'vue';
+import { ref, computed, onMounted, getCurrentInstance,provide } from 'vue';
 //添加和修改对话框
 import StaffMsgDialog from "./StaffMsgDialog.vue"
 //API
 import employees from '../../../api'
+import socket from "../../../util/socket"
 // 格式化时间
 import { GMTToStr } from "../../../util/GMTToStr.js"
 // 引入pinia响应式
@@ -107,6 +108,10 @@ let loadingInstance = ref(null)
 
 //离职员工
 let resignStaff = ref(null)
+
+//重载
+let reload = ref(false)
+provide("reload",reload)
 
 // layout仓库的state数据
 const {
@@ -219,6 +224,8 @@ const handleResign = async () => {
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
     await employees.reqResignStaff({ ...resignStaff.value, entryTime: GMTToStr(resignStaff.value.entryTime) }).then(async resolve => {
+        socket.emit("resign","")
+        socket.emit("staff","")
         if (staffList.value.length === 1) {
             employeesSearchForm.value.pageNo = employeesSearchForm.value.pageNo - 1
             if (employeesSearchForm.value.pageNo === 0) {
@@ -229,10 +236,12 @@ const handleResign = async () => {
         //动画结束
         loadingInstance.value.close()
         confirmDialog.value.dialogStatus = false
+
         $ElMessage({
             message: resolve.message,
             type: "success"
         })
+        reload.value = false
     }, reject => {
         //动画结束
         loadingInstance.value.close()
@@ -244,12 +253,6 @@ const handleResign = async () => {
 
 //获取数据
 const getData = async () => {
-
-    if (!hasAllStaffMsgView.value) {
-        employeesSearchForm.value.departId = departId.value
-    } else {
-        employeesSearchForm.value.departId = ""
-    }
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
     await filterStaffData(employeesSearchForm.value).then((resolve) => {
@@ -290,6 +293,11 @@ const handleSizeChange = async (pageSize) => {
 }
 
 onMounted(async () => {
+    if (!hasAllStaffMsgView.value) {
+        employeesSearchForm.value.departId = departId.value
+    } else {
+        employeesSearchForm.value.departId = ""
+    }
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
     await getData().then((resolve) => {
@@ -298,6 +306,9 @@ onMounted(async () => {
     }).catch(() => {
         //动画结束
         loadingInstance.value.close()
+    })
+    socket.on("staffUpdate", function (data) {
+        reload.value = true
     })
 })
 

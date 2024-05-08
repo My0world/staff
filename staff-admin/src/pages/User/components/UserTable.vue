@@ -392,6 +392,7 @@ const handleCommit = async () => {
         //动画开始
         loadingInstance.value = ElLoading.service({ fullscreen: true })
         await user.reqAddUser(obj).then(async (resolve) => {
+            socket.emit("admin_user","")
             //提示信息
             $ElMessage.success(resolve.message)
             //密码对话框
@@ -400,7 +401,6 @@ const handleCommit = async () => {
             addUserDialog.value.dialogStatus = false
             //重置数据
             editForm.value = {}
-            socket.emit("user","")
             //重新获取数据
             await getData().then((resolve) => {
                 //动画结束
@@ -409,6 +409,7 @@ const handleCommit = async () => {
                 //动画结束
                 loadingInstance.value.close()
             })
+            reload.value = false
         }).catch(() => {
             //动画结束
             loadingInstance.value.close()
@@ -444,6 +445,7 @@ const handleCommit = async () => {
         // 动画开始
         loadingInstance.value = ElLoading.service({ fullscreen: true })
         await user.reqUpdatePassWord(obj).then(async (resolve) => {
+            socket.emit("admin_user","")
             //提示信息
             $ElMessage.success(resolve.message)
             //密码对话框
@@ -453,7 +455,6 @@ const handleCommit = async () => {
             //重置数据
             editForm.value = {}
             requireUserPassword.value = ""
-            socket.emit("user","")
             //动画开始
             loadingInstance.value = ElLoading.service({ fullscreen: true })
             await getData().then((resolve) => {
@@ -463,6 +464,7 @@ const handleCommit = async () => {
                 //动画结束
                 loadingInstance.value.close()
             })
+            reload.value = false
         })
         return
     }
@@ -474,6 +476,7 @@ const handleCommit = async () => {
             authorityString: authorityString.value
         }
         await user.reqAllotAuthority(obj).then(async (resolve) => {
+            socket.emit("admin_user","")
             //提示信息
             $ElMessage.success(resolve.message)
             //密码对话框
@@ -483,7 +486,6 @@ const handleCommit = async () => {
             requireUserPassword.value = ""
             updateStaffId.value = ""
             drawer.value = false
-            socket.emit("user","")
             //动画开始
             loadingInstance.value = ElLoading.service({ fullscreen: true })
             await getData().then((resolve) => {
@@ -493,6 +495,7 @@ const handleCommit = async () => {
                 //动画结束
                 loadingInstance.value.close()
             })
+            reload.value = false
         })
         return
     }
@@ -503,6 +506,7 @@ const handleCommit = async () => {
             requireUserPassword: requireUserPassword.value,
         }
         await user.reqDeleteUser(obj).then(async (resolve) => {
+            socket.emit("admin_user","")
             //提示信息
             $ElMessage.success(resolve.message)
             //密码对话框
@@ -510,7 +514,6 @@ const handleCommit = async () => {
             //重置数据
             requireUserPassword.value = ""
             updateStaffId.value = ""
-            socket.emit("user","")
             //动画开始
             loadingInstance.value = ElLoading.service({ fullscreen: true })
             await getData().then((resolve) => {
@@ -520,6 +523,7 @@ const handleCommit = async () => {
                 //动画结束
                 loadingInstance.value.close()
             })
+            reload.value = false
         })
         return
     }
@@ -816,7 +820,7 @@ onMounted(async () => {
         //动画结束
         loadingInstance.value.close()
     })
-    socket.on("userUpdate", function (data) {
+    socket.on("admin_userUpdate", function (data) {
         reload.value = true
     })
 })

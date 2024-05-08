@@ -70,17 +70,19 @@
             </div>
         </template>
     </el-drawer>
+
     <el-drawer v-model="vacationDrawer" :title="vacationDataRow.staffName + '的请假记录'">
         <el-form label-width="100px">
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="开始日期：">
-                        <el-date-picker @change="handelSearch" v-model="form.startTime" type="date" placeholder="请选择开始日期" />
+                        <el-date-picker @change="handelSearchTime" value-format="YYYY-MM-DD" v-model="form.startTime" type="date"
+                            placeholder="请选择开始日期" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="状态：">
-                        <el-select @change="handelSearch" clearable v-model="form.status" placeholder="请选择审核状态">
+                        <el-select @change="handelSearchStatus" clearable v-model="form.status" placeholder="请选择审核状态">
                             <el-option label="审核通过" value="审核通过" />
                             <el-option label="审核驳回" value="审核驳回" />
                         </el-select>
@@ -112,19 +114,20 @@
                         <el-row>
                             <el-col :span="12">
                                 <el-form-item label="开始日期：">
-                                    {{ i.startTime }}
+                                    {{ GMTToStr(i.startTime) }}
+
                                 </el-form-item>
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item label="结束日期：">
-                                    {{ i.endTime }}
+                                    {{ GMTToStr(i.endTime) }}
                                 </el-form-item>
                             </el-col>
                         </el-row>
                         <el-row>
                             <el-col :span="12">
                                 <el-form-item label="发送日期：">
-                                    {{ i.dateTime }}
+                                    {{ GMTToStr(i.dateTime) }}
                                 </el-form-item>
                             </el-col>
                         </el-row>
@@ -222,34 +225,30 @@ const {
     filterAskforleaveData
 } = employeesStore
 
-// 主题类型
-const themeType = computed(() => {
-    return theme.value === "light" ? true : false
-})
 
 // 考勤状态修改
 function handleUpdate(row) {
     upDrawer.value = true
     upDataRow.value = { ...row }
+
 }
 
-function handelSearch(){
-    // filterAskforleaveData
+//请假数据时间筛选
+async function handelSearchTime(v) {
+    await filterAskforleaveData({ staffId: vacationDataRow.value.staffId,dateTime:form.startTime,status:form.status })
+}
+
+//请假数据状态筛选
+async function handelSearchStatus(v) {
+    await filterAskforleaveData({ staffId: vacationDataRow.value.staffId,dateTime:form.startTime,status:form.status })
 }
 
 //查看请假记录
-function vacationDetail(row) {
+async function vacationDetail(row) {
     vacationDrawer.value = true
     vacationDataRow.value = { ...row }
+    await filterAskforleaveData({ staffId: vacationDataRow.value.staffId,dateTime:form.startTime,status:form.status })
 }
-
-//是否可以查看所有员工考勤
-const hasAllCheckingIn = computed(() => {
-    let index = authorityList.value.findIndex((item) => {
-        return item === "allCheckingIn"
-    })
-    return index !== -1
-})
 
 
 //是否可以修改员工考勤
@@ -257,15 +256,10 @@ const hasEditCheckingIn = computed(() => {
     return authorityList.value.indexOf("editCheckingIn") !== -1
 })
 
-//提交修改
-function confirmClick(){
-
-}
 
 
 // 获取数据
 const getData = async () => {
-    vacationSearchForm.value.departId = departId.value
     //动画开始
     loadingInstance.value = ElLoading.service({ fullscreen: true })
     await filterCheckingInData(checkingInSearchForm.value).then((resolve) => {
@@ -304,6 +298,29 @@ const handleSizeChange = async (pageSize) => {
         loadingInstance.value.close()
     })
 }
+
+//提交修改
+async function confirmClick() {
+    loadingInstance.value = ElLoading.service({ fullscreen: true })
+    await employees.reqEditCheckingIn({ id: upDataRow.value.id, status: upDataRow.value.status }).then(async (res) => {
+        $ElMessage({
+            message: "修改成功",
+            type: "success"
+        })
+        await getData()
+        upDrawer.value = false
+        //动画结束
+        loadingInstance.value.close()
+    }).catch(() => {
+        $ElMessage({
+            message: "修改失败",
+            type: "error"
+        })
+        //动画结束
+        loadingInstance.value.close()
+    })
+}
+
 
 onMounted(async () => {
     //动画开始

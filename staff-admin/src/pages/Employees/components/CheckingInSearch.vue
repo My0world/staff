@@ -6,27 +6,26 @@
 
                     <el-col :span="6">
                         <el-form-item label="部门:">
-                            <el-select :disabled="!hasAllCheckingIn" clearable v-model="form.departId" placeholder="请选择部门" size="large">
+                            <el-select :disabled="!hasAllCheckingIn" v-model="form.departId" placeholder="请选择部门" size="large">
                                 <el-option v-for="i in departmentList" :key="i.departId" :label="i.department_Name"
                                     :value="i.departId" />
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
+                        <el-form-item label="选择日期:">
+                            <el-date-picker :clearable="false" v-model="form.dateTime" value-format="YYYY-MM-DD" type="date" placeholder="选择日期"
+                                style="width: 254.92px;" :disabled-date="disabledDate" size="large" />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
                         <el-form-item label="员工状态:">
                             <el-select clearable v-model="form.status" placeholder="请选择用户状态" size="large">
                                 <el-option label="正常" value="正常" />
-                                <el-option label="请假" value="请假" />
                                 <el-option label="迟到" value="迟到" />
                                 <el-option label="早退" value="早退" />
                                 <el-option label="旷工" value="旷工" />
                             </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="选择日期:">
-                            <el-date-picker clearable v-model="form.dateTime" type="date" placeholder="选择日期"
-                                style="width: 100%;" :disabled-date="disabledDate" size="large" />
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
@@ -60,6 +59,8 @@ import { useLoginStore } from '../../../stores/login'
 import { useEmployeesStore } from '../../../stores/employees'
 //搜索
 import { Search } from '@element-plus/icons-vue'
+//获取当前时间
+import { GetDate } from "../../../util/GetDate.js"
 
 // 获取layout仓库
 let layoutStore = useLayoutStore()
@@ -116,7 +117,6 @@ const hasAllCheckingIn = computed(() => {
     let index = authorityList.value.findIndex((item) => {
         return item === "allCheckingIn"
     })
-    form.departId = departId.value
     return index !== -1
 })
 
@@ -129,15 +129,11 @@ const disabledDate = (time) => {
 // 清除搜索
 const handleClearCard = async () => {
     form.status = ""
-    form.departId = ""
     form.searchValue = ""
-    form.dateTime = ""
     checkingInSearchForm.value = {
         ...checkingInSearchForm.value, ...{
-            departId: "",
             status: "",
             searchValue: "",
-            dateTime: "",
             pageNo: 1
         }
     }
@@ -190,6 +186,10 @@ const getData = async () => {
 
 onMounted(async () => {
     getData()
+    form.dateTime = GetDate()
+    checkingInSearchForm.value.dateTime = GetDate()
+    form.departId = departId.value
+    checkingInSearchForm.value.departId = departId.value
 })
 
 onBeforeUnmount(() => {

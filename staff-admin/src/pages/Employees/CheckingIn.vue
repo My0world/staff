@@ -2,7 +2,7 @@
     <div class="CheckingIn">
         <el-tabs v-model="activeName" type="card" :class="[theme === 'light' ? 'light' : 'dark']">
             <el-tab-pane label="考勤表" name="考勤表">
-                <div class="block">
+                <div class="block" v-if="activeName === '考勤表'">
                     <el-row :gutter="20" class="container">
                         <el-col :span="24" style="height: 100%;">
                             <CheckingInSearch></CheckingInSearch>
@@ -15,8 +15,8 @@
                     </el-row>
                 </div>
             </el-tab-pane>
-            <el-tab-pane v-if="hasCheckVacate" label="请假审核" name="请假审核">
-                <div class="block">
+            <el-tab-pane label="请假审核" name="请假审核">
+                <div class="block" v-if="activeName === '请假审核'">
                     <el-row :gutter="20" class="container">
                         <el-col :span="24" style="height: 100%;">
                             <VacationSearch></VacationSearch>
@@ -76,10 +76,7 @@ const {
     authorityList,
 } = storeToRefs(loginStore)
 
-//审核请假
-const hasCheckVacate = computed(()=>{
-    return authorityList.value.indexOf("checkVacate") !== -1
-})
+
 
 onMounted(() => {
     if (authorityList.value.indexOf("checkingIn") === -1) {

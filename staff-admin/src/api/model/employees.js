@@ -41,6 +41,73 @@ export default {
         url: "/resign/resignStaff",
         method: 'post',
         data: params
-    })
+    }),
 
+    //考勤数据
+    reqCheckingInData: (params) => request({
+        url: "/workattendance/queryAll",
+        method: 'post',
+        data: params
+    }),
+
+    //修改考勤数据
+    reqEditCheckingIn: (params) => request({
+        url: `/workattendance/edit?id=${params.id}&status=${params.status}`,
+        method: 'GET',
+    }),
+
+    //请假数据
+    reqAskforleaveData: (params) => request({
+        url: "/askforleave/queryAll",
+        method: 'post',
+        data: params
+    }),
+
+    //考勤数据
+    reqEditAskforleave: (opid, status) => request({
+        url: `/askforleave/updateStatus?opid=${opid}&status=${status}`,
+        method: 'get',
+    }),
+
+    //今日请假
+    reqtodayQJ: () => request({
+        url: `/workattendance/todayQJ`,
+        method: 'get',
+    }),
+
+    //今日上班
+    reqtodaySB: () => request({
+        url: `/workattendance/todaySB`,
+        method: 'get',
+    }),
+
+    //本月请假
+    reqmonthQJ: () => request({
+        url: `/workattendance/monthQJ`,
+        method: 'get',
+    }),
+
+    //每个月迟到
+    reqmonthChidao: () => request({
+        url: `/workattendance/monthChidao?year=2024`,
+        method: 'get',
+    }),
+
+    //每个月请假
+    reqmonthQingjia: () => request({
+        url: `/workattendance/monthQingjia?year=2024`,
+        method: 'get',
+    }),
+
+    //平均到达时间
+    reqAvgTime: () => request({
+        url: `/workattendance/avgTime`,
+        method: 'get',
+    }),
+
+    //各部门通勤率
+    reqAvgDepart: (departId) => request({
+        url: `/workattendance/avgDepart?departId=${departId}`,
+        method: 'get',
+    }),
 }

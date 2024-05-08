@@ -54,6 +54,7 @@ onMounted(() => {
 .StaffMsg {
     margin-top: 17px;
     height: calc(100% - 17px);
+    overflow-y: auto;
 
     .container {
         overflow-y: auto;
