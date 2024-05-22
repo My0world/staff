@@ -9,7 +9,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    BorderTable: typeof import('./src/components/BorderTable.vue')['default']
     Card: typeof import('./src/components/Card.vue')['default']
     Dialog: typeof import('./src/components/Dialog.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
@@ -21,7 +20,6 @@ declare module '@vue/runtime-core' {
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElDialog: typeof import('element-plus/es')['ElDialog']
-    ElDivider: typeof import('element-plus/es')['ElDivider']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
@@ -38,8 +36,6 @@ declare module '@vue/runtime-core' {
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
-    ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
-    ElPopover: typeof import('element-plus/es')['ElPopover']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
